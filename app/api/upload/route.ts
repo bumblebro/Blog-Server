@@ -1,4 +1,7 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import {
+  GoogleGenerativeAI,
+  FunctionDeclarationSchemaType,
+} from "@google/generative-ai";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
 
@@ -11,11 +14,27 @@ export async function POST(req: NextRequest) {
     console.log("Start");
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-1.5-pro",
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: FunctionDeclarationSchemaType.ARRAY,
+          items: {
+            type: FunctionDeclarationSchemaType.OBJECT,
+            properties: {
+              recipe_name: {
+                type: FunctionDeclarationSchemaType.STRING,
+              },
+            },
+          },
+        },
+      },
     });
-    const prompt = `Generate blog post about ${body?.title} which comes under category ${body?.section} and sub category ${body?.subSection}`;
+    const prompt = `Generate SEO optimised blog post about ${body?.title} which comes under category ${body?.section} and sub category ${body?.subSection}`;
+    // const prompt = `Generate random trending SEO optimised blog which comes under category ${body?.section} and sub category ${body?.subSection}`;
     const result = await model.generateContent(prompt);
     const response = await result.response;
+    // console.log(response);
     const data = response.text();
     console.log(data);
     return Response.json(data);

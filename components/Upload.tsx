@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 function Upload() {
   const [section, setSection] = useState<string>("Tech");
@@ -24,7 +25,8 @@ function Upload() {
   }
 
   return (
-    <div className="  inline-block ">
+    <div className="w-7/12 flex flex-col mx-auto mt-12 ">
+      
       <form action="" className="flex flex-col " onSubmit={handleSubmit}>
         <select
           title="Ndew"
@@ -168,7 +170,7 @@ function Upload() {
         />
         <button className="border-2">Generate</button>
       </form>
-      {loading ? <h1>Loading...</h1> : <p className="text-base">{blog}</p>}
+      {loading ? <h1>Loading...</h1> : <ReactMarkdown>{blog}</ReactMarkdown>}
     </div>
   );
 }
