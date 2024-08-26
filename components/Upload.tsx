@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { load } from "cheerio";
 import { ChangeEvent, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
@@ -32,6 +33,7 @@ function Upload() {
   async function handleSubmit(e: React.FormEvent) {
     console.log("Clicked");
     setLoading(true);
+    setUpdatedBlog([]);
     e.preventDefault();
     const blogs = await axios.post("http://localhost:3000/api/upload", {
       section,
@@ -227,13 +229,24 @@ function Upload() {
       {/* <button onClick={searchImages} className="border-2">
         Generate cat
       </button> */}
-      {updatedBlog.map((item, index) => (
+      {/* {updatedBlog.map((item, index) => (
         <h1 key={index}>
           <ReactMarkdown>{item?.blog}</ReactMarkdown>
           {item.url !== "null" && <img src={item.url} alt="" />}
         </h1>
-      ))}
-      {/* {loading ? <h1>Loading...</h1> : <ReactMarkdown>{blog}</ReactMarkdown>} */}
+      ))} */}
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          {updatedBlog.map((item, index) => (
+            <h1 key={index}>
+              <ReactMarkdown>{item?.blog}</ReactMarkdown>
+              {item.url !== "null" && <img src={item.url} alt="" />}
+            </h1>
+          ))}
+        </>
+      )}
     </div>
   );
 }

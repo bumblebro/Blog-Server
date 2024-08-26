@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     // } `;
 
-    const prompt = `Generate unique blog which provides value and which comes under category ${body?.section} and sub category ${body?.subSection} .the first object in the array should contain only the title of the blog and no description in element blog and image query in the query element (needed for the title). The response should be an array where each element contains an object with two fields: blog for the blog paragraph and query for the associated image query. If an image is not required for a specific paragraph, set the query field to null. The first element should include the first paragraph and its corresponding image query (if needed), and the second element should include the second paragraph with its image query (if needed), and so on. send maximum of 5 query other as null using this JSON schema:
+    const prompt = `Generate unique blog which provides value and which comes under category ${body?.section} and sub category ${body?.subSection} .the first object in the array should contain only the title of the blog and no description in element blog and image query for that title in the query element. The response should be an array where each element contains an object with two fields: blog for the blog paragraph and query for the associated image query. If an image is not required for a specific paragraph, set the query field to null. The first element should include the first paragraph and its corresponding image query (if needed), and the second element should include the second paragraph with its image query (if needed), and so on. send maximum of 5 query other as null using this JSON schema:
      { "type": "array",
     "items":{
      "type": "object",
