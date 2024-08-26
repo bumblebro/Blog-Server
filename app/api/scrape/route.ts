@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   try {
     const results = await gis(body.query);
     console.log(results.slice(0, 10));
-    return Response.json({ results: results[0] });
+    return Response.json({ results: results[1] });
   } catch (e) {
     console.error(e);
     return Response.json({ e });

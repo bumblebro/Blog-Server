@@ -15,7 +15,17 @@ datasource db {
 
 model Blogs {
   id        Int     @id  @default(autoincrement())
-  title  String  
-  body  String
+  section  String  
+  subsection  String
+  blogDetails BlogDetail[]
   creationDate DateTime @default(now())
+}
+
+model BlogDetail {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  url         String
+  blogId      Int
+  blog        Blogs     @relation(fields: [blogId], references: [id])
 }

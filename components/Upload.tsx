@@ -31,10 +31,10 @@ function Upload() {
   };
 
   async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
     console.log("Clicked");
     setLoading(true);
     setUpdatedBlog([]);
-    e.preventDefault();
     const blogs = await axios.post("http://localhost:3000/api/upload", {
       section,
       subSection,
@@ -61,7 +61,7 @@ function Upload() {
 
         // const link = "hello";
         console.log("links", link);
-        return { blog: item.blog, url: link };
+        return { title: item.title, description: item.description, url: link };
       })
     );
     setUpdatedBlog(results);
@@ -162,7 +162,7 @@ function Upload() {
             <option value="Boats">Advice</option>
             <option value="Cars">Drinks</option>
             <option value="Cycling">Fitness</option>
-            <option value="Flying">Finance</option>
+            <option value="Finance">Finance</option>
             <option value="Food">Food</option>
             <option value="Grooming">Grooming</option>
             <option value="Sex & Dating">Sex & Dating</option>
@@ -240,10 +240,13 @@ function Upload() {
       ) : (
         <>
           {updatedBlog.map((item, index) => (
-            <h1 key={index}>
-              <ReactMarkdown>{item?.blog}</ReactMarkdown>
-              {item.url !== "null" && <img src={item.url} alt="" />}
-            </h1>
+            <div key={index} className="flex flex-col gap-5 pb-5">
+              <h1 className="text-2xl font-bold">{item?.title}</h1>
+              <h2 className="text-[#505050]">{item?.description}</h2>{" "}
+              {item.url !== "null" && (
+                <img className="h-96 object-cover" src={item.url} alt="" />
+              )}
+            </div>
           ))}
         </>
       )}
