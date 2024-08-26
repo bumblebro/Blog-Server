@@ -5,28 +5,82 @@ import { ChangeEvent, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 function Upload() {
+  interface blogs {
+    blog: string;
+    image: string;
+  }
+
   const [section, setSection] = useState<string>("Tech");
   const [subSection, setSubSection] = useState<string>("Apple");
   const [title, setTitle] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [blog, setBlog] = useState<string>();
+  const [blog, setBlog] = useState([{ blog: "", query: "" }]);
+  const [updatedBlog, setUpdatedBlog] = useState([]);
+
+  // const [query, setQuery] = useState("a man sleeping in bed");
+  const [images, setImages] = useState([]);
+
+  const searchImages = async (query: string) => {
+    console.log(query);
+    const response = await axios.post("http://localhost:3000/api/scrape", {
+      query,
+    });
+    console.log(response.data.results.url);
+    return response.data.results.url;
+  };
 
   async function handleSubmit(e: React.FormEvent) {
+    console.log("Clicked");
     setLoading(true);
     e.preventDefault();
-    const blog = await axios.post("http://localhost:3001/api/upload", {
+    const blogs = await axios.post("http://localhost:3000/api/upload", {
       section,
       subSection,
       title,
     });
-    const data = await blog.data;
-    setBlog(data);
+    const data = await blogs.data;
+    const covertedBlog = await JSON.parse(data);
+    console.log(covertedBlog);
+    // setBlog(covertedBlog);
+    // covertedBlog.map(async (item) => {
+    //   const link = await searchImages(item.query);
+    //   // const link = "hello";
+    //   console.log("links", link);
+    //   updatedblog.push({ blog: item.blog, url: link });
+    // });
+    const results = await Promise.all(
+      covertedBlog.map(async (item) => {
+        let link;
+        if (item.query == null) {
+          link = "null";
+        } else {
+          link = await searchImages(item.query);
+        }
+
+        // const link = "hello";
+        console.log("links", link);
+        return { blog: item.blog, url: link };
+      })
+    );
+    setUpdatedBlog(results);
+    console.log(covertedBlog);
+    console.log(updatedBlog);
+    console.log(typeof blog);
     setLoading(false);
+  }
+
+  async function handleimage(query: string) {
+    const image = await axios.post("http://localhost:3000/api/image", {
+      query,
+    });
+    const data = await image.data;
+    // console.log(data);
+    console.log(data.link);
+    return data.link;
   }
 
   return (
     <div className="w-7/12 flex flex-col mx-auto mt-12 ">
-      
       <form action="" className="flex flex-col " onSubmit={handleSubmit}>
         <select
           title="Ndew"
@@ -169,8 +223,17 @@ function Upload() {
           }}
         />
         <button className="border-2">Generate</button>
-      </form>
-      {loading ? <h1>Loading...</h1> : <ReactMarkdown>{blog}</ReactMarkdown>}
+      </form>{" "}
+      {/* <button onClick={searchImages} className="border-2">
+        Generate cat
+      </button> */}
+      {updatedBlog.map((item, index) => (
+        <h1 key={index}>
+          <ReactMarkdown>{item?.blog}</ReactMarkdown>
+          {item.url !== "null" && <img src={item.url} alt="" />}
+        </h1>
+      ))}
+      {/* {loading ? <h1>Loading...</h1> : <ReactMarkdown>{blog}</ReactMarkdown>} */}
     </div>
   );
 }
