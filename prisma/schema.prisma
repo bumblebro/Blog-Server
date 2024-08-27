@@ -17,15 +17,6 @@ model Blogs {
   id        Int     @id  @default(autoincrement())
   section  String  
   subsection  String
-  blogDetails BlogDetail[]
+  blogDetails Json[]
   creationDate DateTime @default(now())
-}
-
-model BlogDetail {
-  id          Int       @id @default(autoincrement())
-  title       String
-  description String
-  url         String
-  blogId      Int
-  blog        Blogs     @relation(fields: [blogId], references: [id])
 }

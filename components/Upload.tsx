@@ -43,13 +43,6 @@ function Upload() {
     const data = await blogs.data;
     const covertedBlog = await JSON.parse(data);
     console.log(covertedBlog);
-    // setBlog(covertedBlog);
-    // covertedBlog.map(async (item) => {
-    //   const link = await searchImages(item.query);
-    //   // const link = "hello";
-    //   console.log("links", link);
-    //   updatedblog.push({ blog: item.blog, url: link });
-    // });
     const results = await Promise.all(
       covertedBlog.map(async (item) => {
         let link;
@@ -69,6 +62,15 @@ function Upload() {
     console.log(updatedBlog);
     console.log(typeof blog);
     setLoading(false);
+  }
+
+  async function createBlog() {
+    const res = await axios.post("http://localhost:3000/api/dbupload", {
+      section,
+      subsection: subSection,
+      blogDetails: updatedBlog,
+    });
+    console.log("resss", res);
   }
 
   async function handleimage(query: string) {
@@ -238,7 +240,7 @@ function Upload() {
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        <>
+        <div>
           {updatedBlog.map((item, index) => (
             <div key={index} className="flex flex-col gap-5 pb-5">
               <h1 className="text-2xl font-bold">{item?.title}</h1>
@@ -248,7 +250,8 @@ function Upload() {
               )}
             </div>
           ))}
-        </>
+          <button onClick={createBlog}>Add to DB</button>
+        </div>
       )}
     </div>
   );
