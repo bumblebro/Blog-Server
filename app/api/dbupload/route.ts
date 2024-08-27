@@ -4,11 +4,16 @@ import { NextRequest } from "next/server";
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  const newBlog = await prisma.blogs.create({
-    data: body,
-  });
-  console.log("Created blog:", newBlog);
-  return Response.json(newBlog);
+    const newBlog = await prisma.blogs.create({
+      data: body,
+    });
+    console.log("Created blog:", newBlog);
+    return Response.json(newBlog);
+  } catch (e) {
+    console.log(e);
+    return Response.json(e);
+  }
 }

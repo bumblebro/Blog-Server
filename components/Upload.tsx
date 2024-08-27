@@ -5,6 +5,259 @@ import { load } from "cheerio";
 import { ChangeEvent, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
+const subSections = {
+  Tech: {
+    Apple: ["iPhone", "MacBook", "iPad"],
+    Audio: ["Headphones", "Speakers", "Earbuds"],
+    Cameras: ["DSLR", "Mirrorless", "Action Cameras"],
+    Computers: ["Laptops", "Desktops", "Tablets"],
+    Smartphones: ["Android", "iOS", "Windows Phone"],
+    TVs: ["LG", "Samsung", "Sony", "Projectors"],
+  },
+  Fashion: {
+    "Men's Fashion Advice": ["Formal", "Casual", "Business Casual"],
+    "Men's Fashion Trends": ["Seasonal Trends", "Streetwear", "Minimalist"],
+    "Men's Fragrances": ["Cologne", "Perfume", "Body Spray"],
+    "Men's Hairstyles": ["Short", "Medium", "Long"],
+    "Sneakers & Shoes": ["Sneakers", "Dress Shoes", "Boots"],
+    Watches: ["Analog", "Digital", "Smartwatches"],
+  },
+  Rides: {
+    Boats: ["Yachts", "Superyachts", "Sailing", "Jetskis", "Submarines"],
+    Cars: [
+      "Most Popular Car Brands",
+      "Electric Vehicles",
+      "SUVs",
+      "Porsche",
+      "Ford",
+      "BMW",
+      "Sports Cars",
+      "Mercedes Benz",
+      "Luxury",
+      "Reviews",
+    ],
+    Cycling: [
+      "Bicycles",
+      "Electric Bikes",
+      "Helmets",
+      "Mountain Bikes",
+      "Kickstarter",
+      "Buyers Guides",
+      "Best Electric Bikes",
+    ],
+    Flying: [
+      "Planes",
+      "Jets",
+      "Electric Vehicles",
+      "Space",
+      "Travel",
+      "Auctions",
+    ],
+    Motorcycles: [
+      "Best Cafe Racers",
+      "Fastest Motorcycles in the World",
+      "Electric Motorcycles",
+      "Harley Davidson",
+      "Cafe Racers",
+      "Triumph",
+      "Vintage Helmets",
+      "Motorcycle Backpacks",
+    ],
+  },
+
+  Lifestyle: {
+    Advice: [
+      "Health",
+      "Mental Health",
+      "COVID-19",
+      "Money",
+      "Australia",
+      "Work",
+      "Productivity",
+      "Investing",
+      "Cryptocurrency",
+    ],
+    Drinks: ["Whisky", "Beer", "Wine", "Cocktails", "Bars"],
+    Fitness: [
+      "Workouts",
+      "Shoulder Exercises",
+      "Bicep Exercises",
+      "Triceps Workouts",
+      "Chest Workouts",
+      "Forearm Workouts",
+      "Strongest Celebrities in Hollywood",
+      "How to Lose Weight Fast",
+      "Celebrity Diet & Workout Plans",
+      "Gyms",
+      "Diet & Nutrition",
+    ],
+    Finance: [
+      "Money",
+      "Cryptocurrency",
+      "Investing",
+      "NFTs",
+      "Australia",
+      "Celebrities",
+      "Elon Musk",
+      "Net Worths",
+      "Rich Lists",
+    ],
+    Food: [
+      "Monday Munchies",
+      "Restaurants",
+      "Fast Food",
+      "Sydney",
+      "Melbourne",
+      "Brisbane",
+    ],
+    Grooming: [
+      "Skincare",
+      "Razors",
+      "Hair",
+      "Beards",
+      "Best Beard Oils",
+      "Best Body Groomers",
+      "Best Face Washes",
+      "Men's Skincare Guide",
+      "Best Skincare Products",
+      "Beard Care Guide",
+    ],
+    "Sex & Dating": [
+      "Best Sex Toys",
+      "Best Tinder Bios for Guys",
+      "How To Be Sexually Dominant",
+      "A Guide to (Safe) Rough Sex",
+      "How to Get a Sugar Momma",
+      "Tinder Pick-Up Lines for Guys",
+      "Best Sex Positions",
+      "Best Dating Apps",
+    ],
+    Travel: [
+      "Hotels",
+      "Sydney  ",
+      "Melbourne",
+      "Best Hotels in the World",
+      "Travel Gifts",
+      "World's Best Rooftop Bars",
+      "Skyscanner Alternatives",
+      "Qantas",
+    ],
+  },
+  Entertainment: {
+    Art: ["NFTs", "Auctions", "Tattoos", "Collections", "Memes"],
+    Books: [
+      "Coffee Table Books",
+      "Self-Help Books",
+      "Cookbooks",
+      "Best Kindles",
+    ],
+    Gaming: [
+      "Top New Games",
+      "Playstation",
+      "Xbox",
+      "PC",
+      "Nintendo Switch",
+      "LEGO",
+      "Sony",
+      "Reviews",
+    ],
+    "Movies & TV": [
+      "Guide to Streaming Services",
+      "New on Netflix",
+      "New on Prime Video",
+      "New on Disney+",
+      "New on Stan Australia",
+      "Best Action Movies",
+      "Best Sci-Fi Movies",
+      "Trailers",
+      "Netflix",
+      "Best Movies on Netflix",
+      "Best Amazon Prime Movies",
+      "Best Shows on Netflix",
+      "Documentaries",
+      "James Bond",
+    ],
+    Music: ["Guitars", "Festivals", "Hip Hop"],
+    Sport: [
+      "Golf",
+      "NBA",
+      "Football",
+      "Boxing",
+      "Tennis",
+      "UFC",
+      "AFL",
+      "Formula 1",
+    ],
+  },
+  Living: {
+    Appliances: [
+      "Vacuum Cleaners",
+      "Coffee",
+      "Kitchens",
+      "Cooking",
+      "Lighting",
+      "Dyson",
+      "Best Coffee Machines",
+      "Best Air Fryers",
+      "Best Robot Vacuums",
+    ],
+    Architecture: [
+      "Homes",
+      "Design",
+      "Real Estate",
+      "Interior Design",
+      "Penthouses",
+      "Celebrity Homes",
+    ],
+    Furniture: [
+      "Desks",
+      "IKEA",
+      "Interior Design",
+      "Homes",
+      "Italian",
+      "Chairs",
+      "Office",
+      "Tables",
+      "Design",
+      "Herman Miller",
+    ],
+    Homewares: [],
+  },
+  Outdoors: {
+    Camping: [
+      "Tents",
+      "Campervans",
+      "Knives",
+      "Vehicles",
+      "Australia",
+      "4WD",
+      "Fishing",
+      "Kayaks",
+      "Kickstarter",
+    ],
+    Snow: [
+      "Skiing",
+      "Snowboarding",
+      "Cabins",
+      "Best Ski Jackets",
+      "Best Snow Goggles",
+      "Best Ski Fields in New Zealand",
+      "Winter Must Haves",
+      "Best Australian Ski Fields",
+    ],
+    Surfing: [
+      "Beaches",
+      "Wetsuits",
+      "Surfboards",
+      "Best Wetsuit Tops",
+      "Best Wetsuits for Surfing",
+    ],
+    Skate: [],
+    Hiking: [],
+  },
+  News: [],
+};
+
 function Upload() {
   interface blogs {
     blog: string;
@@ -13,13 +266,11 @@ function Upload() {
 
   const [section, setSection] = useState<string>("Tech");
   const [subSection, setSubSection] = useState<string>("Apple");
+  const [subSubSection, setSubSubSection] = useState<string>("iPhone");
   const [title, setTitle] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [blog, setBlog] = useState([{ blog: "", query: "" }]);
   const [updatedBlog, setUpdatedBlog] = useState([]);
-
-  // const [query, setQuery] = useState("a man sleeping in bed");
-  const [images, setImages] = useState([]);
 
   const searchImages = async (query: string) => {
     console.log(query);
@@ -38,6 +289,7 @@ function Upload() {
     const blogs = await axios.post("http://localhost:3000/api/upload", {
       section,
       subSection,
+      subSubSection,
       title,
     });
     const data = await blogs.data;
@@ -68,6 +320,7 @@ function Upload() {
     const res = await axios.post("http://localhost:3000/api/dbupload", {
       section,
       subsection: subSection,
+      subsubsection: subSubSection,
       blogDetails: updatedBlog,
     });
     console.log("resss", res);
@@ -85,149 +338,65 @@ function Upload() {
 
   return (
     <div className="w-7/12 flex flex-col mx-auto mt-12 ">
-      <form action="" className="flex flex-col " onSubmit={handleSubmit}>
+      <form action="" className="flex flex-col" onSubmit={handleSubmit}>
         <select
-          title="Ndew"
-          name="cdc"
-          id="csd"
+          title="Section"
+          name="section"
+          id="section"
           onChange={(e) => {
             setSection(e.target.value);
+            setSubSection(""); // Reset sub-section when section changes
+            setSubSubSection(""); // Reset sub-sub-section when section changes
           }}
         >
-          <option value="Tech">Tech</option>
-          <option value="Fashion">Fashion</option>
-          <option value="Rides">Rides</option>
-          <option value="Lifestyle">Lifestyle</option>
-          <option value="Entertainment">Entertainment</option>
-          <option value="Living">Living</option>
-          <option value="Outdoors">Outdoors</option>
-          <option value="News">News</option>
+          {Object.keys(subSections).map((section, index) => (
+            <option key={index} value={section}>
+              {section}
+            </option>
+          ))}
         </select>
-        {section == "Tech" && (
+
+        {section && (
           <select
-            title="Tech"
-            name="Tech"
-            id="Tech"
+            title="Subsection"
+            name="subSection"
+            id="subSection"
             onChange={(e) => {
               setSubSection(e.target.value);
+              setSubSubSection(""); // Reset sub-sub-section when sub-section changes
             }}
           >
-            <option value="Apple">Apple</option>
-            <option value="Audio">Audio</option>
-            <option value="Cameras">Cameras</option>
-            <option value="Computers">Computers</option>
-            <option value="Smartphones">Smartphones</option>
-          </select>
-        )}{" "}
-        {section == "Fashion" && (
-          <select
-            title="Fashion"
-            name="Fashion"
-            id="Fashion"
-            onChange={(e) => {
-              setSubSection(e.target.value);
-            }}
-          >
-            <option value="Men's Fashion Advice">Men's Fashion Advice</option>
-            <option value="Men's Fashion Trends">Men's Fashion Trends</option>
-            <option value="Men's Fragnances">Men's Fragnances</option>
-            <option value="Men's Hairstyles">Men's Hairstyles</option>
-            <option value="Sneakers & Shoes">Sneakers & Shoes</option>
-            <option value="Watches">Watches</option>
-          </select>
-        )}{" "}
-        {section == "Rides" && (
-          <select
-            title="Rides"
-            name="Rides"
-            id="Rides"
-            onChange={(e) => {
-              setSubSection(e.target.value);
-            }}
-          >
-            <option value="Boats">Boats</option>
-            <option value="Cars">Cars</option>
-            <option value="Cycling">Cycling</option>
-            <option value="Flying">Flying</option>
-            <option value="Motorcycles">Motorcycles</option>
+            {Object.keys(subSections[section] || {}).map((sub, index) => (
+              <option key={index} value={sub}>
+                {sub}
+              </option>
+            ))}
           </select>
         )}
-        {section == "Lifestyle" && (
+
+        {subSection && (
           <select
-            title="Lifestyle"
-            name="Lifestyle"
-            id="Lifestyle"
-            onChange={(e) => {
-              setSubSection(e.target.value);
-            }}
+            title="Sub-subsection"
+            name="subSubSection"
+            id="subSubSection"
+            onChange={(e) => setSubSubSection(e.target.value)}
           >
-            <option value="Boats">Advice</option>
-            <option value="Cars">Drinks</option>
-            <option value="Cycling">Fitness</option>
-            <option value="Finance">Finance</option>
-            <option value="Food">Food</option>
-            <option value="Grooming">Grooming</option>
-            <option value="Sex & Dating">Sex & Dating</option>
-            <option value="Travel">Travel</option>
+            {(subSections[section][subSection] || []).map((subSub, index) => (
+              <option key={index} value={subSub}>
+                {subSub}
+              </option>
+            ))}
           </select>
         )}
-        {section == "Entertainment" && (
-          <select
-            title="Entertainment"
-            name="Entertainment"
-            id="Entertainment"
-            onChange={(e) => {
-              setSubSection(e.target.value);
-            }}
-          >
-            <option value="Art">Art</option>
-            <option value="Books">Books</option>
-            <option value="Gaming">Gaming</option>
-            <option value="Movies & TV">Movies & TV</option>
-            <option value="Music">Music</option>
-            <option value="Sport">Sport</option>
-          </select>
-        )}
-        {section == "Living" && (
-          <select
-            title="Living"
-            name="Living"
-            id="Living"
-            onChange={(e) => {
-              setSubSection(e.target.value);
-            }}
-          >
-            <option value="Appliances">Appliances</option>
-            <option value="Architecture">Architecture</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Homewares">Homewares</option>
-          </select>
-        )}
-        {section == "Outdoors" && (
-          <select
-            title="Outdoors"
-            name="Outdoors"
-            id="Outdoors"
-            onChange={(e) => {
-              setSubSection(e.target.value);
-            }}
-          >
-            <option value="Camping">Camping</option>
-            <option value="Snow">Snow</option>
-            <option value="Surfing">Surfing</option>
-          </select>
-        )}
+
         <input
           type="text"
-          name=""
-          id=""
           placeholder="Write the Title"
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <button className="border-2">Generate</button>
-      </form>{" "}
+      </form>
+
       {/* <button onClick={searchImages} className="border-2">
         Generate cat
       </button> */}

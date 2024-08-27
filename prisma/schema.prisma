@@ -17,6 +17,7 @@ model Blogs {
   id        Int     @id  @default(autoincrement())
   section  String  
   subsection  String
+  subsubsection String @default("null")
   blogDetails Json[]
   creationDate DateTime @default(now())
 }

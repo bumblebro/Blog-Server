@@ -52,10 +52,10 @@ export async function POST(req: NextRequest) {
     // `;
 
     const prompt = `
-    Generate a unique and engaging blog post ${body?.title} under the category "${body?.section}" and sub-category "${body?.subSection}".
+    Generate a unique and engaging blog post ${body?.title} under the category "${body?.section}" and sub-category "${body?.subSection}" and sub of sub-category "${body?.subSubSection}".
     The structure of the blog should be as follows:
 
-    1. **Introduction**: Start with a catchy opening paragraph that sets the tone and context for the blog. This should include the main idea of the post and entice the reader to continue.
+    1.  Start with a catchy opening paragraph that sets the tone and context for the blog. This should include the main idea of the post and entice the reader to continue.
 
     2. **List of Tips or Sections**: Break down the blog into a series of numbered sections, each offering a distinct tip or piece of advice. Each section should include:
        - A title for the section (numbered if required).
