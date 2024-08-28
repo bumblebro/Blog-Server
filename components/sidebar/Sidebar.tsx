@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Footer from "../footer/Footer";
 
 const Tech = ["Apple", "Audio", "Cameras", "Computers", "Smartphones", "TVs"];
@@ -37,68 +38,116 @@ function Sidebar() {
     <div className="duration-1000 ">
       <div className=" backdrop-blur-2xl bg-black  text-white px-4 tracking-wider">
         <h1 className="text-2xl font-semibold py-6">Sections</h1>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-10">
           <div>
-            <h1 className="font-semibold pb-4">Tech</h1>
-            <ul className="font-light flex flex-col gap-3 ">
+            <Link href={"/tech"} className="font-semibold ">
+              Tech
+            </Link>
+            <ul className="font-light flex flex-col gap-3 pt-4">
               {Tech.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/tech/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
           <div>
-            <h1 className="font-semibold pb-4">Fashion</h1>
-            <ul className="font-light flex flex-col gap-3">
+            <Link href={"/tech"} className="font-semibold ">
+              Fashion
+            </Link>
+            <ul className="font-light flex flex-col gap-3  pt-4">
               {Fashion.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/fashion/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
           <div>
-            <h1 className="font-semibold pb-4">Rides</h1>
-            <ul className="font-light flex flex-col gap-3 ">
+            <Link href={"/tech"} className="font-semibold ">
+              Rides
+            </Link>
+            <ul className="font-light flex flex-col gap-3   pt-4">
               {Rides.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/Rides/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
           <div>
-            <h1 className="font-semibold pb-4">Lifestyle</h1>
-            <ul className="font-light flex flex-col gap-3 ">
+            <Link href={"/tech"} className="font-semibold ">
+              Lifestyle
+            </Link>
+            <ul className="font-light flex flex-col gap-3   pt-4">
               {Lifestyle.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/Lifestyle/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
           <div>
-            <h1 className="font-semibold pb-4">Entertainment</h1>
-            <ul className="font-light flex flex-col gap-3 ">
+            <Link href={"/tech"} className="font-semibold ">
+              Entertainment
+            </Link>
+            <ul className="font-light flex flex-col gap-3   pt-4">
               {Entertainment.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/Entertainment/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
           <div>
-            <h1 className="font-semibold pb-4">Living</h1>
-            <ul className="font-light flex flex-col gap-3 ">
+            <Link href={"/tech"} className="font-semibold ">
+              Living
+            </Link>
+            <ul className="font-light flex flex-col gap-3  pt-4 ">
               {Living.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/Living/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
           <div>
-            <h1 className="font-semibold pb-4">Outdoors</h1>
-            <ul className="font-light flex flex-col gap-3 ">
+            <Link href={"/tech"} className="font-semibold ">
+              Outdoors
+            </Link>
+            <ul className="font-light flex flex-col gap-3   pt-4">
               {Outdoors.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/Outdoors/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
           <div>
-            <h1 className="font-semibold pb-4">News</h1>
-            <ul className="font-light flex flex-col gap-3 ">
+            <Link href={"/tech"} className="font-semibold">
+              News
+            </Link>
+            <ul className="font-light flex flex-col gap-3   pt-4">
               {News.map((item, index) => (
-                <li key={index}>{item}</li>
+                <li key={index}>
+                  <Link href={`/News/${item}`} key={index}>
+                    {item}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>

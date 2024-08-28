@@ -5,8 +5,11 @@ import { Blogs } from "@prisma/client";
 import Pagination from "@/components/pagination/Pagination";
 import BlogList from "@/components/bloglist/BlogList";
 import Navbar from "@/components/navbar/Navbar";
+import Sidebar from "@/components/sidebar/Sidebar";
+import Footer from "@/components/footer/Footer";
 
-function LatestPost({ searchParams }: { searchParams: { pageNo: string } }) {
+function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
+  const [sidebar, SetSideBar] = useState(false);
   const [posts, setPosts] = useState<Blogs[]>([]);
   const [pageNo, setPageNo] = useState("1");
   const [totalPages, setTotalPages] = useState(1);
@@ -36,17 +39,27 @@ function LatestPost({ searchParams }: { searchParams: { pageNo: string } }) {
 
   return (
     <>
-      <div className="mt-28 px-4">
-        <h1 className="text-center  text-lg font-semibold">The Latest News</h1>
-        <BlogList posts={posts || []} />
-        <Pagination
-          pageNo={pageNo}
-          totalPages={totalPages}
-          hasNextPage={hasNextPage}
-        />
-      </div>
+      <Navbar SetSideBar={SetSideBar} sidebar={sidebar} />
+      {sidebar ? (
+        <Sidebar />
+      ) : (
+        <>
+          <div className="mt-28 px-4">
+            <h1 className="text-center  text-lg font-semibold ">
+              The Latest News
+            </h1>
+            <BlogList posts={posts || []} />
+            <Pagination
+              pageNo={pageNo}
+              totalPages={totalPages}
+              hasNextPage={hasNextPage}
+            />
+          </div>
+        </>
+      )}
+      <Footer />
     </>
   );
 }
 
-export default LatestPost;
+export default Blog;

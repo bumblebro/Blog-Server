@@ -1,6 +1,6 @@
 function Category() {
   return (
-    <div className="mt-32 text-center flex flex-col items-center gap-4 px-4 ">
+    <div className="mt-4 text-center flex flex-col items-center gap-4 px-4 pb-3">
       {/* <h1 className="text-xs font-semibold text-gray-500">Home Tech Apple</h1> */}
 
       <nav className="flex tracking-wider" aria-label="Breadcrumb">

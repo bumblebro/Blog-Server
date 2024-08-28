@@ -1,33 +1,31 @@
 "use client";
 
 import BlogList from "@/components/bloglist/BlogList";
-import Category from "@/components/category/Category";
 import Footer from "@/components/footer/Footer";
-import FeaturedPost from "@/components/homepage/FeaturedPost";
 import Navbar from "@/components/navbar/Navbar";
 import Pagination from "@/components/pagination/Pagination";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-function Home({ searchParams }: { searchParams: { pageNo: string } }) {
+function BlogPage({ params }) {
   const [sidebar, SetSideBar] = useState(false);
   const [posts, setPosts] = useState<Blogs[]>([]);
-  const [pageNo, setPageNo] = useState("1");
+  // const [pageNo, setPageNo] = useState("1");
   const [totalPages, setTotalPages] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
   useEffect(() => {
-    if (searchParams.pageNo) {
-      fetchposts(searchParams.pageNo);
+    if (params.pageNo) {
+      console.log(params.pageNo);
+      fetchposts(params.pageNo);
     } else {
       fetchposts("1");
     }
-  }, [searchParams]);
+  }, [params.pageNo]);
 
-  const fetchposts = async (pageNumber: string) => {
+  const fetchposts = async (pageNumber) => {
     const response = await axios.get("/api/blogs", {
       params: {
         pageNo: pageNumber,
@@ -35,7 +33,7 @@ function Home({ searchParams }: { searchParams: { pageNo: string } }) {
     });
     if (response.data) {
       setPosts(response.data.blogs);
-      setPageNo(pageNumber);
+      // setPageNo(pageNumber);
       setTotalPages(response.data.metaData.totalPages);
       setHasNextPage(response.data.metaData.hasNextPage);
     }
@@ -48,14 +46,13 @@ function Home({ searchParams }: { searchParams: { pageNo: string } }) {
         <Sidebar />
       ) : (
         <>
-          <FeaturedPost />
           <div className="mt-28 px-4">
             <h1 className="text-center  text-lg font-semibold tracking-wider">
               The Latest News
             </h1>
             <BlogList posts={posts || []} />
             <Pagination
-              pageNo={pageNo}
+              pageNo={params.pageNo}
               totalPages={totalPages}
               hasNextPage={hasNextPage}
             />
@@ -67,4 +64,4 @@ function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   );
 }
 
-export default Home;
+export default BlogPage;
