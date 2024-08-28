@@ -323,7 +323,7 @@ function Upload() {
       subsubsection: subSubSection,
       blogDetails: updatedBlog,
     });
-    console.log("resss", res);
+    console.log("Upload Result", res);
   }
 
   async function handleimage(query: string) {
@@ -410,6 +410,7 @@ function Upload() {
         <h1>Loading...</h1>
       ) : (
         <div>
+          <button onClick={createBlog}>Add to DB</button>
           {updatedBlog.map((item, index) => (
             <div key={index} className="flex flex-col gap-5 pb-5">
               <h1 className="text-2xl font-bold">{item?.title}</h1>
@@ -419,7 +420,6 @@ function Upload() {
               )}
             </div>
           ))}
-          <button onClick={createBlog}>Add to DB</button>
         </div>
       )}
     </div>

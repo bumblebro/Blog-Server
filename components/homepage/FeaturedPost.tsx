@@ -8,7 +8,7 @@ function FeaturedPost() {
           alt=""
         />
       </div>
-      <div className="bg-black text-white  text-center  w-[360px] py-6 absolute top-[80%] px-6">
+      <div className="bg-black text-white  text-center  w-[85vw] py-6 absolute top-[80%] px-6">
         <h1 className="pb-3 text-blue-600 font-semibold">Gaming</h1>
         <h2 className="text-xl font-semibold">
           7 Best Handheld Gaming Consoles
