@@ -1,12 +1,21 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface Props {
   pageNo?: string;
   totalPages: number;
   hasNextPage: boolean;
+  category: string;
+  subCategory: string;
+  subSubCategory: string;
 }
 
 function Pagination({ pageNo = "1", totalPages, hasNextPage }: Props) {
+  const pathname = usePathname();
+  console.log(pathname);
+
   const currentPage = parseInt(pageNo);
   const getPages = () => {
     let start = 1;
@@ -68,7 +77,8 @@ function Pagination({ pageNo = "1", totalPages, hasNextPage }: Props) {
         {hasNextPage && (
           <Link
             className="flex justify-end font-medium "
-            href={`/blog/page/${currentPage + 1}`}
+            // href={`/blog/page/${currentPage + 1}`}
+            href={`${pathname}/page/${currentPage + 1}`}
           >
             <div className="bg-black text-white py-3 px-4 rounded-lg flex  items-center gap-2">
               <p>Next</p>
