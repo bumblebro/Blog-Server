@@ -4,11 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-const pageSize = 10;
+const pageSize = 8;
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const pageNo = parseInt(searchParams.get("pageNo") || "1");
+    console.log("paaaaaaage", pageNo);
     const take = pageSize;
     const skip = (pageNo - 1) * take;
 

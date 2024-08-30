@@ -35,10 +35,10 @@ const News = [];
 
 function Sidebar() {
   return (
-    <div className="duration-1000 ">
-      <div className=" backdrop-blur-2xl bg-black  text-white px-4 tracking-wider">
+    <div className="duration-1000 bg-black  ">
+      <div className=" backdrop-blur-2xl  text-white px-4 tracking-wider 2xl:px-44 lg:pt-8 mx-auto xl:max-w-[73rem] ">
         <h1 className="text-2xl font-semibold py-6">Sections</h1>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
           <div>
             <Link href={"/tech"} className="font-semibold ">
               Tech

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import BlogList from "../bloglist/BlogList";
 import { Blogs } from "@prisma/client";
-import Pagination from "../pagination/Pagination";
+import Pagination from "../pagination/Paginationbloglist";
 
 function LatestPost({ searchParams }: { searchParams: { pageNo: string } }) {
   const [posts, setPosts] = useState<Blogs[]>([]);

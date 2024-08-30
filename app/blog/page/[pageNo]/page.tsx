@@ -3,7 +3,7 @@
 import BlogList from "@/components/bloglist/BlogList";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
-import Pagination from "@/components/pagination/Pagination";
+import Paginationblog from "@/components/pagination/Paginationblog";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
 import axios from "axios";
@@ -51,7 +51,7 @@ function BlogPage({ params }) {
               The Latest News
             </h1>
             <BlogList posts={posts || []} />
-            <Pagination
+            <Paginationblog
               pageNo={params.pageNo}
               totalPages={totalPages}
               hasNextPage={hasNextPage}

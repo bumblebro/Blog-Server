@@ -5,7 +5,7 @@ import Category from "@/components/category/Category";
 import Footer from "@/components/footer/Footer";
 import FeaturedPost from "@/components/homepage/FeaturedPost";
 import Navbar from "@/components/navbar/Navbar";
-import Pagination from "@/components/pagination/Pagination";
+import Paginationblog from "@/components/pagination/Paginationblog";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
 import axios from "axios";
@@ -49,20 +49,20 @@ function Home({ searchParams }: { searchParams: { pageNo: string } }) {
       ) : (
         <>
           <FeaturedPost />
-          <div className="mt-28 px-4">
+          <div className="mt-32 ">
             <h1 className="text-center  text-lg font-semibold tracking-wider">
               The Latest News
             </h1>
             <BlogList posts={posts || []} />
-            <Pagination
+            <Paginationblog
               pageNo={pageNo}
               totalPages={totalPages}
               hasNextPage={hasNextPage}
             />
           </div>
+          <Footer />
         </>
       )}
-      <Footer />
     </>
   );
 }

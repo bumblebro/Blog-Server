@@ -2,11 +2,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Blogs } from "@prisma/client";
-import Pagination from "@/components/pagination/Pagination";
 import BlogList from "@/components/bloglist/BlogList";
 import Navbar from "@/components/navbar/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Footer from "@/components/footer/Footer";
+import Paginationblog from "@/components/pagination/Paginationblog";
 
 function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
   const [sidebar, SetSideBar] = useState(false);
@@ -49,7 +49,7 @@ function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
               The Latest News
             </h1>
             <BlogList posts={posts || []} />
-            <Pagination
+            <Paginationblog
               pageNo={pageNo}
               totalPages={totalPages}
               hasNextPage={hasNextPage}

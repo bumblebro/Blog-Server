@@ -4,19 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface Props {
-  pageNo?: string;
+  pageNo?: number;
   totalPages: number;
   hasNextPage: boolean;
   category: string;
   subCategory: string;
   subSubCategory: string;
+  slug: string[];
 }
 
-function Pagination({ pageNo = "1", totalPages, hasNextPage }: Props) {
-  const pathname = usePathname();
-  console.log(pathname);
-
-  const currentPage = parseInt(pageNo);
+function Paginationbloglist({
+  pageNo = 1,
+  totalPages,
+  hasNextPage,
+  slug,
+}: Props) {
+  let pathname = usePathname();
+  const currentPage = pageNo;
   const getPages = () => {
     let start = 1;
     let end = start + 10;
@@ -35,18 +39,20 @@ function Pagination({ pageNo = "1", totalPages, hasNextPage }: Props) {
   };
 
   const pages = getPages();
+  const slugPath = slug.join("/");
+
   if (totalPages === 1) return null;
 
   return (
     <div>
-      <nav className="flex justify-between items-center mb-10">
+      <nav className="flex justify-between items-center mb-10 md:mt-10 px-4 mx-auto xl:max-w-[73rem]">
         <Link
           className={`flex justify-start font-medium ${
             currentPage == 1 && "invisible"
           }`}
-          href={`/blog/page/${currentPage - 1}`}
+          href={`/${slugPath}/page/${currentPage - 1}`}
         >
-          <div className="bg-black text-white py-3 px-4 rounded-lg flex  items-center gap-2 ">
+          <div className="bg-black text-white py-3 px-4 rounded-lg flex  items-center gap-2  md:px-8 tracking-widest">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -64,44 +70,43 @@ function Pagination({ pageNo = "1", totalPages, hasNextPage }: Props) {
             <p>Prev</p>
           </div>
         </Link>
-        <div className="invisible sm:visible">
+        <div className="invisible md:visible md:w-[30%] flex justify-between">
           {pages.map((page, i) => {
             return (
-              <Link key={i} href={`/blog/page/${page}`}>
+              <Link key={i} href={`/${slugPath}/page/${page}`}>
                 {page}
               </Link>
             );
           })}
         </div>
 
-        {hasNextPage && (
-          <Link
-            className="flex justify-end font-medium "
-            // href={`/blog/page/${currentPage + 1}`}
-            href={`${pathname}/page/${currentPage + 1}`}
-          >
-            <div className="bg-black text-white py-3 px-4 rounded-lg flex  items-center gap-2">
-              <p>Next</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2.5"
-                stroke="currentColor"
-                className="w-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </div>
-          </Link>
-        )}
+        <Link
+          className={`flex justify-end font-medium ${
+            !hasNextPage && "invisible"
+          }`}
+          href={`/${slugPath}/page/${currentPage + 1}`}
+        >
+          <div className="bg-black text-white py-3 px-4 rounded-lg flex  items-center gap-2 md:px-8 tracking-widest">
+            <p>Next</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="2.5"
+              stroke="currentColor"
+              className="w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
+        </Link>
       </nav>
     </div>
   );
 }
 
-export default Pagination;
+export default Paginationbloglist;
