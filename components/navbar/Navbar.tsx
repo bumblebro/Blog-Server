@@ -1,7 +1,7 @@
 function Navbar({ SetSideBar, sidebar }) {
   return (
     <div className="bg-black text-white  md:py-4  w-full px-4 fixed top-0 z-50 h-[70px] ">
-      <div className="flex justify-between items-center py-3 md:py-0 xl:max-w-[73rem] mx-auto  my-auto h-full">
+      <div className="grid grid-cols-3 py-3 md:py-0 xl:max-w-[73rem] mx-auto  my-auto h-full  ">
         {" "}
         <div className="flex items-center gap-2">
           {sidebar ? (
@@ -56,14 +56,19 @@ function Navbar({ SetSideBar, sidebar }) {
             />
           </svg>
         </div>
-        <a href="/">
-          <h1 className="uppercase font-semibold tracking-[3px] text-[5vw] md:text-[1.1rem]  lg:text-[1.4rem] xl:text-[1.7rem]">
-            ManofMany
+        <div className="flex justify-center items-center">
+          {" "}
+          <a href="/">
+            <h1 className="uppercase font-semibold tracking-[3px] text-[5vw] md:text-[1.1rem]  lg:text-[1.4rem] xl:text-[1.7rem] text-center  ">
+              ManofMany
+            </h1>
+          </a>
+        </div>
+        <div className="flex justify-end items-center">
+          <h1 className="bg-[#0c50e6] w-fit   uppercase tracking-wider text-xs font-semibold py-1 px-2 rounded-full md:text-base md:px-4 md:py-0 2xl:py-2 2xl:px-6">
+            Subscribe
           </h1>
-        </a>
-        <h1 className="bg-[#0c50e6] uppercase tracking-wider text-xs font-semibold py-1 px-2 rounded-full md:text-base md:px-4 md:py-0 2xl:py-2 2xl:px-6">
-          Subscribe
-        </h1>
+        </div>
       </div>
     </div>
   );

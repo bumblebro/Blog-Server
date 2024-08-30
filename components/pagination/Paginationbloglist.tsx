@@ -45,7 +45,7 @@ function Paginationbloglist({
 
   return (
     <div>
-      <nav className="flex justify-between items-center mb-10 md:mt-10 px-4 mx-auto xl:max-w-[73rem]">
+      <nav className="flex justify-between items-center mb-10  px-4 mx-auto xl:max-w-[73rem]">
         <Link
           className={`flex justify-start font-medium ${
             currentPage == 1 && "invisible"
