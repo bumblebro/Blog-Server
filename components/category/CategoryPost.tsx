@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { subSections } from "../../libs/Section";
 
-function Category({ decodedslug, totalBlogs }) {
+function CategoryPost({ decodedslug, totalBlogs }) {
   const [categoryList, SetCategoryList] = useState([]);
 
   useEffect(() => {
@@ -42,6 +42,7 @@ function Category({ decodedslug, totalBlogs }) {
             </Link>
           </li>
           {decodedslug.map((item, i) => {
+            if (i == decodedslug.length - 1) return;
             const url = `/${decodedslug.slice(0, i + 1).join("/")}`;
 
             return (
@@ -74,13 +75,6 @@ function Category({ decodedslug, totalBlogs }) {
         </ul>
       </nav>
 
-      <h1 className="text-2xl font-semibold border-b border-black pb-4 capitalize sm:text-[25px] md:text-[30px] ">
-        {decodedslug[decodedslug.length - 1]}
-      </h1>
-      <p className="text-sm text-gray-800  md:w-[70%] xl:w-[60%] 2xl:w-[50%]">
-        The latest news and reviews of everything Apple. From AppleTV to
-        AirPods, MacBooks to iPads, Apple Watches, accessories and more.
-      </p>
       <div className="overflow-scroll  no-scrollbar w-full">
         <ul className="flex items-center text-xs  pt-8 gap-12 justify-center md:gap-16 ">
           {categoryList.map((item, i) => (
@@ -90,11 +84,8 @@ function Category({ decodedslug, totalBlogs }) {
           ))}
         </ul>
       </div>
-      <h1 className="text-sm font-semibold tracking-wider  pt-8">
-        {totalBlogs} {decodedslug[decodedslug.length - 1]} Articles Published
-      </h1>
     </div>
   );
 }
 
-export default Category;
+export default CategoryPost;

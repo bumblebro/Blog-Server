@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Pagination } from "@nextui-org/react";
 
 interface Props {
   pageNo?: string;

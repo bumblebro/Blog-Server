@@ -1,3 +1,5 @@
+import { button } from "@nextui-org/react";
+
 function Navbar({ SetSideBar, sidebar }) {
   return (
     <div className="bg-black text-white  md:py-4  w-full px-4 fixed top-0 z-50 h-[70px] ">
@@ -5,41 +7,45 @@ function Navbar({ SetSideBar, sidebar }) {
         {" "}
         <div className="flex items-center gap-2">
           {sidebar ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-8"
-              onClick={() => {
-                SetSideBar((prev) => !prev);
-              }}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
+            <a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-8"
+                onClick={() => {
+                  SetSideBar((prev) => !prev);
+                }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </a>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-8"
-              onClick={() => {
-                SetSideBar((prev) => !prev);
-              }}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
+            <a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-8"
+                onClick={() => {
+                  SetSideBar((prev) => !prev);
+                }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
+              </svg>
+            </a>
           )}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +66,7 @@ function Navbar({ SetSideBar, sidebar }) {
           {" "}
           <a href="/">
             <h1 className="uppercase font-semibold tracking-[3px] text-[5vw] md:text-[1.1rem]  lg:text-[1.4rem] xl:text-[1.7rem] text-center  ">
-              ManofMany
+              manofmany
             </h1>
           </a>
         </div>

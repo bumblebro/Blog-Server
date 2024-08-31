@@ -15,6 +15,7 @@ datasource db {
 
 model Blogs {
   id        Int     @id  @default(autoincrement())
+   title     String  @unique
   section  String  
   subsection  String
   subsubsection String @default("null")

@@ -1,6 +1,6 @@
 function FeaturedPost() {
   return (
-    <div className=" container mx-auto   px-4 mt-[69px]">
+    <div className="  mx-auto   px-4 mt-[69px]">
       <div className="flex flex-col items-center relative md:flex-row md:justify-between  md:h-[25rem] md:pt-4 xl:h-[25rem] xl:max-w-[73rem] mx-auto">
         <div className="flex justify-center pt-4 h-64 md:h-full md:pt-0 md:w-[50%]">
           <img
