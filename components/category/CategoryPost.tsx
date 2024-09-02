@@ -26,7 +26,7 @@ function CategoryPost({ decodedslug, totalBlogs }) {
   }, [decodedslug]);
 
   return (
-    <div className=" text-center flex flex-col items-center gap-4 px-4 pb-3 mt-[90px] ">
+    <div className=" text-center flex flex-col items-center pb-3  px-4 mt-[90px]  ">
       <nav
         className="flex tracking-wider justify-start w-full xl:max-w-[73rem]"
         aria-label="Breadcrumb"
@@ -74,16 +74,6 @@ function CategoryPost({ decodedslug, totalBlogs }) {
           })}
         </ul>
       </nav>
-
-      <div className="overflow-scroll  no-scrollbar w-full">
-        <ul className="flex items-center text-xs  pt-8 gap-12 justify-center md:gap-16 ">
-          {categoryList.map((item, i) => (
-            <Link href={`${decodedslug[decodedslug.length - 1]}/${item}`}>
-              {item}
-            </Link>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 }

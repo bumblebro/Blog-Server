@@ -4,14 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-const pageSize = 8;
-
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get("category");
     const subCategory = searchParams.get("subCategory");
     const subSubCategory = searchParams.get("subSubCategory");
+    const pageSize = parseInt(searchParams.get("pageSize") || "8");
 
     console.log(searchParams);
     const pageNo = parseInt(searchParams.get("pageNo") || "1");

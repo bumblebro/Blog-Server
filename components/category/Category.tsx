@@ -8,7 +8,7 @@ function Category({ decodedslug, totalBlogs }) {
   const [categoryList, SetCategoryList] = useState([]);
 
   useEffect(() => {
-    const input = decodedslug[decodedslug.length - 1].trim().toLowerCase();
+    const input = decodedslug[decodedslug.length - 1]?.trim().toLowerCase();
     for (const [category, subCategory] of Object.entries(subSections)) {
       if (input === category.toLowerCase()) {
         console.log(Object.keys(subCategory));
@@ -84,7 +84,10 @@ function Category({ decodedslug, totalBlogs }) {
       <div className="overflow-scroll  no-scrollbar w-full">
         <ul className="flex items-center text-xs  pt-8 gap-12 justify-center md:gap-16 ">
           {categoryList.map((item, i) => (
-            <Link href={`${decodedslug[decodedslug.length - 1]}/${item}`}>
+            <Link
+              key={i}
+              href={`${decodedslug[decodedslug.length - 1]}/${item}`}
+            >
               {item}
             </Link>
           ))}

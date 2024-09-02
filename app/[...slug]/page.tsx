@@ -20,6 +20,7 @@ function BlogCategory({ params }) {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [currentPost, setCurrentPost] = useState<Blogs | null>(null);
+  const [slugs, SetSlugs] = useState([]);
 
   let page = 1;
 
@@ -27,18 +28,23 @@ function BlogCategory({ params }) {
   const decodedslug = slug.map((item) => decodeURIComponent(item));
 
   useEffect(() => {
-    console.log("New Slug", slug);
-  }, []);
-
-  useEffect(() => {
+    SetSlugs(decodedslug);
     async function run() {
-      console.log("sluggggggg", decodedslug);
       const pageIndex = decodedslug.indexOf("page");
+      console.log("OUTPUTTTTTTTT", decodedslug);
+      console.log("OUTPUTTTTTTTT", pageIndex);
+      console.log(pageIndex < decodedslug.length - 1);
+      console.log("before");
+      console.log(decodedslug);
       if (pageIndex !== -1 && pageIndex < decodedslug.length - 1) {
+        // if (pageIndex !== -1 && decodedslug[decodedslug.length - 1] == "page") {
         setPageNumber(parseInt(decodedslug[pageIndex + 1]));
         page = parseInt(decodedslug[pageIndex + 1]);
         decodedslug.splice(pageIndex, 2);
+        SetSlugs(decodedslug);
       }
+      console.log("after");
+      console.log(decodedslug);
 
       if (decodedslug.length === 0) {
       } else if (decodedslug.length === 1) {
@@ -52,7 +58,7 @@ function BlogCategory({ params }) {
       }
     }
     run();
-  }, [slug]);
+  }, [params]);
 
   async function fetchBlogs(params) {
     const response = await axios.get("/api/blogslayer", {
@@ -97,12 +103,15 @@ function BlogCategory({ params }) {
         <>
           {currentPost ? (
             <>
-              <CategoryPost decodedslug={decodedslug} totalBlogs={totalBlogs} />
-              <BlogDisplay decodedslug={decodedslug} />
+              <CategoryPost decodedslug={slugs} totalBlogs={totalBlogs} />
+              <BlogDisplay
+                decodedslug={decodedslug}
+                currentPost={currentPost || []}
+              />
             </>
           ) : (
             <>
-              <Category decodedslug={decodedslug} totalBlogs={totalBlogs} />
+              <Category decodedslug={slugs} totalBlogs={totalBlogs} />
               <BlogList decodedslug={decodedslug} posts={posts || []} />
             </>
           )}
@@ -110,7 +119,7 @@ function BlogCategory({ params }) {
             pageNo={pageNumber}
             totalPages={totalPages}
             hasNextPage={hasNextPage}
-            slug={decodedslug}
+            slug={slugs}
           />
         </>
       )}

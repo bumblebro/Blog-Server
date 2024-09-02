@@ -14,6 +14,19 @@ function BlogList({ posts, decodedslug }) {
                 item.subsubsection !== "null" ? item.subsubsection + "/" : ""
               }${item.blogDetails[0].title}`}
             >
+              {/* <img
+                className="h-[75vw] object-cover w-full pb-4 lg:h-[12rem] xl:h-[14rem] md:h-[17rem]"
+                src={
+                  item.blogDetails[0].url
+                    ? item.blogDetails[1].url
+                      ? item.blogDetails[2].url
+                        ? item.blogDetails[3].url
+                        : item.blogDetails[2].url
+                      : item.blogDetails[1].url
+                    : item.blogDetails[0].url
+                }
+                alt=""
+              /> */}
               <img
                 className="h-[75vw] object-cover w-full pb-4 lg:h-[12rem] xl:h-[14rem] md:h-[17rem]"
                 src={item.blogDetails[0].url}

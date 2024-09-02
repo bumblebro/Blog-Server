@@ -40,6 +40,7 @@ function Paginationbloglist({
 
   const pages = getPages();
   const slugPath = slug.join("/");
+  console.log("paaaath", slugPath, slug);
 
   if (totalPages === 1) return null;
 
