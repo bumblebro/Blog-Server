@@ -46,7 +46,7 @@ function BlogPage({ params }) {
         <Sidebar />
       ) : (
         <>
-          <div className="mt-28 px-4">
+          <div className="mt-32 md:mt-10 lg:mt-8">
             <h1 className="text-center  text-lg font-semibold tracking-wider">
               The Latest News
             </h1>
