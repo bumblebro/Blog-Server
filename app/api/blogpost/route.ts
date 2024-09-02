@@ -7,7 +7,6 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const title = searchParams.get("title");
-
     const blogs = await prisma.blogs.findUnique({
       where: { title: title },
     });

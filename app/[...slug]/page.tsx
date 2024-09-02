@@ -71,7 +71,6 @@ function BlogCategory({ params }) {
 
     if (response.data) {
       setPosts(response.data.blogs);
-      // setPageNo(pageNumber);
       setTotalPages(response.data.metaData.totalPages);
       setHasNextPage(response.data.metaData.hasNextPage);
       setTotalBlogs(response.data.metaData.totalBlogs);
@@ -85,7 +84,7 @@ function BlogCategory({ params }) {
           title: params,
         },
       });
-
+      console.log(`res`, response);
       if (response.data) {
         setCurrentPost(response.data);
       }

@@ -14,11 +14,16 @@ datasource db {
 }
 
 model Blogs {
-  id        Int     @id  @default(autoincrement())
-   title     String  @unique
+  id        String   @id @default(uuid())
+  author    String 
+  title     String     @unique
+  imageurl String
+  imagealt String
+  quote String  
   section  String  
   subsection  String
   subsubsection String @default("null")
-  blogDetails Json[]
+  content Json[]
+  seo Json
   creationDate DateTime @default(now())
 }

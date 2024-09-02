@@ -6,14 +6,14 @@ const prisma = new PrismaClient();
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-
+    console.log(body);
     const newBlog = await prisma.blogs.create({
       data: body,
     });
     console.log("Created blog:", newBlog);
     return Response.json(newBlog);
-  } catch (e) {
-    console.log(e);
-    return Response.json(e);
+  } catch (error) {
+    console.log(error);
+    return Response.json(error);
   }
 }
