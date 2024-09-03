@@ -44,6 +44,7 @@ async function BlogCategory({ params }: params) {
 
   let { slug } = params;
   let decodedslug = slug.map((item: string) => decodeURIComponent(item));
+  console.log(`SLOGGGGGGGGG`, decodedslug);
 
   slugs = decodedslug;
 
@@ -64,25 +65,22 @@ async function BlogCategory({ params }: params) {
         pageNo: page,
       },
     });
-    console.log("Category Blog", response.data);
-
     if (response.data) {
-      posts: response.data.blogs;
+      posts = response.data.blogs;
       totalPages = response.data.metaData.totalPages;
       hasNextPage = response.data.metaData.hasNextPage;
       totalBlogs = response.data.metaData.totalBlogs;
     }
   } else if (decodedslug.length === 2) {
+    console.log(`BINGO`, 2);
     let response = await axios.get("http://localhost:3000/api/blogslayer", {
       params: {
         subCategory: decodedslug[1],
         pageNo: page,
       },
     });
-    console.log("Category Blog", response.data);
-
     if (response.data) {
-      posts: response.data.blogs;
+      posts = response.data.blogs;
       totalPages = response.data.metaData.totalPages;
       hasNextPage = response.data.metaData.hasNextPage;
       totalBlogs = response.data.metaData.totalBlogs;
@@ -94,10 +92,8 @@ async function BlogCategory({ params }: params) {
         pageNo: page,
       },
     });
-    console.log("Category Blog", response.data);
-
     if (response.data) {
-      posts: response.data.blogs;
+      posts = response.data.blogs;
       totalPages = response.data.metaData.totalPages;
       hasNextPage = response.data.metaData.hasNextPage;
       totalBlogs = response.data.metaData.totalBlogs;
@@ -108,14 +104,14 @@ async function BlogCategory({ params }: params) {
         title: decodedslug[decodedslug.length - 1],
       },
     });
-    console.log(`res`, response);
     if (response.data) {
       currentPost = response.data;
     }
   }
 
-  console.log(`runinggggg`, currentPost);
-  console.log(`weewcwecwecPPPPPPPP`, currentPost?.subsubsection);
+  console.log(`currentPost`, currentPost);
+  console.log(`currentPost?.subsubsection`, currentPost?.subsubsection);
+  console.log(`posts`, posts);
   // ----------------------------
 
   if (currentPost?.subsubsection) {
@@ -127,7 +123,6 @@ async function BlogCategory({ params }: params) {
       },
     });
     if (response.data.blogs) {
-      console.log(`RRRRRRRRR`, response.data.blogs);
       relposts = response.data.blogs;
     }
   } else if (currentPost?.subsection) {
