@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 interface Props {
   pageNo?: number;
@@ -19,26 +16,8 @@ function Paginationbloglist({
   hasNextPage,
   slug,
 }: Props) {
-  let pathname = usePathname();
   const currentPage = pageNo;
-  // const getPages = () => {
-  //   let start = 1;
-  //   let end = start + 10;
 
-  //   if (totalPages > 10) {
-  //     if (parseInt(pageNo) % 10 == 0) {
-  //       start = parseInt(pageNo);
-  //     } else {
-  //       let start = parseInt(pageNo) - (parseInt(pageNo) % 10);
-  //     }
-  //   }
-  //   if (end > totalPages) {
-  //     end = totalPages;
-  //   }
-  //   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
-  // };
-
-  // const pages = getPages();
 
   const getPageRange = () => {
     const range = [];

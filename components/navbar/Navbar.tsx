@@ -1,4 +1,3 @@
-import { button } from "@nextui-org/react";
 
 interface Navbar {
   SetSideBar: Function;

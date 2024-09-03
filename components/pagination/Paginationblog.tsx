@@ -1,8 +1,5 @@
-"use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Pagination } from "@nextui-org/react";
 
 interface Props {
   pageNo?: string;
@@ -14,27 +11,7 @@ interface Props {
 }
 
 function Paginationblog({ pageNo = "1", totalPages, hasNextPage }: Props) {
-  let pathname = usePathname();
   const currentPage = parseInt(pageNo);
-
-  // const getPages = () => {
-  //   let start = 1;
-  //   let end = start + 10;
-
-  //   if (totalPages > 10) {
-  //     if (parseInt(pageNo) % 10 == 0) {
-  //       start = parseInt(pageNo);
-  //     } else {
-  //       let start = parseInt(pageNo) - (parseInt(pageNo) % 10);
-  //     }
-  //   }
-  //   if (end > totalPages) {
-  //     end = totalPages;
-  //   }
-  //   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
-  // };
-
-  // const pages = getPages();
 
   const getPageRange = () => {
     const range = [];

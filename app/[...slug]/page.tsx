@@ -40,6 +40,10 @@ async function BlogCategory({ params }: params) {
   } | null = null;
   let slugs: string[] = [];
 
+  const handleChange = () => {
+    sidebar = !sidebar;
+  };
+
   let page = 1;
 
   let { slug } = params;
@@ -151,7 +155,7 @@ async function BlogCategory({ params }: params) {
 
   return (
     <>
-      {/* <Navbar SetSideBar={SetSideBar} sidebar={sidebar} /> */}
+      {/* <Navbar handleChange={handleChange} sidebar={sidebar} /> */}
       {sidebar ? (
         <Sidebar />
       ) : (
