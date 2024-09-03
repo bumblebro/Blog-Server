@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { subSections } from "../../libs/Section";
@@ -10,25 +8,24 @@ interface Category {
 }
 
 function Category({ decodedslug, totalBlogs }: Category) {
-  const [categoryList, SetCategoryList] = useState<string[]>([]);
+  let categoryList: string[] = [];
 
-  useEffect(() => {
-    const input = decodedslug[decodedslug.length - 1]?.trim().toLowerCase();
-    for (const [category, subCategory] of Object.entries(subSections)) {
-      if (input === category.toLowerCase()) {
-        console.log(Object.keys(subCategory));
-        SetCategoryList(Object.keys(subCategory));
-      }
+  const input = decodedslug[decodedslug.length - 1]?.trim().toLowerCase();
 
-      // Check if the input matches a sub-category
-      for (const [subCategoryKey, items] of Object.entries(subCategory)) {
-        if (input === subCategoryKey.toLowerCase()) {
-          console.log(items);
-          SetCategoryList(items);
-        }
+  for (const [category, subCategory] of Object.entries(subSections)) {
+    if (input === category.toLowerCase()) {
+      console.log(Object.keys(subCategory));
+      categoryList = Object.keys(subCategory);
+    }
+
+    // Check if the input matches a sub-category
+    for (const [subCategoryKey, items] of Object.entries(subCategory)) {
+      if (input === subCategoryKey.toLowerCase()) {
+        console.log(items);
+        categoryList = items;
       }
     }
-  }, [decodedslug]);
+  }
 
   return (
     <div className=" text-center flex flex-col items-center gap-4 px-4 pb-3 mt-[90px] ">

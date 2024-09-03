@@ -1,9 +1,6 @@
-"use client";
-
 import { Blogs } from "@prisma/client";
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 interface JsonValue {
   [key: string]: any;
@@ -25,42 +22,10 @@ interface BlogDisp {
     seo: JsonValue;
     creationDate: Date;
   };
+  posts: Blogs[];
 }
-function BlogDisplay({ decodedslug, currentPost }: BlogDisp) {
-  const [posts, setPosts] = useState<Blogs[]>();
+function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
   const date = new Date(currentPost.creationDate);
-
-  useEffect(() => {
-    console.log(`currentPossssssst`, currentPost);
-  }, [currentPost]);
-
-  async function fetchBlogs(params: {}) {
-    const response = await axios.get("/api/blogslayer", {
-      params: {
-        ...params,
-        pageNo: "1",
-        pageSize: "10",
-      },
-    });
-    console.log("Dinda Blog", response.data.blogs);
-
-    if (response.data.blogs) {
-      setPosts(response.data.blogs);
-    }
-  }
-
-  useEffect(() => {
-    if (currentPost?.subsubsection) {
-      fetchBlogs({ subsubsection: currentPost.subsubsection });
-      return;
-    } else if (currentPost?.subsection) {
-      fetchBlogs({ subsection: currentPost.subsection });
-      return;
-    } else if (currentPost?.section) {
-      fetchBlogs({ section: currentPost.section });
-      return;
-    }
-  }, []);
 
   return (
     <div className=" xl:max-w-[73rem] mx-auto  mb-10 md:grid md:grid-cols-[56.7%_auto] lg:grid-cols-[67.5%_auto] xl:grid-cols-[74.25%_auto] xl:gap-2 2xl:grid-cols-[71.5%_auto]">

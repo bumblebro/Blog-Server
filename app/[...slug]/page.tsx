@@ -1,5 +1,3 @@
-"use client";
-
 import BlogDisplay from "@/components/BlogDisplay/BlogDisplay";
 import BlogList from "@/components/bloglist/BlogList";
 import Category from "@/components/category/Category";
@@ -18,14 +16,15 @@ interface params {
   };
 }
 
-function BlogCategory({ params }: params) {
-  const [sidebar, SetSideBar] = useState(false);
-  const [posts, setPosts] = useState<Blogs[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalBlogs, setTotalBlogs] = useState<number>(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const [currentPost, setCurrentPost] = useState<{
+async function BlogCategory({ params }: params) {
+  let sidebar = false;
+  let posts: Blogs[] = [];
+  let relposts: Blogs[] = [];
+  let totalPages = 1;
+  let totalBlogs: number = 1;
+  let hasNextPage = false;
+  let pageNumber: number = 1;
+  let currentPost: {
     id: string;
     author: string;
     title: string;
@@ -38,91 +37,126 @@ function BlogCategory({ params }: params) {
     content: [];
     seo: {};
     creationDate: Date;
-  } | null>(null);
-  const [slugs, SetSlugs] = useState<string[]>([]);
+  } | null = null;
+  let slugs: string[] = [];
 
   let page = 1;
 
-  const { slug } = params;
-  const decodedslug = slug.map((item: string) => decodeURIComponent(item));
+  let { slug } = params;
+  let decodedslug = slug.map((item: string) => decodeURIComponent(item));
 
-  useEffect(() => {
-    console.log(`SLOGGGGGGGGvfbrf`, currentPost);
-  }, [params]);
+  slugs = decodedslug;
 
-  useEffect(() => {
-    SetSlugs(decodedslug);
-    async function run() {
-      const pageIndex = decodedslug.indexOf("page");
-      console.log("OUTPUTTTTTTTT", decodedslug);
-      console.log("OUTPUTTTTTTTT", pageIndex);
-      console.log(pageIndex < decodedslug.length - 1);
-      console.log("before");
-      console.log(decodedslug);
-      if (pageIndex !== -1 && pageIndex < decodedslug.length - 1) {
-        // if (pageIndex !== -1 && decodedslug[decodedslug.length - 1] == "page") {
-        setPageNumber(parseInt(decodedslug[pageIndex + 1]));
-        page = parseInt(decodedslug[pageIndex + 1]);
-        decodedslug.splice(pageIndex, 2);
-        SetSlugs(decodedslug);
-      }
-      console.log("after");
-      console.log(decodedslug);
+  let pageIndex = decodedslug.indexOf("page");
+  if (pageIndex !== -1 && pageIndex < decodedslug.length - 1) {
+    // if (pageIndex !== -1 && decodedslug[decodedslug.length - 1] == "page") {
+    pageNumber = parseInt(decodedslug[pageIndex + 1]);
+    page = parseInt(decodedslug[pageIndex + 1]);
+    decodedslug.splice(pageIndex, 2);
+    slugs = decodedslug;
+  }
 
-      if (decodedslug.length === 0) {
-      } else if (decodedslug.length === 1) {
-        fetchBlogs({ category: decodedslug[0] });
-      } else if (decodedslug.length === 2) {
-        fetchBlogs({ subCategory: decodedslug[1] });
-      } else if (decodedslug.length === 3) {
-        fetchBlogs({ subSubCategory: decodedslug[2] });
-      } else if (decodedslug.length > 3) {
-        fetchBlogPost(decodedslug[decodedslug.length - 1]);
-      }
-    }
-    run();
-  }, [params]);
-
-  async function fetchBlogs(params: {
-    category?: string;
-    subCategory?: string;
-    subSubCategory?: string;
-  }) {
-    const response = await axios.get("/api/blogslayer", {
+  if (decodedslug.length === 0) {
+  } else if (decodedslug.length === 1) {
+    let response = await axios.get("http://localhost:3000/api/blogslayer", {
       params: {
-        ...params,
+        category: decodedslug[0],
         pageNo: page,
       },
     });
     console.log("Category Blog", response.data);
 
     if (response.data) {
-      setPosts(response.data.blogs);
-      setTotalPages(response.data.metaData.totalPages);
-      setHasNextPage(response.data.metaData.hasNextPage);
-      setTotalBlogs(response.data.metaData.totalBlogs);
+      posts: response.data.blogs;
+      totalPages = response.data.metaData.totalPages;
+      hasNextPage = response.data.metaData.hasNextPage;
+      totalBlogs = response.data.metaData.totalBlogs;
+    }
+  } else if (decodedslug.length === 2) {
+    let response = await axios.get("http://localhost:3000/api/blogslayer", {
+      params: {
+        subCategory: decodedslug[1],
+        pageNo: page,
+      },
+    });
+    console.log("Category Blog", response.data);
+
+    if (response.data) {
+      posts: response.data.blogs;
+      totalPages = response.data.metaData.totalPages;
+      hasNextPage = response.data.metaData.hasNextPage;
+      totalBlogs = response.data.metaData.totalBlogs;
+    }
+  } else if (decodedslug.length === 3) {
+    let response = await axios.get("http://localhost:3000/api/blogslayer", {
+      params: {
+        subSubCategory: decodedslug[2],
+        pageNo: page,
+      },
+    });
+    console.log("Category Blog", response.data);
+
+    if (response.data) {
+      posts: response.data.blogs;
+      totalPages = response.data.metaData.totalPages;
+      hasNextPage = response.data.metaData.hasNextPage;
+      totalBlogs = response.data.metaData.totalBlogs;
+    }
+  } else if (decodedslug.length > 3) {
+    let response = await axios.get("http://localhost:3000/api/blogpost", {
+      params: {
+        title: decodedslug[decodedslug.length - 1],
+      },
+    });
+    console.log(`res`, response);
+    if (response.data) {
+      currentPost = response.data;
     }
   }
 
-  async function fetchBlogPost(params: string) {
-    try {
-      const response = await axios.get("/api/blogpost", {
-        params: {
-          title: params,
-        },
-      });
-      console.log(`res`, response);
-      if (response.data) {
-        setCurrentPost(response.data);
-      }
-    } catch (error) {
-      console.log("Error getting perticular blog", error);
+  console.log(`runinggggg`, currentPost);
+  console.log(`weewcwecwecPPPPPPPP`, currentPost?.subsubsection);
+  // ----------------------------
+
+  if (currentPost?.subsubsection) {
+    const response = await axios.get("http://localhost:3000/api/blogslayer", {
+      params: {
+        subsubsection: currentPost.subsubsection,
+        pageNo: "1",
+        pageSize: "10",
+      },
+    });
+    if (response.data.blogs) {
+      console.log(`RRRRRRRRR`, response.data.blogs);
+      relposts = response.data.blogs;
+    }
+  } else if (currentPost?.subsection) {
+    const response = await axios.get("http://localhost:3000/api/blogslayer", {
+      params: {
+        subsection: currentPost.subsection,
+        pageNo: "1",
+        pageSize: "10",
+      },
+    });
+    if (response.data.blogs) {
+      relposts = response.data.blogs;
+    }
+  } else if (currentPost?.section) {
+    const response = await axios.get("http://localhost:3000/api/blogslayer", {
+      params: {
+        section: currentPost.section,
+        pageNo: "1",
+        pageSize: "10",
+      },
+    });
+    if (response.data.blogs) {
+      relposts = response.data.blogs;
     }
   }
 
   return (
     <>
-      <Navbar SetSideBar={SetSideBar} sidebar={sidebar} />
+      {/* <Navbar SetSideBar={SetSideBar} sidebar={sidebar} /> */}
       {sidebar ? (
         <Sidebar />
       ) : (
@@ -133,6 +167,7 @@ function BlogCategory({ params }: params) {
               <BlogDisplay
                 decodedslug={decodedslug}
                 currentPost={currentPost || []}
+                posts={relposts}
               />
             </>
           ) : (
