@@ -251,7 +251,7 @@ export async function POST(req: NextRequest) {
     // `;
 
     const promptForTitle = `
-  Generate a 50 random, unique, non-repetitive and engaging title for a blog for "${body?.subSubSection}" which comes under "${body?.subSection}" which comes under "${body?.section}". The title should be based on one of the following type:
+  Generate a 100 random, unique, non-repetitive and engaging title for a blog for "${body?.subSubSection}" which comes under "${body?.subSection}" which comes under "${body?.section}". The title should be based on one of the following type:
   - Listicles
   - Review Blogs
   - Comparison Blogs
@@ -279,7 +279,7 @@ export async function POST(req: NextRequest) {
     const response = await res.response;
     const data = response.text();
     const titlelist = JSON.parse(data);
-    const title = await titlelist[Math.floor(Math.random() * 50) + 1].title;
+    const title = await titlelist[Math.floor(Math.random() * 100) + 1].title;
 
     const prompt = `
     Generate an engaging brief (with total of around 1300 words) news article for the title "${title}". The article should be written in a clear, informative, and professional tone, with a focus on delivering current and relevant information.
@@ -309,7 +309,7 @@ export async function POST(req: NextRequest) {
     - "seo": An object containing all the SEO-related fields.
     - "content": An array of objects, where each object contains:
        - "title": The title of the section.
-       - "description": The detailed paragraph explaining the news content.
+       - "description": The detailed paragraph explaining the news content(never send markdown language).
        - "query": The image query related to the section's content (or null if not needed).
     
     Ensure that the overall article title is included as a headline at the top of the response.

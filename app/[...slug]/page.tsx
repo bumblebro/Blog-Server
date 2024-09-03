@@ -25,7 +25,7 @@ function BlogCategory({ params }) {
   let page = 1;
 
   const { slug } = params;
-  const decodedslug = slug.map((item) => decodeURIComponent(item));
+  const decodedslug = slug.map((item: string) => decodeURIComponent(item));
 
   useEffect(() => {
     SetSlugs(decodedslug);

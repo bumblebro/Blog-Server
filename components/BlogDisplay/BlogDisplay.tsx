@@ -129,7 +129,7 @@ function BlogDisplay({ decodedslug, currentPost }) {
               {item.url == "null" ? null : (
                 <div className="mb-4 flex flex-col gap-2">
                   <img
-                    className="h-[17rem] object-cover  md:h-[21rem] lg:h-[31.5rem] xl:h-[39.5rem] sm:h-[28.5rem] 2xl:h-[38rem]"
+                    className="h-[17rem] object-contain bg-[#eeeff1]  md:h-[21rem] lg:h-[31.5rem] xl:h-[39.5rem] sm:h-[28.5rem] 2xl:h-[38rem]"
                     src={item.url}
                     alt=""
                   />
@@ -138,7 +138,7 @@ function BlogDisplay({ decodedslug, currentPost }) {
                   </p>
                 </div>
               )}
-              <h1 className="leading-7 font-normal text-[#030303]">
+              <h1 className="leading-[1.7rem] font-[330] text-black ">
                 {item.description}
               </h1>
             </div>

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-const pageSize = 1;
+const pageSize = 12;
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);

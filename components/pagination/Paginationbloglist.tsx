@@ -137,7 +137,7 @@ function Paginationbloglist({
               {page === "..." ? (
                 <span className="text-gray-500">...</span>
               ) : (
-                <Link href={`/blog/page/${page}`}>{page}</Link>
+                <Link href={`/${slugPath}/page/${page}`}>{page}</Link>
               )}
             </div>
           ))}
