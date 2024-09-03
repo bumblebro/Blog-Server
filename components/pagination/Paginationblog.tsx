@@ -48,7 +48,7 @@ function Paginationblog({ pageNo = "1", totalPages, hasNextPage }: Props) {
 
     // Add dots if there is a gap between the first pages and current page
     if (currentPage > firstPagesToShow + 2) {
-      range.push('...');
+      range.push("...");
     }
 
     // Show pages around the current page
@@ -62,11 +62,15 @@ function Paginationblog({ pageNo = "1", totalPages, hasNextPage }: Props) {
 
     // Add dots if there is a gap between the current page and last pages
     if (currentPage < totalPages - lastPagesToShow - 1) {
-      range.push('...');
+      range.push("...");
     }
 
     // Show last pages
-    for (let i = Math.max(totalPages - lastPagesToShow + 1, 1); i <= totalPages; i++) {
+    for (
+      let i = Math.max(totalPages - lastPagesToShow + 1, 1);
+      i <= totalPages;
+      i++
+    ) {
       if (!range.includes(i)) {
         range.push(i);
       }
@@ -115,10 +119,15 @@ function Paginationblog({ pageNo = "1", totalPages, hasNextPage }: Props) {
             );
           })}
         </div> */}
-          <div className="invisible md:visible md:w-[30%] flex justify-between">
+        <div className="invisible md:visible md:w-[30%] flex justify-center gap-4">
           {pages.map((page, i) => (
-            <div key={i} className={`py-1 px-2 rounded-lg ${page === currentPage ? "bg-black text-white" : "text-black"}`}>
-              {page === '...' ? (
+            <div
+              key={i}
+              className={`py-2 px-4 rounded-lg ${
+                page === currentPage ? "bg-black text-white" : "text-black"
+              }`}
+            >
+              {page === "..." ? (
                 <span className="text-gray-500">...</span>
               ) : (
                 <Link href={`/blog/page/${page}`}>{page}</Link>

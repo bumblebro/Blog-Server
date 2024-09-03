@@ -126,11 +126,11 @@ function Paginationbloglist({
             );
           })}
         </div> */}
-        <div className="invisible md:visible md:w-[30%] flex justify-between">
+        <div className="invisible md:visible md:w-[30%] flex justify-center">
           {pages.map((page, i) => (
             <div
               key={i}
-              className={`py-1 px-2 rounded-lg ${
+              className={`py-2 px-4 rounded-lg ${
                 page === currentPage ? "bg-black text-white" : "text-black"
               }`}
             >
