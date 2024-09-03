@@ -30,6 +30,7 @@ function BlogList({ posts }) {
                 }
                 alt=""
               /> */}
+
               <img
                 className="h-[75vw] object-cover w-full pb-4 lg:h-[12rem] xl:h-[13rem] md:h-[17rem] sm:h-[29rem]"
                 src={item.imageurl}
