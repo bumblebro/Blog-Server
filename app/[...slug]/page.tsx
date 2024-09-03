@@ -12,7 +12,16 @@ import { Blogs } from "@prisma/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function BlogCategory({ params }) {
+interface params {
+  params: {
+    slug: string[];
+  };
+}
+
+function BlogCategory({ params }: params) {
+  useEffect(() => {
+    console.log(`SLOGGGGGGGG`, decodedslug);
+  }, []);
   const [sidebar, SetSideBar] = useState(false);
   const [posts, setPosts] = useState<Blogs[]>([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -20,7 +29,7 @@ function BlogCategory({ params }) {
   const [hasNextPage, setHasNextPage] = useState(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [currentPost, setCurrentPost] = useState<Blogs | null>(null);
-  const [slugs, SetSlugs] = useState([]);
+  const [slugs, SetSlugs] = useState<string[]>([]);
 
   let page = 1;
 
@@ -60,7 +69,11 @@ function BlogCategory({ params }) {
     run();
   }, [params]);
 
-  async function fetchBlogs(params) {
+  async function fetchBlogs(params: {
+    category?: string;
+    subCategory?: string;
+    subSubCategory?: string;
+  }) {
     const response = await axios.get("/api/blogslayer", {
       params: {
         ...params,
@@ -77,7 +90,7 @@ function BlogCategory({ params }) {
     }
   }
 
-  async function fetchBlogPost(params) {
+  async function fetchBlogPost(params: string) {
     try {
       const response = await axios.get("/api/blogpost", {
         params: {
@@ -111,7 +124,7 @@ function BlogCategory({ params }) {
           ) : (
             <>
               <Category decodedslug={slugs} totalBlogs={totalBlogs} />
-              <BlogList decodedslug={decodedslug} posts={posts || []} />
+              <BlogList posts={posts} />
             </>
           )}
           <Paginationbloglist

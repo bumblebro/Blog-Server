@@ -1,6 +1,11 @@
 import { button } from "@nextui-org/react";
 
-function Navbar({ SetSideBar, sidebar }) {
+interface Navbar {
+  SetSideBar: Function;
+  sidebar: boolean;
+}
+
+function Navbar({ SetSideBar, sidebar }: Navbar) {
   return (
     <div className="bg-black text-white  md:py-4  w-full px-4 fixed top-0 z-50 h-[70px] ">
       <div className="grid grid-cols-3 py-3 md:py-0 xl:max-w-[73rem] mx-auto  my-auto h-full  ">
@@ -16,7 +21,7 @@ function Navbar({ SetSideBar, sidebar }) {
                 stroke="currentColor"
                 className="w-8"
                 onClick={() => {
-                  SetSideBar((prev) => !prev);
+                  SetSideBar((prev: boolean) => !prev);
                 }}
               >
                 <path
@@ -36,7 +41,7 @@ function Navbar({ SetSideBar, sidebar }) {
                 stroke="currentColor"
                 className="w-8"
                 onClick={() => {
-                  SetSideBar((prev) => !prev);
+                  SetSideBar((prev: boolean) => !prev);
                 }}
               >
                 <path

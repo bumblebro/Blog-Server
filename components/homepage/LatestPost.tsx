@@ -7,7 +7,7 @@ import Pagination from "../pagination/Paginationbloglist";
 
 function LatestPost({ searchParams }: { searchParams: { pageNo: string } }) {
   const [posts, setPosts] = useState<Blogs[]>([]);
-  const [pageNo, setPageNo] = useState("1");
+  const [pageNo, setPageNo] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
 
@@ -29,7 +29,7 @@ function LatestPost({ searchParams }: { searchParams: { pageNo: string } }) {
     if (response.data) {
       console.log(response.data.blogs);
       setPosts(response.data.blogs);
-      setPageNo(pageNumber);
+      setPageNo(parseInt(pageNumber));
       setTotalPages(response.data.metaData.totalPages);
       setHasNextPage(response.data.metaData.hasNextPage);
     }

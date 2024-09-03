@@ -1,20 +1,36 @@
 "use client";
 
+import { Blogs } from "@prisma/client";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-function BlogDisplay({ decodedslug, currentPost }) {
-  const [posts, setPosts] = useState();
+interface BlogDisp {
+  decodedslug: string[];
+  currentPost: {
+    id: string;
+    author: string;
+    title: string;
+    imageurl: string;
+    imagealt: string;
+    quote: string;
+    section: string;
+    subsection: string;
+    subsubsection: string;
+    content: [{ title: string; url: string; description: string; alt: string }];
+    seo: {};
+    creationDate: Date;
+  };
+}
+function BlogDisplay({ decodedslug, currentPost }: BlogDisp) {
+  const [posts, setPosts] = useState<Blogs[]>();
   const date = new Date(currentPost.creationDate);
 
-  const options = { day: "2-digit", month: "short", year: "numeric" };
-
   useEffect(() => {
-    console.log("POST", currentPost);
-  }, []);
+    console.log(`currentPost`, posts);
+  }, [posts]);
 
-  async function fetchBlogs(params) {
+  async function fetchBlogs(params: {}) {
     const response = await axios.get("/api/blogslayer", {
       params: {
         ...params,
@@ -64,7 +80,12 @@ function BlogDisplay({ decodedslug, currentPost }) {
                 By <span className="underline ">{currentPost.author}</span>
               </h1>
               <h2 className=" font-normal text-gray-600">
-                Published: {date.toLocaleDateString("en-GB", options)}
+                Published:{" "}
+                {date.toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                })}
               </h2>
             </div>
             <div className="flex items-center gap-2 text-xs font-semibold tracking-wider mb-4 px-4 lg:w-[45%] lg:ml-auto xl:px-0 2xl:w-[40%]">
@@ -111,7 +132,7 @@ function BlogDisplay({ decodedslug, currentPost }) {
             </div>
           </div>
         </div>
-        {currentPost.content?.map((item, i) => {
+        {currentPost.content.map((item, i) => {
           return (
             <div key={i} className="flex flex-col  pb-8 px-4 xl:px-0">
               {/* <h1

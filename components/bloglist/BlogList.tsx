@@ -1,9 +1,15 @@
+import { Blogs } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-function BlogList({ posts }) {
+type JsonValue = string | number | boolean | null;
+interface posts {
+  posts: Blogs[];
+}
+
+function BlogList({ posts }: posts) {
   useEffect(() => {
-    console.log("blog", posts);
+    console.log("BLOGGGGGGGGGGGGGGG", posts);
   }, [posts]);
   return (
     <div className="  mx-auto mb-10   w-full px-4">
