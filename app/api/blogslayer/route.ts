@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { request } from "http";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     const skip = (pageNo - 1) * take;
     console.log(skip);
 
-    const whereClause = {};
+    const whereClause: Prisma.BlogsWhereInput = {};
 
     if (category) {
       whereClause.section = {
