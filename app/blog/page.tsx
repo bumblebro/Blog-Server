@@ -1,4 +1,3 @@
-"use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Blogs } from "@prisma/client";
@@ -8,38 +7,42 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import Footer from "@/components/footer/Footer";
 import Paginationblog from "@/components/pagination/Paginationblog";
 
-function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
-  const [sidebar, SetSideBar] = useState(false);
-  const [posts, setPosts] = useState<Blogs[]>([]);
-  const [pageNo, setPageNo] = useState("1");
-  const [totalPages, setTotalPages] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
+async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
+  let sidebar = false;
+  let posts: Blogs[] = [];
+  let pageNo = "1";
+  let totalPages = 1;
+  let hasNextPage = false;
 
-  useEffect(() => {
-    if (searchParams.pageNo) {
-      fetchposts(searchParams.pageNo);
-    } else {
-      fetchposts("1");
-    }
-  }, [searchParams]);
-
-  const fetchposts = async (pageNumber: string) => {
-    const response = await axios.get("/api/blogs", {
+  if (searchParams.pageNo) {
+    const response = await axios.get("http://localhost:3000/api/blogs", {
       params: {
-        pageNo: pageNumber,
+        pageNo: searchParams.pageNo,
       },
     });
     if (response.data) {
-      setPosts(response.data.blogs);
-      setPageNo(pageNumber);
-      setTotalPages(response.data.metaData.totalPages);
-      setHasNextPage(response.data.metaData.hasNextPage);
+      posts = response.data.blogs;
+      pageNo = searchParams.pageNo;
+      totalPages = response.data.metaData.totalPages;
+      hasNextPage = response.data.metaData.hasNextPage;
     }
-  };
+  } else {
+    const response = await axios.get("http://localhost:3000/api/blogs", {
+      params: {
+        pageNo: "1",
+      },
+    });
+    if (response.data) {
+      posts = response.data.blogs;
+      pageNo = "1";
+      totalPages = response.data.metaData.totalPages;
+      hasNextPage = response.data.metaData.hasNextPage;
+    }
+  }
 
   return (
     <>
-      <Navbar SetSideBar={SetSideBar} sidebar={sidebar} />
+      {/* <Navbar SetSideBar={SetSideBar} sidebar={sidebar} /> */}
       {sidebar ? (
         <Sidebar />
       ) : (
