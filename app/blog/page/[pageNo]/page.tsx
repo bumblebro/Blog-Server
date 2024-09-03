@@ -1,5 +1,3 @@
-"use client";
-
 import BlogList from "@/components/bloglist/BlogList";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
@@ -15,39 +13,42 @@ interface params {
     pageNo: Number;
   };
 }
-function BlogPage({ params }: params) {
-  const [sidebar, SetSideBar] = useState(false);
-  const [posts, setPosts] = useState<Blogs[]>([]);
+async function BlogPage({ params }: params) {
+  let sidebar = false;
+  let posts: Blogs[] = [];
   // const [pageNo, setPageNo] = useState("1");
-  const [totalPages, setTotalPages] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
+  let totalPages = 1;
+  let hasNextPage = false;
 
-  useEffect(() => {
-    if (params.pageNo) {
-      console.log(params.pageNo.toString());
-      fetchposts(params.pageNo.toString());
-    } else {
-      fetchposts("1");
-    }
-  }, [params.pageNo]);
-
-  const fetchposts = async (pageNumber: string) => {
-    const response = await axios.get("/api/blogs", {
+  if (params.pageNo) {
+    const response = await axios.get("http://localhost:3000/api/blogs", {
       params: {
-        pageNo: pageNumber,
+        pageNo: params.pageNo.toString(),
       },
     });
     if (response.data) {
-      setPosts(response.data.blogs);
+      posts = response.data.blogs;
       // setPageNo(pageNumber);
-      setTotalPages(response.data.metaData.totalPages);
-      setHasNextPage(response.data.metaData.hasNextPage);
+      totalPages = response.data.metaData.totalPages;
+      hasNextPage = response.data.metaData.hasNextPage;
     }
-  };
+  } else {
+    const response = await axios.get("http://localhost:3000/api/blogs", {
+      params: {
+        pageNo: "1",
+      },
+    });
+    if (response.data) {
+      posts = response.data.blogs;
+      // setPageNo(pageNumber);
+      totalPages = response.data.metaData.totalPages;
+      hasNextPage = response.data.metaData.hasNextPage;
+    }
+  }
 
   return (
     <>
-      <Navbar SetSideBar={SetSideBar} sidebar={sidebar} />
+      {/* <Navbar SetSideBar={SetSideBar} sidebar={sidebar} /> */}
       {sidebar ? (
         <Sidebar />
       ) : (
