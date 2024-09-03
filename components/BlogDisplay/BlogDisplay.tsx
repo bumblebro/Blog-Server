@@ -5,20 +5,24 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+interface JsonValue {
+  [key: string]: any;
+}
+
 interface BlogDisp {
   decodedslug: string[];
   currentPost: {
-    id: string;
-    author: string;
-    title: string;
+    id?: string;
+    author?: string;
+    title?: string;
     imageurl: string;
     imagealt: string;
     quote: string;
     section: string;
     subsection: string;
     subsubsection: string;
-    content: [{ title: string; url: string; description: string; alt: string }];
-    seo: {};
+    content: JsonValue[];
+    seo: JsonValue;
     creationDate: Date;
   };
 }
@@ -27,8 +31,8 @@ function BlogDisplay({ decodedslug, currentPost }: BlogDisp) {
   const date = new Date(currentPost.creationDate);
 
   useEffect(() => {
-    console.log(`currentPost`, posts);
-  }, [posts]);
+    console.log(`currentPossssssst`, currentPost);
+  }, [currentPost]);
 
   async function fetchBlogs(params: {}) {
     const response = await axios.get("/api/blogslayer", {
@@ -142,25 +146,25 @@ function BlogDisplay({ decodedslug, currentPost }: BlogDisp) {
               > */}
               <h1
                 className={`${
-                  item.title == "Introduction" && "hidden"
+                  item?.title == "Introduction" && "hidden"
                 } text-[18.72px] pb-6 font-semibold `}
               >
-                {item.title}
+                {item?.title}
               </h1>
-              {item.url == "null" ? null : (
+              {item?.url == "null" ? null : (
                 <div className="mb-4 flex flex-col gap-2">
                   <img
                     className="h-[17rem] object-cover bg-[#eeeff1]  md:h-[21rem] lg:h-[31.5rem] xl:h-[39.5rem] sm:h-[28.5rem] 2xl:h-[38rem]"
-                    src={item.url}
+                    src={item?.url}
                     alt=""
                   />
                   <p className="text-gray-500 font-light text-sm">
-                    {item.alt} | Image: Supplied
+                    {item?.alt} | Image: Supplied
                   </p>
                 </div>
               )}
               <h1 className="leading-[1.7rem] font-[330] text-black ">
-                {item.description}
+                {item?.description}
               </h1>
             </div>
           );
