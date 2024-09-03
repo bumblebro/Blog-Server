@@ -7,9 +7,15 @@ import Paginationblog from "@/components/pagination/Paginationblog";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
 import axios from "axios";
+import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 
-function BlogPage({ params }) {
+interface params {
+  params: {
+    pageNo: Number;
+  };
+}
+function BlogPage({ params }: params) {
   const [sidebar, SetSideBar] = useState(false);
   const [posts, setPosts] = useState<Blogs[]>([]);
   // const [pageNo, setPageNo] = useState("1");
@@ -18,14 +24,14 @@ function BlogPage({ params }) {
 
   useEffect(() => {
     if (params.pageNo) {
-      console.log(params.pageNo);
-      fetchposts(params.pageNo);
+      console.log(params.pageNo.toString());
+      fetchposts(params.pageNo.toString());
     } else {
       fetchposts("1");
     }
   }, [params.pageNo]);
 
-  const fetchposts = async (pageNumber) => {
+  const fetchposts = async (pageNumber: string) => {
     const response = await axios.get("/api/blogs", {
       params: {
         pageNo: pageNumber,
@@ -46,13 +52,13 @@ function BlogPage({ params }) {
         <Sidebar />
       ) : (
         <>
-          <div className="mt-32 md:mt-10 lg:mt-8">
+          <div className="mt-32 md:mt-22 lg:mt-13">
             <h1 className="text-center  text-lg font-semibold tracking-wider">
               The Latest News
             </h1>
             <BlogList posts={posts || []} />
             <Paginationblog
-              pageNo={params.pageNo}
+              pageNo={params.pageNo.toString()}
               totalPages={totalPages}
               hasNextPage={hasNextPage}
             />

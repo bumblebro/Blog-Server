@@ -8,9 +8,9 @@ interface Props {
   pageNo?: string;
   totalPages: number;
   hasNextPage: boolean;
-  category: string;
-  subCategory: string;
-  subSubCategory: string;
+  category?: string;
+  subCategory?: string;
+  subSubCategory?: string;
 }
 
 function Paginationblog({ pageNo = "1", totalPages, hasNextPage }: Props) {

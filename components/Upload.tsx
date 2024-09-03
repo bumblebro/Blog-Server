@@ -1,29 +1,39 @@
 "use client";
 
 import axios from "axios";
-import { load } from "cheerio";
 import { ChangeEvent, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { subSections } from "../libs/Section";
 
+interface blogs {
+  blog: string;
+  image: string;
+}
+
+interface updatedBlog {
+  title: string;
+  description: string;
+  url: string;
+}
+interface sections {
+  [key: string]: any; // Allows any string key to be used
+}
+
 function Upload() {
-  interface blogs {
-    blog: string;
-    image: string;
-  }
+  const sections: sections = subSections;
 
   const [section, setSection] = useState<string>("Tech");
   const [subSection, setSubSection] = useState<string>("Apple");
   const [subSubSection, setSubSubSection] = useState<string>("iPhone");
   const [loading, setLoading] = useState<boolean>(false);
   const [blog, setBlog] = useState([{ blog: "", query: "" }]);
-  const [updatedBlog, setUpdatedBlog] = useState([]);
+  const [updatedBlog, setUpdatedBlog] = useState<updatedBlog[]>([]);
   const [seo, setSeo] = useState({});
-  const [author, setAuthor] = useState("");
-  const [quote, setQuote] = useState("");
-  const [title, setTitle] = useState("");
-  const [imageurl, setImageUrl] = useState("");
-  const [imagealt, setImageAlt] = useState("");
+  const [author, setAuthor] = useState<string>("");
+  const [quote, setQuote] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [imageurl, setImageUrl] = useState<string>("");
+  const [imagealt, setImageAlt] = useState<string>("");
 
   const searchImages = async (query: string) => {
     console.log(query);
@@ -56,23 +66,25 @@ function Upload() {
     setImageUrl(link);
     setImageAlt(covertedBlog.imageQuery);
     const results = await Promise.all(
-      covertedBlog.content.map(async (item) => {
-        let link;
-        if (item.query == null) {
-          link = "null";
-        } else {
-          link = await searchImages(item.query);
-        }
+      covertedBlog.content.map(
+        async (item: { query: string; title: string; description: string }) => {
+          let link;
+          if (item.query == null) {
+            link = "null";
+          } else {
+            link = await searchImages(item.query);
+          }
 
-        // const link = "hello";
-        console.log("links", link);
-        return {
-          title: item.title,
-          description: item.description,
-          url: link,
-          alt: item.query,
-        };
-      })
+          // const link = "hello";
+          console.log("links", link);
+          return {
+            title: item.title,
+            description: item.description,
+            url: link,
+            alt: item.query,
+          };
+        }
+      )
     );
 
     setUpdatedBlog(results);
@@ -109,7 +121,7 @@ function Upload() {
             setSubSubSection(""); // Reset sub-sub-section when section changes
           }}
         >
-          {Object.keys(subSections).map((section, index) => (
+          {Object.keys(sections).map((section, index) => (
             <option key={index} value={section}>
               {section}
             </option>
@@ -126,7 +138,7 @@ function Upload() {
               setSubSubSection(""); // Reset sub-sub-section when sub-section changes
             }}
           >
-            {Object.keys(subSections[section] || {}).map((sub, index) => (
+            {Object.keys(sections[section] || {}).map((sub, index) => (
               <option key={index} value={sub}>
                 {sub}
               </option>
@@ -141,11 +153,13 @@ function Upload() {
             id="subSubSection"
             onChange={(e) => setSubSubSection(e.target.value)}
           >
-            {(subSections[section][subSection] || []).map((subSub, index) => (
-              <option key={index} value={subSub}>
-                {subSub}
-              </option>
-            ))}
+            {(sections[section][subSection] || []).map(
+              (subSub: string[], index: number) => (
+                <option key={index} value={subSub}>
+                  {subSub}
+                </option>
+              )
+            )}
           </select>
         )}
 

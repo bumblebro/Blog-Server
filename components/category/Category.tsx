@@ -4,8 +4,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { subSections } from "../../libs/Section";
 
-function Category({ decodedslug, totalBlogs }) {
-  const [categoryList, SetCategoryList] = useState([]);
+interface Category {
+  decodedslug: string[];
+  totalBlogs: number;
+}
+
+function Category({ decodedslug, totalBlogs }: Category) {
+  const [categoryList, SetCategoryList] = useState<string[]>([]);
 
   useEffect(() => {
     const input = decodedslug[decodedslug.length - 1]?.trim().toLowerCase();

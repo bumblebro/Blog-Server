@@ -7,10 +7,10 @@ interface Props {
   pageNo?: number;
   totalPages: number;
   hasNextPage: boolean;
-  category: string;
-  subCategory: string;
-  subSubCategory: string;
-  slug: string[];
+  category?: string;
+  subCategory?: string;
+  subSubCategory?: string;
+  slug?: string[];
 }
 
 function Paginationbloglist({
@@ -85,7 +85,7 @@ function Paginationbloglist({
 
   const pages = getPageRange();
 
-  const slugPath = slug.join("/");
+  const slugPath = slug?.join("/");
   console.log("paaaath", slugPath, slug);
 
   if (totalPages === 1) return null;
