@@ -67,7 +67,6 @@ function CategoryPost({ decodedslug, totalBlogs }: CategoryPost) {
                     d="m1 9 4-4-4-4"
                   />
                 </svg>
-
                 <a
                   href={url}
                   className="inline-flex capitalize items-center  font-medium text-gray-500 hover:text-blue-600 "

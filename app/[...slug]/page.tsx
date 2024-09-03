@@ -19,22 +19,36 @@ interface params {
 }
 
 function BlogCategory({ params }: params) {
-  useEffect(() => {
-    console.log(`SLOGGGGGGGG`, decodedslug);
-  }, []);
   const [sidebar, SetSideBar] = useState(false);
   const [posts, setPosts] = useState<Blogs[]>([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalBlogs, setTotalBlogs] = useState();
+  const [totalBlogs, setTotalBlogs] = useState<number>(1);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [currentPost, setCurrentPost] = useState<Blogs | null>(null);
+  const [currentPost, setCurrentPost] = useState<{
+    id: string;
+    author: string;
+    title: string;
+    imageurl: string;
+    imagealt: string;
+    quote: string;
+    section: string;
+    subsection: string;
+    subsubsection: string;
+    content: [];
+    seo: {};
+    creationDate: Date;
+  } | null>(null);
   const [slugs, SetSlugs] = useState<string[]>([]);
 
   let page = 1;
 
   const { slug } = params;
   const decodedslug = slug.map((item: string) => decodeURIComponent(item));
+
+  useEffect(() => {
+    console.log(`SLOGGGGGGGGvfbrf`, currentPost);
+  }, [params]);
 
   useEffect(() => {
     SetSlugs(decodedslug);
