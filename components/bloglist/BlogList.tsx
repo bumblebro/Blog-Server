@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-function BlogList({ posts, decodedslug }) {
+function BlogList({ posts }) {
+  useEffect(() => {
+    console.log("blog", posts);
+  }, [posts]);
   return (
     <div className="  mx-auto mb-10   w-full px-4">
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 lg:gap-4   xl:max-w-[73rem] mx-auto w-full">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 lg:gap-4   xl:max-w-[73rem] mx-auto w-full lg:gap-x-5 xl:gap-y-14">
         {posts.map((item, index) => (
           <div key={index} className="pt-4 ">
             <Link
@@ -12,7 +15,7 @@ function BlogList({ posts, decodedslug }) {
                 item.subsection !== "null" ? item.subsection + "/" : ""
               }${
                 item.subsubsection !== "null" ? item.subsubsection + "/" : ""
-              }${item.blogDetails[0].title}`}
+              }${item.title}`}
             >
               {/* <img
                 className="h-[75vw] object-cover w-full pb-4 lg:h-[12rem] xl:h-[14rem] md:h-[17rem]"
@@ -28,8 +31,8 @@ function BlogList({ posts, decodedslug }) {
                 alt=""
               /> */}
               <img
-                className="h-[75vw] object-cover w-full pb-4 lg:h-[12rem] xl:h-[14rem] md:h-[17rem]"
-                src={item.blogDetails[0].url}
+                className="h-[75vw] object-cover w-full pb-4 lg:h-[12rem] xl:h-[13rem] md:h-[17rem] sm:h-[29rem]"
+                src={item.imageurl}
                 alt=""
               />
             </Link>
@@ -40,7 +43,7 @@ function BlogList({ posts, decodedslug }) {
                 item.subsubsection !== "null" ? item.subsubsection + "/" : ""
               }`}
             >
-              <h1 className="text-md text-blue-600 font-semibold pb-2">
+              <h1 className="text-sm text-blue-600 font-semibold pb-2 tracking-wider">
                 {item.subsection}
               </h1>
             </Link>
@@ -50,9 +53,9 @@ function BlogList({ posts, decodedslug }) {
                 item.subsection !== "null" ? item.subsection + "/" : ""
               }${
                 item.subsubsection !== "null" ? item.subsubsection + "/" : ""
-              }${item.blogDetails[0].title}`}
+              }${item.title}`}
             >
-              <h2 className="font-semibold">{item.blogDetails[0].title}</h2>
+              <h2 className="font-semibold">{item.title}</h2>
             </Link>
           </div>
         ))}

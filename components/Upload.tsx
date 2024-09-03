@@ -15,10 +15,15 @@ function Upload() {
   const [section, setSection] = useState<string>("Tech");
   const [subSection, setSubSection] = useState<string>("Apple");
   const [subSubSection, setSubSubSection] = useState<string>("iPhone");
-  const [title, setTitle] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [blog, setBlog] = useState([{ blog: "", query: "" }]);
   const [updatedBlog, setUpdatedBlog] = useState([]);
+  const [seo, setSeo] = useState({});
+  const [author, setAuthor] = useState("");
+  const [quote, setQuote] = useState("");
+  const [title, setTitle] = useState("");
+  const [imageurl, setImageUrl] = useState("");
+  const [imagealt, setImageAlt] = useState("");
 
   const searchImages = async (query: string) => {
     console.log(query);
@@ -42,9 +47,16 @@ function Upload() {
     });
     const data = await blogs.data;
     const covertedBlog = await JSON.parse(data);
-    console.log(covertedBlog);
+    console.log(`blog`, covertedBlog);
+    const link = await searchImages(covertedBlog.imageQuery);
+    setAuthor(covertedBlog.author);
+    setQuote(covertedBlog.quote);
+    setSeo(covertedBlog.seo);
+    setTitle(covertedBlog.pageTitle);
+    setImageUrl(link);
+    setImageAlt(covertedBlog.imageQuery);
     const results = await Promise.all(
-      covertedBlog.map(async (item) => {
+      covertedBlog.content.map(async (item) => {
         let link;
         if (item.query == null) {
           link = "null";
@@ -54,35 +66,34 @@ function Upload() {
 
         // const link = "hello";
         console.log("links", link);
-        return { title: item.title, description: item.description, url: link };
+        return {
+          title: item.title,
+          description: item.description,
+          url: link,
+          alt: item.query,
+        };
       })
     );
+
     setUpdatedBlog(results);
-    console.log(covertedBlog);
-    console.log(updatedBlog);
-    console.log(typeof blog);
+
     setLoading(false);
   }
 
   async function createBlog() {
     const res = await axios.post("/api/dbupload", {
-      title: updatedBlog[0].title,
       section,
+      title,
+      imagealt,
+      imageurl,
       subsection: subSection,
       subsubsection: subSubSection,
-      blogDetails: updatedBlog,
+      content: updatedBlog,
+      author,
+      quote,
+      seo,
     });
     console.log("Upload Result", res);
-  }
-
-  async function handleimage(query: string) {
-    const image = await axios.post("/api/image", {
-      query,
-    });
-    const data = await image.data;
-    // console.log(data);
-    console.log(data.link);
-    return data.link;
   }
 
   return (
@@ -138,11 +149,7 @@ function Upload() {
           </select>
         )}
 
-        <input
-          type="text"
-          placeholder="Write the Title"
-          onChange={(e) => setTitle(e.target.value)}
-        />
+        <input type="text" placeholder="Write the Title" />
         <button className="border-2">Generate</button>
       </form>
 
