@@ -108,7 +108,7 @@ function Navbar() {
         <div className="flex justify-center items-center">
           <Link href="/">
             <h1 className="uppercase font-semibold tracking-[3px] text-[5vw] md:text-[1.1rem]  lg:text-[1.4rem] xl:text-[1.7rem] text-center  ">
-              manofmany
+            marksofmarks
             </h1>
           </Link>
         </div>
