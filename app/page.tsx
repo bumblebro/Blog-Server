@@ -18,11 +18,14 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   let hasNextPage = false;
 
   if (searchParams.pageNo) {
-    let response = await axios.get("/api/blogs", {
-      params: {
-        pageNo: searchParams.pageNo,
-      },
-    });
+    let response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`,
+      {
+        params: {
+          pageNo: searchParams.pageNo,
+        },
+      }
+    );
     console.log(response.data.blogs);
     if (response.data) {
       posts = response.data.blogs;
@@ -31,11 +34,14 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
       hasNextPage = response.data.metaData.hasNextPage;
     }
   } else {
-    let response = await axios.get("/api/blogs", {
-      params: {
-        pageNo: "1",
-      },
-    });
+    let response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`,
+      {
+        params: {
+          pageNo: "1",
+        },
+      }
+    );
     console.log(response.data.blogs);
     if (response.data) {
       posts = response.data.blogs;

@@ -63,12 +63,15 @@ async function BlogCategory({ params }: params) {
 
   if (decodedslug.length === 0) {
   } else if (decodedslug.length === 1) {
-    let response = await axios.get("/api/blogslayer", {
-      params: {
-        category: decodedslug[0],
-        pageNo: page,
-      },
-    });
+    let response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
+      {
+        params: {
+          category: decodedslug[0],
+          pageNo: page,
+        },
+      }
+    );
     if (response.data) {
       posts = response.data.blogs;
       totalPages = response.data.metaData.totalPages;
@@ -77,7 +80,7 @@ async function BlogCategory({ params }: params) {
     }
   } else if (decodedslug.length === 2) {
     console.log(`BINGO`, 2);
-    let response = await axios.get("/api/blogslayer", {
+    let response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`, {
       params: {
         subCategory: decodedslug[1],
         pageNo: page,
@@ -90,7 +93,7 @@ async function BlogCategory({ params }: params) {
       totalBlogs = response.data.metaData.totalBlogs;
     }
   } else if (decodedslug.length === 3) {
-    let response = await axios.get("/api/blogslayer", {
+    let response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`, {
       params: {
         subSubCategory: decodedslug[2],
         pageNo: page,
@@ -103,7 +106,7 @@ async function BlogCategory({ params }: params) {
       totalBlogs = response.data.metaData.totalBlogs;
     }
   } else if (decodedslug.length > 3) {
-    let response = await axios.get("/api/blogpost", {
+    let response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost`, {
       params: {
         title: decodedslug[decodedslug.length - 1],
       },
@@ -115,7 +118,7 @@ async function BlogCategory({ params }: params) {
   // ----------------------------
 
   if (currentPost?.subsubsection) {
-    const response = await axios.get("/api/blogslayer", {
+    const response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`, {
       params: {
         subsubsection: currentPost.subsubsection,
         pageNo: "1",
@@ -126,7 +129,7 @@ async function BlogCategory({ params }: params) {
       relposts = response.data.blogs;
     }
   } else if (currentPost?.subsection) {
-    const response = await axios.get("/api/blogslayer", {
+    const response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`, {
       params: {
         subsection: currentPost.subsection,
         pageNo: "1",
@@ -137,7 +140,7 @@ async function BlogCategory({ params }: params) {
       relposts = response.data.blogs;
     }
   } else if (currentPost?.section) {
-    const response = await axios.get("/api/blogslayer", {
+    const response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`, {
       params: {
         section: currentPost.section,
         pageNo: "1",
@@ -151,8 +154,6 @@ async function BlogCategory({ params }: params) {
 
   return (
     <>
-      
-
       {currentPost ? (
         <>
           <CategoryPost decodedslug={slugs} totalBlogs={totalBlogs} />
