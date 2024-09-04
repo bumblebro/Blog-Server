@@ -1,21 +1,116 @@
-function FeaturedPost() {
+import { Blogs } from "@prisma/client";
+import Image from "next/image";
+import Link from "next/link";
+
+interface posts {
+  posts: Blogs[];
+}
+function FeaturedPost({ posts }: posts) {
+  let randomNum = Math.floor(Math.random() * 10) + 1;
   return (
     <div className="  mx-auto   px-4 mt-[69px]">
-      <div className="flex flex-col items-center relative md:flex-row md:justify-between  md:h-[25rem] md:pt-4 xl:h-[25rem] xl:max-w-[73rem] mx-auto">
-        <div className="flex justify-center pt-4 h-64 md:h-full md:pt-0 md:w-[50%]">
-          <img
-            className="  object-cover md:px-0 w-full"
-            src="https://manofmany.com/_next/image?url=https%3A%2F%2Fapi.manofmany.com%2Fwp-content%2Fuploads%2F2024%2F07%2FROG-Ally-X-screen-up-close.jpg&w=1200&q=75"
+      <div className="grid grid-cols-1 relative md:grid-cols-2   md:h-[25rem]  xl:h-[25rem] xl:max-w-[73rem] mx-auto ">
+        <Link
+          className="flex justify-center pt-4 h-64 relative md:h-full"
+          href={`/${
+            posts[randomNum].section !== "null"
+              ? posts[randomNum].section + "/"
+              : ""
+          }${
+            posts[randomNum].subsection !== "null"
+              ? posts[randomNum].subsection + "/"
+              : ""
+          }${
+            posts[randomNum].subsubsection !== "null"
+              ? posts[randomNum].subsubsection + "/"
+              : ""
+          }${posts[randomNum].title}`}
+        >
+          <Image
+            fill
+            src={posts[randomNum].imageurl}
+            objectFit="cover"
             alt=""
-          />
-        </div>
-        <div className="bg-black text-white  text-center  w-[90%] py-6 absolute top-[80%] px-6 md:relative md:h-full md:top-0 md:flex md:flex-col md:justify-center md:w-[50%]">
-          <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
-            Gaming
-          </h1>
-          <h2 className="text-xl font-semibold md:text-3xl">
-            2078HP Track-Ready Rimac Nevera R is a Road-Going Missile
-          </h2>
+          />{" "}
+        </Link>{" "}
+        <div className="bg-black text-white left-[5%]  text-center  w-[90%] py-6 absolute top-[80%] px-6 md:relative md:h-full md:top-0 md:flex md:flex-col md:justify-center md:left-0 md:w-full   ">
+          {/* <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
+            {posts[randomNum].section
+              ? posts[randomNum].section
+              : posts[randomNum].subsection
+              ? posts[randomNum].subsection
+              : posts[randomNum].subsubsection}
+          </h1> */}
+          {posts[randomNum].subsubsection ? (
+            <Link
+              href={`/${
+                posts[randomNum].section !== "null"
+                  ? posts[randomNum].section + "/"
+                  : ""
+              }${
+                posts[randomNum].subsection !== "null"
+                  ? posts[randomNum].subsection + "/"
+                  : ""
+              }${
+                posts[randomNum].subsubsection !== "null"
+                  ? posts[randomNum].subsubsection + "/"
+                  : ""
+              }`}
+            >
+              {" "}
+              <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
+                {posts[randomNum].subsubsection}
+              </h1>
+            </Link>
+          ) : posts[randomNum].subsection ? (
+            <Link
+              href={`/${
+                posts[randomNum].section !== "null"
+                  ? posts[randomNum].section + "/"
+                  : ""
+              }${
+                posts[randomNum].subsection !== "null"
+                  ? posts[randomNum].subsection + "/"
+                  : ""
+              }`}
+            >
+              <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
+                {posts[randomNum].subsection}
+              </h1>
+            </Link>
+          ) : (
+            <Link
+              href={`/${
+                posts[randomNum].section !== "null"
+                  ? posts[randomNum].section + "/"
+                  : ""
+              }`}
+            >
+              {" "}
+              <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
+                {posts[randomNum].section}
+              </h1>
+            </Link>
+          )}
+          <Link
+            href={`/${
+              posts[randomNum].section !== "null"
+                ? posts[randomNum].section + "/"
+                : ""
+            }${
+              posts[randomNum].subsection !== "null"
+                ? posts[randomNum].subsection + "/"
+                : ""
+            }${
+              posts[randomNum].subsubsection !== "null"
+                ? posts[randomNum].subsubsection + "/"
+                : ""
+            }${posts[randomNum].title}`}
+          >
+            <h2 className="text-xl font-semibold md:text-3xl">
+              {posts[randomNum].title}
+            </h2>
+          </Link>
         </div>
       </div>
     </div>
