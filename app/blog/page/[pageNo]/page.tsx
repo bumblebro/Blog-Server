@@ -21,7 +21,7 @@ async function BlogPage({ params }: params) {
   let hasNextPage = false;
 
   if (params.pageNo) {
-    const response = await axios.get("http://localhost:3000/api/blogs", {
+    const response = await axios.get("/api/blogs", {
       params: {
         pageNo: params.pageNo.toString(),
       },
@@ -33,7 +33,7 @@ async function BlogPage({ params }: params) {
       hasNextPage = response.data.metaData.hasNextPage;
     }
   } else {
-    const response = await axios.get("http://localhost:3000/api/blogs", {
+    const response = await axios.get("/api/blogs", {
       params: {
         pageNo: "1",
       },

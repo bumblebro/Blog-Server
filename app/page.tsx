@@ -18,7 +18,7 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   let hasNextPage = false;
 
   if (searchParams.pageNo) {
-    let response = await axios.get("http://localhost:3000/api/blogs", {
+    let response = await axios.get("/api/blogs", {
       params: {
         pageNo: searchParams.pageNo,
       },
@@ -31,7 +31,7 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
       hasNextPage = response.data.metaData.hasNextPage;
     }
   } else {
-    let response = await axios.get("http://localhost:3000/api/blogs", {
+    let response = await axios.get("/api/blogs", {
       params: {
         pageNo: "1",
       },
