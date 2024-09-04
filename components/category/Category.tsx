@@ -63,13 +63,13 @@ function Category({ decodedslug, totalBlogs }: Category) {
                     d="m1 9 4-4-4-4"
                   />
                 </svg>
-
-                <a
+                <Link
                   href={url}
-                  className="inline-flex capitalize items-center  font-medium text-gray-500 hover:text-blue-600 "
+                  className="inline-flex capitalize items-center font-medium
+                  text-gray-500 hover:text-blue-600 "
                 >
                   {item}
-                </a>
+                </Link>
               </li>
             );
           })}

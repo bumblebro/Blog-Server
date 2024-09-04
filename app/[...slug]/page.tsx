@@ -112,10 +112,6 @@ async function BlogCategory({ params }: params) {
       currentPost = response.data;
     }
   }
-
-  console.log(`currentPost`, currentPost);
-  console.log(`currentPost?.subsubsection`, currentPost?.subsubsection);
-  console.log(`posts`, posts);
   // ----------------------------
 
   if (currentPost?.subsubsection) {
@@ -155,26 +151,21 @@ async function BlogCategory({ params }: params) {
 
   return (
     <>
-      {/* <Navbar handleChange={handleChange} sidebar={sidebar} /> */}
-      {sidebar ? (
-        <Sidebar />
+      
+
+      {currentPost ? (
+        <>
+          <CategoryPost decodedslug={slugs} totalBlogs={totalBlogs} />
+          <BlogDisplay
+            decodedslug={decodedslug}
+            currentPost={currentPost || []}
+            posts={relposts}
+          />
+        </>
       ) : (
         <>
-          {currentPost ? (
-            <>
-              <CategoryPost decodedslug={slugs} totalBlogs={totalBlogs} />
-              <BlogDisplay
-                decodedslug={decodedslug}
-                currentPost={currentPost || []}
-                posts={relposts}
-              />
-            </>
-          ) : (
-            <>
-              <Category decodedslug={slugs} totalBlogs={totalBlogs} />
-              <BlogList posts={posts} />
-            </>
-          )}
+          <Category decodedslug={slugs} totalBlogs={totalBlogs} />
+          <BlogList posts={posts} />{" "}
           <Paginationbloglist
             pageNo={pageNumber}
             totalPages={totalPages}
