@@ -5,9 +5,9 @@ import Navbar from "@/components/navbar/Navbar";
 import NextTopLoader from "nextjs-toploader";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Footer from "@/components/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,6 +27,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        <Footer />
       </body>
     </html>
   );

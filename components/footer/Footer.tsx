@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Footer() {
   return (
     <div className="bg-black ">
@@ -24,36 +26,26 @@ function Footer() {
         <div className="flex flex-col  font-normal text-sm gap-4 md:flex-row md:justify-between md:items-center">
           {" "}
           <div className="gap-4 flex flex-col md:text-start">
-            {" "}
-            <h1>About Us </h1>
-            <h1>Advertise With Us</h1>
-            <h1>Meet the Team</h1>
-            <h1>Industry Awards</h1>
-            <h1>In the Press</h1>
-            <h1>Contact Us</h1>
-            <h1>How We Test</h1>
-          </div>{" "}
+            <Link href={"/"}>Home</Link>
+            <Link href={"/about"}>About Us</Link>
+            <Link href={"/about"}>Advertise With Us</Link>
+            <Link href={"/about"}>Contact Us</Link>
+          </div>
           <div className="gap-4 flex flex-col md:text-end">
-            {" "}
-            <h1>Editorial Policy</h1>
-            <h1>Corrections Policy</h1>
-            <h1>Fact-Checking Policy</h1>
-            <h1>Privacy Policy</h1>
-            <h1>Terms and Conditions</h1>
-            <h1>Manage Subscription</h1>
+            <Link href={"/privacy-policy"}>Privacy Policy</Link>
+            <Link href={"/website-disclaimer"}>Disclaimer</Link>
+            <Link href={"/terms"}>Terms and Conditions</Link>
           </div>
         </div>
         <p className="font-light text-sm italic px-4 text-center">
-          Man of Many provides content of a general nature that is designed for
-          informational purposes only. The content is not intended to be a
-          substitute for professional medical advice, diagnosis, or treatment or
-          for professional financial advice. Click here for additional
-          information.
+          WordofMany offers general content intended solely for informational
+          purposes. The information provided is not a substitute for
+          professional medical advice, diagnosis, treatment, or financial
+          consultation. Always seek the advice of qualified professionals
+          regarding any medical or financial decisions.
         </p>
         <p className="font-light text-sm text-[#757577] xl:w-[50%] text-center mx-auto">
-          © 2024 Man of Many Pty Ltd – Sydney, Australia ABN 73 163 331 280 MAN
-          OF MANY® and its Logos are registered trademarks of Man of Many Pty
-          Ltd.
+          © 2024 Word of Many. All Rights Reserved.
         </p>
       </div>
     </div>

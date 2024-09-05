@@ -57,7 +57,9 @@ function Navbar() {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-8"
+                  className={`w-8 transform-gpu  duration-500 ${
+                    sidebar ? "rotate-180  " : "rotate-0 "
+                  }`}
                   onClick={() => {
                     setSideBar((prev: boolean) => !prev);
                   }}
@@ -77,7 +79,9 @@ function Navbar() {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="w-8"
+                  className={`w-8 transform-gpu  duration-500 ${
+                    sidebar ? "rotate-180  " : "rotate-0 "
+                  }`}
                   onClick={() => {
                     setSideBar((prev: boolean) => !prev);
                   }}
@@ -90,7 +94,7 @@ function Navbar() {
                 </svg>
               </button>
             )}
-            <svg
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -103,7 +107,7 @@ function Navbar() {
                 strokeLinejoin="round"
                 d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
               />
-            </svg>
+            </svg> */}
           </div>
           <div className="flex justify-center items-center">
             <Link href="/" onClick={handleSidebar}>
@@ -122,7 +126,7 @@ function Navbar() {
           className={`  w-full ${
             !sidebar && "hidden"
           }    text-white  tracking-wider 2xl:px-44 lg:pt-8 mx-auto  xl:max-w-[73rem] "
-          id="navbar-sticky overflow-y-auto h-screen `}
+          id="navbar-sticky overflow-y-auto h-screen animate-fadein`}
         >
           <h1 className="text-2xl font-semibold py-6">Sections</h1>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">

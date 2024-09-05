@@ -59,7 +59,6 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
           </div>
         </>
       )}
-      <Footer />
     </>
   );
 }

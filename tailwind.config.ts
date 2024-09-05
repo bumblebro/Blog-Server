@@ -17,14 +17,16 @@ const config: Config = {
         "fade-in": {
           "0%": {
             opacity: "0",
+            transform: "translateY(10px)",
           },
           "100%": {
             opacity: "1",
+            transform: "translateY(0)",
           },
         },
       },
       animation: {
-        fadein: "fade-in 1s ease-in-out 0.25s 1",
+        fadein: "fade-in 0.6s ease-in 0s 1",
       },
     },
     screens: {
