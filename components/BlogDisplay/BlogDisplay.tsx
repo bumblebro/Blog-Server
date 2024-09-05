@@ -1,6 +1,7 @@
 import { Blogs } from "@prisma/client";
 import axios from "axios";
 import Link from "next/link";
+import Markdown from "../Markdown";
 
 interface JsonValue {
   [key: string]: any;
@@ -128,9 +129,9 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                   </p>
                 </div>
               )}
-              <h1 className="leading-[1.7rem] font-[330] text-black ">
-                {item?.description}
-              </h1>
+              <div className="leading-[1.7rem] font-[330] text-black ">
+                <Markdown text={item?.description} />
+              </div>
             </div>
           );
         })}
