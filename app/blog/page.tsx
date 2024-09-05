@@ -42,7 +42,6 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
 
   return (
     <>
-      {/* <Navbar SetSideBar={SetSideBar} sidebar={sidebar} /> */}
       {sidebar ? (
         <Sidebar />
       ) : (

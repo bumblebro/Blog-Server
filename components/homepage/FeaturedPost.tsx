@@ -8,7 +8,7 @@ interface posts {
 function FeaturedPost({ posts }: posts) {
   let randomNum = Math.floor(Math.random() * 10) + 1;
   return (
-    <div className="  mx-auto   px-4 mt-[69px]">
+    <div className="  mx-auto   px-4 mt-[100px] md:mt-[80px]">
       <div className="grid grid-cols-1 relative md:grid-cols-2   md:h-[25rem]  xl:h-[25rem] xl:max-w-[73rem] mx-auto ">
         <Link
           className="flex justify-center pt-4 h-64 relative md:h-full"
@@ -30,6 +30,7 @@ function FeaturedPost({ posts }: posts) {
             fill
             src={posts[randomNum].imageurl}
             objectFit="cover"
+            quality={100}
             alt=""
           />{" "}
         </Link>{" "}
