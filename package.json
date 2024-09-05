@@ -17,6 +17,7 @@
     "@vercel/speed-insights": "^1.0.12",
     "async-g-i-s": "^1.5.4",
     "axios": "^1.7.5",
+    "clipboard-copy": "^4.0.1",
     "flowbite-react": "^0.10.1",
     "install": "^0.13.0",
     "markdown-it": "^14.1.0",
@@ -27,7 +28,8 @@
     "prisma": "^5.18.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-markdown": "^9.0.1"
+    "react-markdown": "^9.0.1",
+    "react-web-share": "^2.0.2"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
