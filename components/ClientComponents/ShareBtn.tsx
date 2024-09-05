@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { RWebShare } from "react-web-share";
 
 function ShareBtn({
@@ -21,7 +20,7 @@ function ShareBtn({
       }}
       onClick={() => console.log("shared successfully!")}
     >
-      <button className="uppercase flex justify-center items-center border-[#ee5631] border-solid border-2 rounded-md py-[0.5rem] gap-2 w-full hover:bg-[#ee5631]">
+      <button className="uppercase flex justify-center items-center border-[#ee5631] border-solid border-2 rounded-md py-[0.5rem] gap-2 w-full hover:bg-[#ee5731ca] hover:border-[#ee5731ca] focus:bg-[#ee5631] focus:border-[#ee5631]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

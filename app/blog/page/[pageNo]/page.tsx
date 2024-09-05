@@ -66,7 +66,6 @@ async function BlogPage({ params }: params) {
           </div>
         </>
       )}
-      <Footer />
     </>
   );
 }

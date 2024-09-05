@@ -58,7 +58,7 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
         <Sidebar />
       ) : (
         <>
-          <FeaturedPost posts={posts || []}/>
+          <FeaturedPost posts={posts || []} />
           <div className="mt-32 md:mt-10 lg:mt-8 ">
             <h1 className="text-center  text-lg font-semibold tracking-wider">
               The Latest News
@@ -70,7 +70,6 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
               hasNextPage={hasNextPage}
             />
           </div>
-          <Footer />
         </>
       )}
     </>

@@ -14,7 +14,7 @@ interface BlogDisp {
   currentPost: {
     id?: string;
     author?: string;
-    title?: string;
+    title: string;
     imageurl: string;
     imagealt: string;
     quote: string;
@@ -91,9 +91,9 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                 }${currentPost.title}`}
               />
               <ShareBtn
-                text={currentPost.seo.ogDescription}
+                text={currentPost?.seo?.ogDescription}
                 url={currentPost.imageurl}
-                title={currentPost.title || ""}
+                title={currentPost.title}
               />
             </div>
           </div>
@@ -132,7 +132,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
           );
         })}
       </div>
-      <div className="bg-[#eeeff1] py-8 px-4 md:bg-[#ffffff]">
+      <div className="bg-[#eeeff1] py-8 px-4 md:bg-[#ffffff] xl:pr-0">
         <h1 className="text-lg font-semibold text-center pb-4">
           Related Stories
         </h1>
@@ -155,7 +155,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                     alt=""
                   />
                 </Link>
-                <div className="flex flex-col gap-2 ">
+                <div className="flex flex-col gap-2 md:gap-2 w-full">
                   {item.subsubsection ? (
                     <Link
                       href={`/${
@@ -208,7 +208,9 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                         : ""
                     }${item.title}`}
                   >
-                    <h1 className="text-sm font-semibold">{item.title}</h1>
+                    <h1 className="text-sm font-semibold line-clamp-2 ">
+                      {item.title}
+                    </h1>
                   </Link>
                 </div>
               </div>
