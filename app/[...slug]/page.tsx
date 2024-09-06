@@ -43,37 +43,37 @@ interface JsonValue {
 //   }
 // }
 
-export async function generateStaticParams() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+// export async function generateStaticParams() {
+//   try {
+//     const response = await fetch(
+//       `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch blogs: ${response.statusText}`);
-    }
+//     if (!response.ok) {
+//       throw new Error(`Failed to fetch blogs: ${response.statusText}`);
+//     }
 
-    const { blogs } = await response.json(); // Parse the JSON response
+//     const { blogs } = await response.json(); // Parse the JSON response
 
-    return blogs?.map((item: Blogs) => ({
-      slug: [
-        item.section,
-        item.subsection,
-        item.subsubsection,
-        encodeURIComponent(item.title),
-      ],
-    }));
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-    return [];
-  }
-}
+//     return blogs?.map((item: Blogs) => ({
+//       slug: [
+//         item.section,
+//         item.subsection,
+//         item.subsubsection,
+//         encodeURIComponent(item.title),
+//       ],
+//     }));
+//   } catch (error) {
+//     console.error("Error fetching blogs:", error);
+//     return [];
+//   }
+// }
 
 export async function generateMetadata({ params }: params): Promise<Metadata> {
   // await Delay();
