@@ -21,25 +21,25 @@ interface JsonValue {
   [key: string]: any;
 }
 
-export async function generateStaticParams() {
-  let response = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`
-  );
-  console.log(`resposnseeeee`, response.data);
+// export async function generateStaticParams() {
+//   let response = await axios.get(
+//     `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`
+//   );
+//   console.log(`resposnseeeee`, response.data);
 
-  const { blogs } = await response.data;
+//   const { blogs } = await response.data;
 
-  return blogs?.map((item: Blogs) => {
-    return {
-      slug: [
-        item.section,
-        item.subsection,
-        item.subsubsection,
-        encodeURIComponent(item.title),
-      ],
-    };
-  });
-}
+//   return blogs?.map((item: Blogs) => {
+//     return {
+//       slug: [
+//         item.section,
+//         item.subsection,
+//         item.subsubsection,
+//         encodeURIComponent(item.title),
+//       ],
+//     };
+//   });
+// }
 
 export async function generateMetadata({ params }: params): Promise<Metadata> {
   let pageNumber: number = 1;
