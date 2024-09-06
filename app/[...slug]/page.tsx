@@ -8,11 +8,94 @@ import Paginationbloglist from "@/components/pagination/Paginationbloglist";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
 import axios from "axios";
+import { Metadata } from "next";
 import { useEffect, useState } from "react";
 
 interface params {
   params: {
     slug: string[];
+  };
+}
+
+interface JsonValue {
+  [key: string]: any;
+}
+
+
+export async function generateStaticParams() {
+  let response = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`
+  );
+  console.log(`resposnseeeee`, response.data);
+
+  const { blogs } = await response.data;
+
+  return blogs.map((item: Blogs) => {
+    return {
+      slug: [
+        item.section,
+        item.subsection,
+        item.subsubsection,
+        encodeURIComponent(item.title),
+      ],
+    };
+  });
+}
+
+export async function generateMetadata({ params }: params): Promise<Metadata> {
+  let pageNumber: number = 1;
+  let slugs: string[] = [];
+
+  let { slug } = params;
+  let decodedslug = slug.map((item: string) => decodeURIComponent(item));
+  let pageIndex = decodedslug.indexOf("page");
+  let page = 1;
+  let currentPost: {
+    id: string;
+    author: string;
+    title: string;
+    imageurl: string;
+    imagealt: string;
+    quote: string;
+    section: string;
+    subsection: string;
+    subsubsection: string;
+    content: JsonValue[];
+    seo: JsonValue;
+    creationDate: Date;
+  } | null = null;
+
+  if (pageIndex !== -1 && pageIndex < decodedslug.length - 1) {
+    // if (pageIndex !== -1 && decodedslug[decodedslug.length - 1] == "page") {
+    pageNumber = parseInt(decodedslug[pageIndex + 1]);
+    page = parseInt(decodedslug[pageIndex + 1]);
+    decodedslug.splice(pageIndex, 2);
+    slugs = decodedslug;
+  }
+
+  if (decodedslug.length > 3) {
+    let response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost`,
+      {
+        params: {
+          title: decodedslug[decodedslug.length - 1],
+        },
+      }
+    );
+    if (response.data) {
+      currentPost = response.data;
+    }
+  }
+  return {
+    title: currentPost?.title,
+    description: currentPost?.seo?.ogDescription,
+    openGraph: {
+      images: [
+        {
+          url: currentPost?.imageurl || "",
+        },
+      ],
+    },
   };
 }
 
@@ -40,16 +123,10 @@ async function BlogCategory({ params }: params) {
   } | null = null;
   let slugs: string[] = [];
 
-  const handleChange = () => {
-    sidebar = !sidebar;
-  };
-
   let page = 1;
 
   let { slug } = params;
   let decodedslug = slug.map((item: string) => decodeURIComponent(item));
-  console.log(`SLOGGGGGGGGG`, decodedslug);
-
   slugs = decodedslug;
 
   let pageIndex = decodedslug.indexOf("page");
@@ -79,7 +156,6 @@ async function BlogCategory({ params }: params) {
       totalBlogs = response.data.metaData.totalBlogs;
     }
   } else if (decodedslug.length === 2) {
-    console.log(`BINGO`, 2);
     let response = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
       {

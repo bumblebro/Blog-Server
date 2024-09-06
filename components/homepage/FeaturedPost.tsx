@@ -13,22 +13,22 @@ function FeaturedPost({ posts }: posts) {
         <Link
           className="flex justify-center pt-4 h-64 relative md:h-full"
           href={`/${
-            posts[randomNum].section !== "null"
-              ? posts[randomNum].section + "/"
+            posts[randomNum]?.section !== "null"
+              ? posts[randomNum]?.section + "/"
               : ""
           }${
-            posts[randomNum].subsection !== "null"
-              ? posts[randomNum].subsection + "/"
+            posts[randomNum]?.subsection !== "null"
+              ? posts[randomNum]?.subsection + "/"
               : ""
           }${
-            posts[randomNum].subsubsection !== "null"
-              ? posts[randomNum].subsubsection + "/"
+            posts[randomNum]?.subsubsection !== "null"
+              ? posts[randomNum]?.subsubsection + "/"
               : ""
-          }${posts[randomNum].title}`}
+          }${posts[randomNum]?.title}`}
         >
           <Image
             fill
-            src={posts[randomNum].imageurl}
+            src={posts[randomNum]?.imageurl}
             objectFit="cover"
             quality={100}
             alt=""
@@ -42,7 +42,7 @@ function FeaturedPost({ posts }: posts) {
               ? posts[randomNum].subsection
               : posts[randomNum].subsubsection}
           </h1> */}
-          {posts[randomNum].subsubsection ? (
+          {posts[randomNum]?.subsubsection ? (
             <Link
               href={`/${
                 posts[randomNum].section !== "null"
@@ -63,7 +63,7 @@ function FeaturedPost({ posts }: posts) {
                 {posts[randomNum].subsubsection}
               </h1>
             </Link>
-          ) : posts[randomNum].subsection ? (
+          ) : posts[randomNum]?.subsection ? (
             <Link
               href={`/${
                 posts[randomNum].section !== "null"
@@ -82,34 +82,34 @@ function FeaturedPost({ posts }: posts) {
           ) : (
             <Link
               href={`/${
-                posts[randomNum].section !== "null"
-                  ? posts[randomNum].section + "/"
+                posts[randomNum]?.section !== "null"
+                  ? posts[randomNum]?.section + "/"
                   : ""
               }`}
             >
               {" "}
               <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
-                {posts[randomNum].section}
+                {posts[randomNum]?.section}
               </h1>
             </Link>
           )}
           <Link
             href={`/${
-              posts[randomNum].section !== "null"
-                ? posts[randomNum].section + "/"
+              posts[randomNum]?.section !== "null"
+                ? posts[randomNum]?.section + "/"
                 : ""
             }${
-              posts[randomNum].subsection !== "null"
-                ? posts[randomNum].subsection + "/"
+              posts[randomNum]?.subsection !== "null"
+                ? posts[randomNum]?.subsection + "/"
                 : ""
             }${
-              posts[randomNum].subsubsection !== "null"
-                ? posts[randomNum].subsubsection + "/"
+              posts[randomNum]?.subsubsection !== "null"
+                ? posts[randomNum]?.subsubsection + "/"
                 : ""
-            }${posts[randomNum].title}`}
+            }${posts[randomNum]?.title}`}
           >
             <h2 className="text-xl font-semibold md:text-3xl">
-              {posts[randomNum].title}
+              {posts[randomNum]?.title}
             </h2>
           </Link>
         </div>

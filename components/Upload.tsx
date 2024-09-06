@@ -34,6 +34,7 @@ function Upload() {
   const [title, setTitle] = useState<string>("");
   const [imageurl, setImageUrl] = useState<string>("");
   const [imagealt, setImageAlt] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
 
   const searchImages = async (query: string) => {
     console.log(query);
@@ -65,6 +66,9 @@ function Upload() {
     setTitle(covertedBlog.pageTitle);
     setImageUrl(link);
     setImageAlt(covertedBlog.imageQuery);
+    setSlug(
+      `${section}/${subSection}/${subSubSection}/${covertedBlog.pageTitle}`
+    );
     const results = await Promise.all(
       covertedBlog.content.map(
         async (item: { query: string; title: string; description: string }) => {
@@ -104,12 +108,13 @@ function Upload() {
       author,
       quote,
       seo,
+      slug,
     });
     console.log("Upload Result", res);
   }
 
   return (
-    <div className="w-7/12 flex flex-col mx-auto mt-12 ">
+    <div className="w-7/12 flex flex-col mx-auto my-52 ">
       <form action="" className="flex flex-col" onSubmit={handleSubmit}>
         <select
           title="Section"
