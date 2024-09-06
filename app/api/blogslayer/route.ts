@@ -11,13 +11,9 @@ export async function GET(req: NextRequest) {
     const subCategory = searchParams.get("subCategory");
     const subSubCategory = searchParams.get("subSubCategory");
     const pageSize = parseInt(searchParams.get("pageSize") || "8");
-
-    console.log(searchParams);
     const pageNo = parseInt(searchParams.get("pageNo") || "1");
-    console.log("paaaaaaage", pageNo);
     const take = pageSize;
     const skip = (pageNo - 1) * take;
-    console.log(skip);
 
     const whereClause: Prisma.BlogsWhereInput = {};
 
@@ -27,7 +23,6 @@ export async function GET(req: NextRequest) {
         mode: "insensitive",
       };
 
-      console.log(whereClause);
     }
 
     if (subCategory) {
@@ -35,7 +30,6 @@ export async function GET(req: NextRequest) {
         contains: subCategory,
         mode: "insensitive",
       };
-      console.log(whereClause);
     }
 
     if (subSubCategory) {
@@ -43,7 +37,6 @@ export async function GET(req: NextRequest) {
         contains: subSubCategory,
         mode: "insensitive",
       };
-      console.log(whereClause);
     }
 
     const blogs = await prisma.blogs.findMany({
@@ -55,13 +48,6 @@ export async function GET(req: NextRequest) {
     const totalBlogs = await prisma.blogs.count({
       where: whereClause,
     });
-    console.log({
-      blogs: blogs,
-      metaData: {
-        hasNextPage: take + skip < totalBlogs,
-        totalPages: Math.ceil(totalBlogs / take),
-      },
-    });
     return NextResponse.json({
       blogs: blogs,
       metaData: {
@@ -71,7 +57,6 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { "something went wrong": error },
       { status: 500 }
