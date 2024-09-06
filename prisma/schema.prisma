@@ -17,6 +17,7 @@ model Blogs {
   id        String   @id @default(uuid())
   author    String 
   title     String     @unique
+  slug      String     @unique
   imageurl String
   imagealt String
   quote String  
