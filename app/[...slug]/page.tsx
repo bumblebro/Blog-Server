@@ -21,27 +21,6 @@ interface JsonValue {
   [key: string]: any;
 }
 
-// export async function generateStaticParams() {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`
-//     );
-//     const { blogs } = response.data; // No need to await here
-
-//     return blogs?.map((item: Blogs) => ({
-//       slug: [
-//         item.section,
-//         item.subsection,
-//         item.subsubsection,
-//         encodeURIComponent(item.title),
-//       ],
-//     }));
-//   } catch (error) {
-//     console.error("Error fetching blogs:", error);
-//     return [];
-//   }
-// }
-
 export async function generateStaticParams() {
   try {
     const response = await fetch(
