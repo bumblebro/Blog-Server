@@ -76,7 +76,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: params): Promise<Metadata> {
-  await Delay();
+  // await Delay();
   let pageNumber: number = 1;
   let slugs: string[] = [];
 
