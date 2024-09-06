@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
 import Paginationbloglist from "@/components/pagination/Paginationbloglist";
 import Sidebar from "@/components/sidebar/Sidebar";
+import Delay from "@/libs/Delay";
 import { Blogs } from "@prisma/client";
 import axios from "axios";
 import { Metadata } from "next";
@@ -21,23 +22,53 @@ interface JsonValue {
   [key: string]: any;
 }
 
+// export async function generateStaticParams() {
+//   try {
+//     const response = await axios.get(
+//       `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`
+//     );
+//     const { blogs } = response.data; // No need to await here
+
+//     return blogs?.map((item: Blogs) => ({
+//       slug: [
+//         item.section,
+//         item.subsection,
+//         item.subsubsection,
+//         encodeURIComponent(item.title),
+//       ],
+//     }));
+//   } catch (error) {
+//     console.error("Error fetching blogs:", error);
+//     return [];
+//   }
+// }
+
 export async function generateStaticParams() {
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-    const { blogs } = response.data; // No need to await here
 
-    return blogs?.map((item: Blogs) => {
-      return {
-        slug: [
-          item.section,
-          item.subsection,
-          item.subsubsection,
-          encodeURIComponent(item.title),
-        ],
-      };
-    });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch blogs: ${response.statusText}`);
+    }
+
+    const { blogs } = await response.json(); // Parse the JSON response
+
+    return blogs?.map((item: Blogs) => ({
+      slug: [
+        item.section,
+        item.subsection,
+        item.subsubsection,
+        encodeURIComponent(item.title),
+      ],
+    }));
   } catch (error) {
     console.error("Error fetching blogs:", error);
     return [];
@@ -45,6 +76,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: params): Promise<Metadata> {
+  await Delay();
   let pageNumber: number = 1;
   let slugs: string[] = [];
 

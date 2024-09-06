@@ -23,7 +23,6 @@ export async function GET(req: NextRequest) {
         mode: "insensitive",
       };
 
-      console.log(whereClause);
     }
 
     if (subCategory) {
@@ -31,7 +30,6 @@ export async function GET(req: NextRequest) {
         contains: subCategory,
         mode: "insensitive",
       };
-      console.log(whereClause);
     }
 
     if (subSubCategory) {
@@ -39,7 +37,6 @@ export async function GET(req: NextRequest) {
         contains: subSubCategory,
         mode: "insensitive",
       };
-      console.log(whereClause);
     }
 
     const blogs = await prisma.blogs.findMany({

@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const pageNo = parseInt(searchParams.get("pageNo") || "1");
-    console.log("paaaaaaage", pageNo);
     const take = pageSize;
     const skip = (pageNo - 1) * take;
 
@@ -19,13 +18,6 @@ export async function GET(req: NextRequest) {
     });
 
     const totalBlogs = await prisma.blogs.count();
-    console.log({
-      blogs: blogs,
-      metaData: {
-        hasNextPage: take + skip < totalBlogs,
-        totalPages: Math.ceil(totalBlogs / take),
-      },
-    });
     return NextResponse.json({
       blogs: blogs,
       metaData: {
@@ -34,7 +26,6 @@ export async function GET(req: NextRequest) {
       },
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { "something went wrong": error },
       { status: 500 }

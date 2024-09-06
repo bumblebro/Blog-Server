@@ -7,15 +7,10 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     const blogs = await prisma.blogs.findMany();
-
-    console.log({
-      blogs: blogs,
-    });
     return NextResponse.json({
       blogs: blogs,
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { "something went wrong": error },
       { status: 500 }
