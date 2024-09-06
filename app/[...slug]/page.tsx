@@ -10,6 +10,9 @@ import Delay from "@/libs/Delay";
 import { Blogs } from "@prisma/client";
 import { Metadata } from "next";
 import { useEffect, useState } from "react";
+import GETBLOGSLAYER from "../api/blogslayer/GETBLOGSLAYER";
+import GETBLOGPOST from "../api/blogpost/GETBLOGPOST";
+import GETBLOGALL from "../api/blogsall/GETBLOGALL";
 
 interface params {
   params: {
@@ -23,19 +26,21 @@ interface JsonValue {
 
 export async function generateStaticParams() {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // const response = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
 
-    const { blogs } = await response.json(); // Parse the JSON response
+    // const { blogs } = await response.json(); // Parse the JSON response
 
-    return blogs?.map((item: Blogs) => ({
+    const response = await GETBLOGALL();
+
+    return response?.map((item: Blogs) => ({
       slug: [
         item.section,
         item.subsection,
@@ -58,20 +63,51 @@ export async function generateMetadata({ params }: params): Promise<Metadata> {
   let decodedslug = slug.map((item: string) => decodeURIComponent(item));
   let pageIndex = decodedslug.indexOf("page");
   let page = 1;
-  let currentPost: {
-    id: string;
-    author: string;
-    title: string;
-    imageurl: string;
-    imagealt: string;
-    quote: string;
-    section: string;
-    subsection: string;
-    subsubsection: string;
-    content: JsonValue[];
-    seo: JsonValue;
-    creationDate: Date;
-  } | null = null;
+  // let currentPost: {
+  //   id: string;
+  //   author: string;
+  //   title: string;
+  //   imageurl: string;
+  //   imagealt: string;
+  //   quote: string;
+  //   section: string;
+  //   subsection: string;
+  //   subsubsection: string;
+  //   content: JsonValue[];
+  //   seo: JsonValue;
+  //   creationDate: Date;
+  // } | null = null;
+
+  let currentPost: Blogs | null = null;
+
+  // let currentPost: {
+  //   id: string;
+  //   author: string;
+  //   title: string;
+  //   imageurl: string;
+  //   imagealt: string;
+  //   quote: string;
+  //   section: string;
+  //   subsection: string;
+  //   subsubsection: string;
+  //   content: JsonValue[];
+  //   seo: JsonValue;
+  //   creationDate: Date;
+  // } = {
+  //   id: "",
+  //   author: "",
+  //   title: "",
+  //   slug: "",
+  //   imageurl: "",
+  //   imagealt: "",
+  //   quote: "",
+  //   section: "",
+  //   subsection: "",
+  //   subsubsection: "",
+  //   content: [],
+  //   seo: { ogDescription: "" },
+  //   creationDate: Date(),
+  // };
 
   if (pageIndex !== -1 && pageIndex < decodedslug.length - 1) {
     // if (pageIndex !== -1 && decodedslug[decodedslug.length - 1] == "page") {
@@ -82,24 +118,27 @@ export async function generateMetadata({ params }: params): Promise<Metadata> {
   }
 
   if (decodedslug.length > 3) {
-    let response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
-        decodedslug[decodedslug.length - 1]
-      }`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.ok) {
-      currentPost = await response.json();
+    // let response = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
+    //     decodedslug[decodedslug.length - 1]
+    //   }`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    const response = await GETBLOGPOST({
+      title: decodedslug[decodedslug.length - 1],
+    });
+    if (response) {
+      currentPost = response;
     }
   }
   return {
     title: currentPost?.title,
-    description: currentPost?.seo?.ogDescription,
+    // description: currentPost?.seo?.ogDescription,
     openGraph: {
       images: [
         {
@@ -118,20 +157,22 @@ async function BlogCategory({ params }: params) {
   let totalBlogs: number = 1;
   let hasNextPage = false;
   let pageNumber: number = 1;
-  let currentPost: {
-    id: string;
-    author: string;
-    title: string;
-    imageurl: string;
-    imagealt: string;
-    quote: string;
-    section: string;
-    subsection: string;
-    subsubsection: string;
-    content: [];
-    seo: {};
-    creationDate: Date;
-  } | null = null;
+  // let currentPost: {
+  //   id: string;
+  //   author: string;
+  //   title: string;
+  //   imageurl: string;
+  //   imagealt: string;
+  //   quote: string;
+  //   section: string;
+  //   subsection: string;
+  //   subsubsection: string;
+  //   content: JsonValue[];
+  //   seo: JsonValue;
+  //   creationDate: Date;
+  // } | null = null;
+  let currentPost: Blogs | null = null;
+
   let slugs: string[] = [];
 
   let page = 1;
@@ -151,126 +192,165 @@ async function BlogCategory({ params }: params) {
 
   if (decodedslug.length === 0) {
   } else if (decodedslug.length === 1) {
-    let res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?category=${decodedslug[0]}&pageNo=${page}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
-    if (res.ok) {
+    // let res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?category=${decodedslug[0]}&pageNo=${page}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+
+    const response = await GETBLOGSLAYER({
+      category: decodedslug[0],
+      pageNo: page,
+    });
+
+    if (response) {
       posts = response.blogs;
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
       totalBlogs = response.metaData.totalBlogs;
     }
   } else if (decodedslug.length === 2) {
-    let res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subCategory=${decodedslug[1]}&pageNo=${page}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
-    if (res.ok) {
+    // let res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subCategory=${decodedslug[1]}&pageNo=${page}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+
+    const response = await GETBLOGSLAYER({
+      subCategory: decodedslug[1],
+      pageNo: page,
+    });
+
+    if (response) {
       posts = response.blogs;
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
       totalBlogs = response.metaData.totalBlogs;
     }
   } else if (decodedslug.length === 3) {
-    let res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subSubCategory=${decodedslug[2]}&pageNo=${page}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // let res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subSubCategory=${decodedslug[2]}&pageNo=${page}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
 
-    if (res.ok) {
+    const response = await GETBLOGSLAYER({
+      subSubCategory: decodedslug[2],
+      pageNo: page,
+    });
+
+    if (response) {
       posts = response.blogs;
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
       totalBlogs = response.metaData.totalBlogs;
     }
   } else if (decodedslug.length > 3) {
-    let res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
-        decodedslug[decodedslug.length - 1]
-      }`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // let res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
+    //     decodedslug[decodedslug.length - 1]
+    //   }`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
 
-    if (res.ok) {
+    const response = await GETBLOGPOST({
+      title: decodedslug[decodedslug.length - 1],
+    });
+
+    if (response) {
       currentPost = response;
     }
   }
   // ----------------------------
 
   if (currentPost?.subsubsection) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsubsection=${
-        currentPost.subsubsection
-      }&pageNo=${"1"}&pageSize=${"20"}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsubsection=${
+    //     currentPost.subsubsection
+    //   }&pageNo=${"1"}&pageSize=${"20"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
 
-    if (res.ok) {
+    const response = await GETBLOGSLAYER({
+      subSubCategory: currentPost.subsubsection,
+      pageNo: 1,
+      pageSize: "20",
+    });
+
+    if (response) {
       relposts = response.blogs;
     }
   } else if (currentPost?.subsection) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsection=${
-        currentPost.subsection
-      }&pageNo=${"1"}&pageSize=${"20"}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsection=${
+    //     currentPost.subsection
+    //   }&pageNo=${"1"}&pageSize=${"20"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
 
-    if (res.ok) {
+    const response = await GETBLOGSLAYER({
+      subCategory: currentPost.subsection,
+      pageNo: 1,
+      pageSize: "20",
+    });
+
+    if (response) {
       relposts = response.blogs;
     }
   } else if (currentPost?.section) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?section=${
-        currentPost.section
-      }&pageNo=${"1"}&pageSize=${"20"}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?section=${
+    //     currentPost.section
+    //   }&pageNo=${"1"}&pageSize=${"20"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
 
-    if (res.ok) {
+    const response = await GETBLOGSLAYER({
+      category: currentPost.section,
+      pageNo: 1,
+      pageSize: "20",
+    });
+
+    if (response) {
       relposts = response.blogs;
     }
   }

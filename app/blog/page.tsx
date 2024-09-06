@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Footer from "@/components/footer/Footer";
 import Paginationblog from "@/components/pagination/Paginationblog";
+import GETBLOG from "../api/blogs/GETBLOG";
 
 async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
   let sidebar = false;
@@ -14,35 +15,38 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
   let hasNextPage = false;
 
   if (searchParams.pageNo) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${searchParams.pageNo}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
-    if (res.ok) {
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${searchParams.pageNo}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    const response = await GETBLOG({ pageNo: searchParams.pageNo });
+
+    // const response = await res.json();
+    if (response) {
       posts = response.blogs;
       pageNo = searchParams.pageNo;
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
     }
   } else {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${"1"}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${"1"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+    const response = await GETBLOG({ pageNo: "1" });
 
-    if (res.ok) {
+    if (response) {
       posts = response.blogs;
       pageNo = "1";
       totalPages = response.metaData.totalPages;
