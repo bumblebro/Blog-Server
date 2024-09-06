@@ -8,7 +8,6 @@ import Paginationbloglist from "@/components/pagination/Paginationbloglist";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Delay from "@/libs/Delay";
 import { Blogs } from "@prisma/client";
-import axios from "axios";
 import { Metadata } from "next";
 import { useEffect, useState } from "react";
 
@@ -43,37 +42,33 @@ interface JsonValue {
 //   }
 // }
 
-// export async function generateStaticParams() {
-//   try {
-//     const response = await fetch(
-//       `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
-//       {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
+export async function generateStaticParams() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch blogs: ${response.statusText}`);
-//     }
+    const { blogs } = await response.json(); // Parse the JSON response
 
-//     const { blogs } = await response.json(); // Parse the JSON response
-
-//     return blogs?.map((item: Blogs) => ({
-//       slug: [
-//         item.section,
-//         item.subsection,
-//         item.subsubsection,
-//         encodeURIComponent(item.title),
-//       ],
-//     }));
-//   } catch (error) {
-//     console.error("Error fetching blogs:", error);
-//     return [];
-//   }
-// }
+    return blogs?.map((item: Blogs) => ({
+      slug: [
+        item.section,
+        item.subsection,
+        item.subsubsection,
+        encodeURIComponent(item.title),
+      ],
+    }));
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    return [];
+  }
+}
 
 export async function generateMetadata({ params }: params): Promise<Metadata> {
   // await Delay();
@@ -108,16 +103,19 @@ export async function generateMetadata({ params }: params): Promise<Metadata> {
   }
 
   if (decodedslug.length > 3) {
-    let response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost`,
+    let response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
+        decodedslug[decodedslug.length - 1]
+      }`,
       {
-        params: {
-          title: decodedslug[decodedslug.length - 1],
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data) {
-      currentPost = response.data;
+    if (response.ok) {
+      currentPost = await response.json();
     }
   }
   return {
@@ -174,109 +172,127 @@ async function BlogCategory({ params }: params) {
 
   if (decodedslug.length === 0) {
   } else if (decodedslug.length === 1) {
-    let response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?category=${decodedslug[0]}&pageNo=${page}`,
       {
-        params: {
-          category: decodedslug[0],
-          pageNo: page,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data) {
-      posts = response.data.blogs;
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
-      totalBlogs = response.data.metaData.totalBlogs;
+    const response = await res.json();
+    if (res.ok) {
+      posts = response.blogs;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
+      totalBlogs = response.metaData.totalBlogs;
     }
   } else if (decodedslug.length === 2) {
-    let response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subCategory=${decodedslug[1]}&pageNo=${page}`,
       {
-        params: {
-          subCategory: decodedslug[1],
-          pageNo: page,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data) {
-      posts = response.data.blogs;
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
-      totalBlogs = response.data.metaData.totalBlogs;
+    const response = await res.json();
+    if (res.ok) {
+      posts = response.blogs;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
+      totalBlogs = response.metaData.totalBlogs;
     }
   } else if (decodedslug.length === 3) {
-    let response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subSubCategory=${decodedslug[2]}&pageNo=${page}`,
       {
-        params: {
-          subSubCategory: decodedslug[2],
-          pageNo: page,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data) {
-      posts = response.data.blogs;
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
-      totalBlogs = response.data.metaData.totalBlogs;
+    const response = await res.json();
+
+    if (res.ok) {
+      posts = response.blogs;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
+      totalBlogs = response.metaData.totalBlogs;
     }
   } else if (decodedslug.length > 3) {
-    let response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost`,
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
+        decodedslug[decodedslug.length - 1]
+      }`,
       {
-        params: {
-          title: decodedslug[decodedslug.length - 1],
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data) {
-      currentPost = response.data;
+    const response = await res.json();
+
+    if (res.ok) {
+      currentPost = response;
     }
   }
   // ----------------------------
 
   if (currentPost?.subsubsection) {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsubsection=${
+        currentPost.subsubsection
+      }&pageNo=${"1"}&pageSize=${"20"}`,
       {
-        params: {
-          subsubsection: currentPost.subsubsection,
-          pageNo: "1",
-          pageSize: "10",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data.blogs) {
-      relposts = response.data.blogs;
+    const response = await res.json();
+
+    if (res.ok) {
+      relposts = response.blogs;
     }
   } else if (currentPost?.subsection) {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsection=${
+        currentPost.subsection
+      }&pageNo=${"1"}&pageSize=${"20"}`,
       {
-        params: {
-          subsection: currentPost.subsection,
-          pageNo: "1",
-          pageSize: "10",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data.blogs) {
-      relposts = response.data.blogs;
+    const response = await res.json();
+
+    if (res.ok) {
+      relposts = response.blogs;
     }
   } else if (currentPost?.section) {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?section=${
+        currentPost.section
+      }&pageNo=${"1"}&pageSize=${"20"}`,
       {
-        params: {
-          section: currentPost.section,
-          pageNo: "1",
-          pageSize: "10",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    if (response.data.blogs) {
-      relposts = response.data.blogs;
+    const response = await res.json();
+
+    if (res.ok) {
+      relposts = response.blogs;
     }
   }
 
