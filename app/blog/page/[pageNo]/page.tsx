@@ -1,3 +1,4 @@
+import GETBLOG from "@/app/api/blogs/GETBLOG";
 import BlogList from "@/components/bloglist/BlogList";
 import Footer from "@/components/footer/Footer";
 import Navbar from "@/components/navbar/Navbar";
@@ -20,38 +21,40 @@ async function BlogPage({ params }: params) {
   let hasNextPage = false;
 
   if (params.pageNo) {
-    const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_BASE_API_URL
-      }/api/blogs?pageNo=${params.pageNo.toString()}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // const res = await fetch(
+    //   `${
+    //     process.env.NEXT_PUBLIC_BASE_API_URL
+    //   }/api/blogs?pageNo=${params.pageNo.toString()}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+    const response = await GETBLOG({ pageNo: params.pageNo.toString() });
 
-    if (res.ok) {
+    if (response) {
       posts = response.blogs;
       // setPageNo(pageNumber);
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
     }
   } else {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${"1"}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const response = await res.json();
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${"1"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+    const response = await GETBLOG({ pageNo: "1" });
 
-    if (res.ok) {
+    if (response) {
       posts = response.blogs;
       // setPageNo(pageNumber);
       totalPages = response.metaData.totalPages;

@@ -8,23 +8,36 @@ import ShareBtn from "../ClientComponents/ShareBtn";
 interface JsonValue {
   [key: string]: any;
 }
+type SEOType = {
+  ogDescription: string;
+  ogTitle: string;
+  ogImage: string;
+};
+
+type ContentItem = {
+  title: string;
+  url: string;
+  alt: string;
+  description: string;
+};
 
 interface BlogDisp {
   decodedslug: string[];
-  currentPost: {
-    id?: string;
-    author?: string;
-    title: string;
-    imageurl: string;
-    imagealt: string;
-    quote: string;
-    section: string;
-    subsection: string;
-    subsubsection: string;
-    content: JsonValue[];
-    seo: JsonValue;
-    creationDate: Date;
-  };
+  // currentPost: {
+  //   id: string;
+  //   author: string;
+  //   title: string;
+  //   imageurl: string;
+  //   imagealt: string;
+  //   quote: string;
+  //   section: string;
+  //   subsection: string;
+  //   subsubsection: string;
+  //   content: JsonValue[];
+  //   seo: JsonValue;
+  //   creationDate: Date;
+  // };
+  currentPost: Blogs;
   posts: Blogs[];
 }
 function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
@@ -91,7 +104,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                 }${currentPost.title}`}
               />
               <ShareBtn
-                text={currentPost?.seo?.ogDescription}
+                text={(currentPost?.seo as SEOType).ogDescription}
                 url={currentPost.imageurl}
                 title={currentPost.title}
               />
@@ -99,6 +112,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
           </div>
         </div>
         {currentPost.content?.map((item, i) => {
+          const contentItem = item as ContentItem;
           return (
             <div key={i} className="flex flex-col  pb-8 px-4 xl:px-0">
               {/* <h1
@@ -108,25 +122,25 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
               > */}
               <h1
                 className={`${
-                  item?.title == "Introduction" && "hidden"
+                  contentItem.title == "Introduction" && "hidden"
                 } text-[18.72px] pb-6 font-semibold `}
               >
-                {item?.title}
+                {contentItem.title}
               </h1>
-              {item?.url == "null" ? null : (
+              {contentItem.url == "null" ? null : (
                 <div className="mb-4 flex flex-col gap-2">
                   <img
                     className="h-[17rem] object-cover bg-[#eeeff1]  md:h-[21rem] lg:h-[31.5rem] xl:h-[39.5rem] sm:h-[28.5rem] 2xl:h-[38rem]"
-                    src={item?.url}
+                    src={contentItem.url}
                     alt=""
                   />
                   <p className="text-gray-500 font-light text-sm">
-                    {item?.alt} | Image: Supplied
+                    {contentItem.alt} | Image: Supplied
                   </p>
                 </div>
               )}
               <div className="leading-[1.7rem] font-[330] text-black ">
-                <Markdown text={item?.description} />
+                <Markdown text={contentItem.description} />
               </div>
             </div>
           );
