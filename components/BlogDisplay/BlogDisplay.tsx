@@ -98,7 +98,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
             </div>
           </div>
         </div>
-        {currentPost.content.map((item, i) => {
+        {currentPost.content?.map((item, i) => {
           return (
             <div key={i} className="flex flex-col  pb-8 px-4 xl:px-0">
               {/* <h1

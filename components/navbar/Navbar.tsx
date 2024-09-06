@@ -111,8 +111,8 @@ function Navbar() {
           </div>
           <div className="flex justify-center items-center">
             <Link href="/" onClick={handleSidebar}>
-              <h1 className="uppercase font-semibold tracking-[3px] text-xl md:text-[1.1rem]  lg:text-[1.4rem] xl:text-[1.7rem] text-center  ">
-                wordofmany
+              <h1 className="uppercase font-[650] tracking-[4px] text-xl md:text-[1.1rem]  lg:text-[1.4rem] xl:text-[1.7rem] text-center  ">
+                WordofMany
               </h1>
             </Link>
           </div>
