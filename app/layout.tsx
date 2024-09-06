@@ -22,7 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NextTopLoader showSpinner={false} color="#0050f0" />
+        <NextTopLoader showSpinner={false} color="#0050f0" crawlSpeed={50}
+ />
         <Navbar />
         {children}
         <Analytics />
