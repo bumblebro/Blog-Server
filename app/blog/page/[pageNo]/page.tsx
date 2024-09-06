@@ -4,7 +4,6 @@ import Navbar from "@/components/navbar/Navbar";
 import Paginationblog from "@/components/pagination/Paginationblog";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
-import axios from "axios";
 import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 
@@ -21,28 +20,42 @@ async function BlogPage({ params }: params) {
   let hasNextPage = false;
 
   if (params.pageNo) {
-    const response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`, {
-      params: {
-        pageNo: params.pageNo.toString(),
-      },
-    });
-    if (response.data) {
-      posts = response.data.blogs;
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_BASE_API_URL
+      }/api/blogs?pageNo=${params.pageNo.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const response = await res.json();
+
+    if (res.ok) {
+      posts = response.blogs;
       // setPageNo(pageNumber);
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
     }
   } else {
-    const response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`, {
-      params: {
-        pageNo: "1",
-      },
-    });
-    if (response.data) {
-      posts = response.data.blogs;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${"1"}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const response = await res.json();
+
+    if (res.ok) {
+      posts = response.blogs;
       // setPageNo(pageNumber);
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
     }
   }
 

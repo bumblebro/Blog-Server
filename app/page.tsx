@@ -6,9 +6,7 @@ import Navbar from "@/components/navbar/Navbar";
 import Paginationblog from "@/components/pagination/Paginationblog";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+
 
 async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   let sidebar = false;
@@ -18,36 +16,40 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   let hasNextPage = false;
 
   if (searchParams.pageNo) {
-    let response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`,
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${searchParams.pageNo}`,
       {
-        params: {
-          pageNo: searchParams.pageNo,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    console.log(response.data.blogs);
-    if (response.data) {
-      posts = response.data.blogs;
+    const response = await res.json();
+
+    if (res.ok) {
+      posts = response.blogs;
       pageNo = searchParams.pageNo;
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
     }
   } else {
-    let response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`,
+    let res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?${"1"}`,
       {
-        params: {
-          pageNo: "1",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
-    console.log(response.data.blogs);
-    if (response.data) {
-      posts = response.data.blogs;
+    const response = await res.json();
+
+    if (res.ok) {
+      posts = response.blogs;
       pageNo = "1";
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
     }
   }
 

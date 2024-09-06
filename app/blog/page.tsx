@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Blogs } from "@prisma/client";
 import BlogList from "@/components/bloglist/BlogList";
@@ -15,28 +14,39 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
   let hasNextPage = false;
 
   if (searchParams.pageNo) {
-    const response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`, {
-      params: {
-        pageNo: searchParams.pageNo,
-      },
-    });
-    if (response.data) {
-      posts = response.data.blogs;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${searchParams.pageNo}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const response = await res.json();
+    if (res.ok) {
+      posts = response.blogs;
       pageNo = searchParams.pageNo;
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
     }
   } else {
-    const response = await axios.get( `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs`, {
-      params: {
-        pageNo: "1",
-      },
-    });
-    if (response.data) {
-      posts = response.data.blogs;
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${"1"}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const response = await res.json();
+
+    if (res.ok) {
+      posts = response.blogs;
       pageNo = "1";
-      totalPages = response.data.metaData.totalPages;
-      hasNextPage = response.data.metaData.hasNextPage;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
     }
   }
 
