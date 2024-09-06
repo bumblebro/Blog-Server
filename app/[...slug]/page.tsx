@@ -21,7 +21,6 @@ interface JsonValue {
   [key: string]: any;
 }
 
-
 export async function generateStaticParams() {
   let response = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`
@@ -30,7 +29,7 @@ export async function generateStaticParams() {
 
   const { blogs } = await response.data;
 
-  return blogs.map((item: Blogs) => {
+  return blogs?.map((item: Blogs) => {
     return {
       slug: [
         item.section,
