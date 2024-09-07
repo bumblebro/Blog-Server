@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import GETBLOGSLAYER from "../api/blogslayer/GETBLOGSLAYER";
 import GETBLOGPOST from "../api/blogpost/GETBLOGPOST";
 import GETBLOGALL from "../api/blogsall/GETBLOGALL";
+import GenerateSlugs from "../../libs/GenerateSlugs";
+import { subSections } from "@/libs/Section";
 
 interface params {
   params: {
@@ -37,12 +39,14 @@ export async function generateStaticParams() {
     // );
 
     // const { blogs } = await response.json(); // Parse the JSON response
+    const sluglayer = await GenerateSlugs(subSections);
 
     const response = await GETBLOGALL();
 
-    return response?.map((item: Blogs) => ({
+    const titlearray = response?.map((item: Blogs) => ({
       slug: [item.section, item.subsection, item.subsubsection, item.title],
     }));
+    return [...sluglayer, ...titlearray];
   } catch (error) {
     console.error("Error fetching blogs:", error);
     return [];
@@ -296,7 +300,7 @@ async function BlogCategory({ params }: params) {
     const response = await GETBLOGSLAYER({
       subSubCategory: currentPost.subsubsection,
       pageNo: 1,
-      pageSize: "20",
+      pageSize: "12",
     });
 
     if (response) {
@@ -319,7 +323,7 @@ async function BlogCategory({ params }: params) {
     const response = await GETBLOGSLAYER({
       subCategory: currentPost.subsection,
       pageNo: 1,
-      pageSize: "20",
+      pageSize: "12",
     });
 
     if (response) {
@@ -342,7 +346,7 @@ async function BlogCategory({ params }: params) {
     const response = await GETBLOGSLAYER({
       category: currentPost.section,
       pageNo: 1,
-      pageSize: "20",
+      pageSize: "12",
     });
 
     if (response) {
