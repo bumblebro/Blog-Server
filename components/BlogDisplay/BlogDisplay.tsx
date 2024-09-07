@@ -4,6 +4,7 @@ import Link from "next/link";
 import Markdown from "../Markdown";
 import CopyBtn from "../ClientComponents/CopyBtn";
 import ShareBtn from "../ClientComponents/ShareBtn";
+import DeSlugify from "@/libs/DeSlugify";
 
 interface JsonValue {
   [key: string]: any;
@@ -67,11 +68,11 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
             }`}
           >
             <h1 className="font-semibold  mx-4 pb-2 text-sm tracking-wider text-[#004ff2] hidden md:flex xl:mx-0">
-              {decodedslug[decodedslug.length - 2]}
+              {DeSlugify(decodedslug[decodedslug.length - 2])}
             </h1>
           </Link>
           <h1 className="text-2xl mx-4 xl:mx-0  font-semibold border-b-[0.1px] pb-4 mb-6 border-gray-500  capitalize sm:text-[25px] md:text-[30px] lg:text-[32px] xl:pb-6">
-            {decodedslug[decodedslug.length - 1]}
+            {DeSlugify(decodedslug[decodedslug.length - 1])}
           </h1>{" "}
           <div className="lg:flex lg:pb-4">
             <div className="mx-4 text-xs tracking-wider flex flex-col gap-2 pb-4 xl:mx-0">
@@ -184,7 +185,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                     >
                       {" "}
                       <h1 className="text-xs text-[#1750d3] font-semibold tracking-wider">
-                        {item.subsubsection}
+                        {DeSlugify(item.subsubsection)}
                       </h1>
                     </Link>
                   ) : item.subsection ? (
@@ -196,7 +197,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                       }`}
                     >
                       <h1 className="text-xs text-[#1e50ce] font-semibold tracking-wider">
-                        {item.subsection}
+                        {DeSlugify(item.subsection)}
                       </h1>
                     </Link>
                   ) : (
@@ -207,7 +208,7 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                     >
                       {" "}
                       <h1 className="text-xs text-[#1e50ce] font-semibold tracking-wider">
-                        {item.section}
+                        {DeSlugify(item.section)}
                       </h1>
                     </Link>
                   )}{" "}
@@ -220,10 +221,10 @@ function BlogDisplay({ decodedslug, currentPost, posts }: BlogDisp) {
                       item.subsubsection !== "null"
                         ? item.subsubsection + "/"
                         : ""
-                    }${item.title}`}
+                    }${DeSlugify(item.title)}`}
                   >
                     <h1 className="text-sm font-semibold line-clamp-2 ">
-                      {item.title}
+                      {DeSlugify(item.title)}
                     </h1>
                   </Link>
                 </div>

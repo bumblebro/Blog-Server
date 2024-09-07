@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import Footer from "../footer/Footer";
+import DeSlugify from "@/libs/DeSlugify";
 
 const Tech = ["Apple", "Audio", "Cameras", "Computers", "Smartphones", "TVs"];
 const Fashion = [
-  "Men's Fashion Advice",
-  "Men's Fashion Trends",
-  "Men's Fragrances",
-  "Men's Hairstyles",
-  "Sneakers & Shoes",
+  "Men's-Fashion-Advice",
+  "Men's-Fashion-Trends",
+  "Men's-Fragrances",
+  "Men's-Hairstyles",
+  "Sneakers-&-Shoes",
   "Watches",
 ];
 const Rides = ["Boats", "Cars", "Cycling", "Flying", "Motorcycles"];
@@ -21,20 +22,20 @@ const Lifestyle = [
   "Finance",
   "Food",
   "Grooming",
-  "Sex & Dating",
+  "Sex-&-Dating",
   "Travel",
 ];
 const Entertainment = [
   "Art",
   "Books",
   "Gaming",
-  "Movies & TV",
+  "Movies-&-TV",
   "Music",
   "Sport",
 ];
 const Living = ["Appliances", "Architecture", "Furniture", "Homewares"];
 const Outdoors = ["Camping", "Snow", "Surfing", "Skate", "Hiking"];
-const News = ["World News", "Tech News", "Sports News", "Entertainment News"];
+const News = ["World-News", "Tech-News", "Sports-News", "Entertainment-News"];
 
 function Navbar() {
   const [sidebar, setSideBar] = useState(false);
@@ -146,7 +147,7 @@ function Navbar() {
                       href={`/tech/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}
@@ -168,7 +169,7 @@ function Navbar() {
                       href={`/fashion/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}
@@ -190,7 +191,7 @@ function Navbar() {
                       href={`/Rides/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}
@@ -212,7 +213,7 @@ function Navbar() {
                       href={`/Lifestyle/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}
@@ -234,7 +235,7 @@ function Navbar() {
                       href={`/Entertainment/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}
@@ -256,7 +257,7 @@ function Navbar() {
                       href={`/Living/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}
@@ -278,7 +279,7 @@ function Navbar() {
                       href={`/Outdoors/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}
@@ -300,7 +301,7 @@ function Navbar() {
                       href={`/News/${item}`}
                       key={index}
                     >
-                      {item}
+                      {DeSlugify(item)}
                     </Link>
                   </li>
                 ))}

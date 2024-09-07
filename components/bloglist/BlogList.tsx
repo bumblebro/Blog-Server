@@ -1,3 +1,4 @@
+import DeSlugify from "@/libs/DeSlugify";
 import { Blogs } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -34,7 +35,7 @@ function BlogList({ posts }: posts) {
               }`}
             >
               <h1 className="text-sm text-blue-600 font-semibold pb-2 tracking-wider">
-                {item.subsection}
+                {DeSlugify(item.subsection)}
               </h1>
             </Link>
 
@@ -45,7 +46,7 @@ function BlogList({ posts }: posts) {
                 item.subsubsection !== "null" ? item.subsubsection + "/" : ""
               }${item.title}`}
             >
-              <h2 className="font-semibold">{item.title}</h2>
+              <h2 className="font-semibold">{DeSlugify(item.title)}</h2>
             </Link>
           </div>
         ))}

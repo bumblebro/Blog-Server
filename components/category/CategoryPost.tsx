@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { subSections } from "../../libs/Section";
+import DeSlugify from "@/libs/DeSlugify";
 
 interface CategoryPost {
   decodedslug: string[];
@@ -67,7 +68,7 @@ function CategoryPost({ decodedslug, totalBlogs }: CategoryPost) {
                   href={url}
                   className="inline-flex capitalize items-center  font-medium text-gray-500 hover:text-blue-600 "
                 >
-                  {item}
+                  {DeSlugify(item)}
                 </a>
               </li>
             );

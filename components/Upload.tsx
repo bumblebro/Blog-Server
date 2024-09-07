@@ -4,6 +4,7 @@ import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { subSections } from "../libs/Section";
+import slugify from "slugify";
 
 interface blogs {
   blog: string;
@@ -63,11 +64,13 @@ function Upload() {
     setAuthor(covertedBlog.author);
     setQuote(covertedBlog.quote);
     setSeo(covertedBlog.seo);
-    setTitle(covertedBlog.pageTitle);
+    setTitle(slugify(covertedBlog.pageTitle));
     setImageUrl(link);
     setImageAlt(covertedBlog.imageQuery);
     setSlug(
-      `${section}/${subSection}/${subSubSection}/${covertedBlog.pageTitle}`
+      `${section}/${subSection}/${subSubSection}/${slugify(
+        covertedBlog.pageTitle
+      )}`
     );
     const results = await Promise.all(
       covertedBlog.content.map(
