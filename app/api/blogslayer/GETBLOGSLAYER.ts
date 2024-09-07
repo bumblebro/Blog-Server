@@ -22,7 +22,7 @@ export default async function GETBLOGSLAYER({
   // const category = searchParams.get("category");
   // const subCategory = searchParams.get("subCategory");
   // const subSubCategory = searchParams.get("subSubCategory");
-  const pagSize = parseInt(pageSize || "8");
+  const pagSize = parseInt(pageSize || "24");
 
   const pageNum = pageNo || 1;
 

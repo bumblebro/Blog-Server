@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
-const pageSize = 8;
+const pageSize = 24;
 
 export default async function GETBLOG({ pageNo }: { pageNo: string }) {
   console.log(`BOOOOOOOOOO`, pageNo);
