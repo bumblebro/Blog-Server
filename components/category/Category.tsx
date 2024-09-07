@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { subSections } from "../../libs/Section";
+import DeSlugify from "@/libs/DeSlugify";
 
 interface Category {
   decodedslug: string[];
@@ -68,7 +69,7 @@ function Category({ decodedslug, totalBlogs }: Category) {
                   className="inline-flex capitalize items-center font-medium
                   text-gray-500 hover:text-blue-600 "
                 >
-                  {item}
+                  {DeSlugify(item)}
                 </Link>
               </li>
             );
@@ -77,7 +78,7 @@ function Category({ decodedslug, totalBlogs }: Category) {
       </nav>
 
       <h1 className="text-2xl font-semibold border-b border-black pb-4 capitalize sm:text-[25px] md:text-[30px] ">
-        {decodedslug[decodedslug.length - 1]}
+        {DeSlugify(decodedslug[decodedslug.length - 1])}
       </h1>
       <p className="text-sm text-gray-800  md:w-[70%] xl:w-[60%] 2xl:w-[50%]">
         The latest news and reviews of everything Apple. From AppleTV to
@@ -90,13 +91,14 @@ function Category({ decodedslug, totalBlogs }: Category) {
               key={i}
               href={`${decodedslug[decodedslug.length - 1]}/${item}`}
             >
-              {item}
+              {DeSlugify(item)}
             </Link>
           ))}
         </ul>
       </div>
       <h1 className="text-sm font-semibold tracking-wider  pt-8">
-        {totalBlogs} {decodedslug[decodedslug.length - 1]} Articles Published
+        {totalBlogs} {DeSlugify(decodedslug[decodedslug.length - 1])} Articles
+        Published
       </h1>
     </div>
   );

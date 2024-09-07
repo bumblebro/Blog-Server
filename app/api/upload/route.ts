@@ -1,9 +1,10 @@
 import { SchemaType, GoogleGenerativeAI } from "@google/generative-ai";
 import { PrismaClient } from "@prisma/client";
+import { withAccelerate } from "@prisma/extension-accelerate";
 import { NextRequest } from "next/server";
 
 const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
-const client = new PrismaClient();
+const prisma = new PrismaClient().$extends(withAccelerate());
 
 export async function POST(req: NextRequest) {
   try {
@@ -95,9 +96,9 @@ export async function POST(req: NextRequest) {
     // - Roundup Blogs
     // - Buying Guides
     // - Opinion Blogs
-    
+
     // Please ensure the title reflects the chosen format and provides a creative and captivating approach.
-    
+
     // Use the following JSON schema for the response:
     //   {
     //     "type": "array",
@@ -290,7 +291,7 @@ export async function POST(req: NextRequest) {
     console.log(data1);
     console.log(title, body.section, body.subSection, body.subSubSection);
     return Response.json(data1);
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    Response.json(error);
   }
 }
