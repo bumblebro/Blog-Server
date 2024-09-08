@@ -5,12 +5,21 @@ import Navbar from "@/components/navbar/Navbar";
 import Paginationblog from "@/components/pagination/Paginationblog";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
+import { Metadata } from "next";
 import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 
 interface params {
   params: {
     pageNo: Number;
+  };
+}
+
+export async function generateMetadata({ params }: params): Promise<Metadata> {
+  return {
+    title: `Blog - Page ${params.pageNo}`,
+    description:
+      "Enjoy access to the complete Word of Many's archived articles—every post and every page we have ever published.",
   };
 }
 
