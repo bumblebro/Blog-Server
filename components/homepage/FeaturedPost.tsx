@@ -6,8 +6,8 @@ interface posts {
   posts: Blogs[];
 }
 function FeaturedPost({ posts }: posts) {
-  // let randomNum = Math.floor(Math.random() * 10) + 1;
-  let randomNum = 1;
+  let randomNum = Math.floor(Math.random() * posts.length) + 1;
+  // let randomNum = 1;
   return (
     <div className="  mx-auto   px-4 mt-[100px] md:mt-[80px]">
       <div className="grid grid-cols-1 relative md:grid-cols-2   md:h-[25rem]  xl:h-[25rem] xl:max-w-[73rem] mx-auto ">
