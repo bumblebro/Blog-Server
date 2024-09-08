@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
-const pageSize = 24;
+const pageSize = 4;
 
 export default async function GETBLOG({ pageNo }: { pageNo: string }) {
   console.log(`BOOOOOOOOOO`, pageNo);
@@ -17,6 +17,7 @@ export default async function GETBLOG({ pageNo }: { pageNo: string }) {
   const blogs = await prisma.blogs.findMany({
     skip,
     take,
+
     cacheStrategy: { ttl: 60 },
   });
 

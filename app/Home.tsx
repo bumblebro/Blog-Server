@@ -15,52 +15,50 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   let totalPages = 1;
   let hasNextPage = false;
 
-  // if (searchParams.pageNo) {
-  // let res = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${searchParams.pageNo}`,
-  //   {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }
-  // );
-  // const response = await res.json();
-  //   const response = await GETBLOG({
-  //     pageNo: searchParams.pageNo,
-  //   });
-  //   if (response) {
-  //     posts = response.blogs;
-  //     pageNo = searchParams.pageNo;
-  //     totalPages = response.metaData.totalPages;
-  //     hasNextPage = response.metaData.hasNextPage;
-  //   }
-  // } else {
-  // let res = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?${"1"}`,
-  //   {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }
-  // );
-  // const response = await res.json();
+  if (searchParams.pageNo) {
+    // let res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?pageNo=${searchParams.pageNo}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+    const response = await GETBLOG({ pageNo: searchParams.pageNo });
+    if (response) {
+      posts = response.blogs;
+      pageNo = searchParams.pageNo;
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
+    }
+  } else {
+    // let res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogs?${"1"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
 
-  // if (res.ok) {
-  //   posts = response.blogs;
-  //   pageNo = "1";
-  //   totalPages = response.metaData.totalPages;
-  //   hasNextPage = response.metaData.hasNextPage;
-  // }
-  const response = await GETBLOG({ pageNo: "1" });
-  if (response) {
-    posts = response.blogs;
-    pageNo = "1";
-    totalPages = response.metaData.totalPages;
-    hasNextPage = response.metaData.hasNextPage;
+    // if (res.ok) {
+    //   posts = response.blogs;
+    //   pageNo = "1";
+    //   totalPages = response.metaData.totalPages;
+    //   hasNextPage = response.metaData.hasNextPage;
+    // }
+    const response = await GETBLOG({ pageNo: "1" });
+    if (response) {
+      posts = response.blogs;
+      pageNo = "1";
+      totalPages = response.metaData.totalPages;
+      hasNextPage = response.metaData.hasNextPage;
+    }
   }
-  // }
 
   return (
     <>

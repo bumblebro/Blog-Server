@@ -13,6 +13,18 @@ interface params {
     pageNo: Number;
   };
 }
+
+export async function generateStaticParams() {
+  const response = await GETBLOG({ pageNo: "1" });
+  const totalpage = response.metaData.totalPages;
+  const arr = [];
+  for (let i = 1; i <= totalpage; i++) {
+    arr.push({
+      slug: ["page", i],
+    });
+  }
+  return arr;
+}
 async function BlogPage({ params }: params) {
   let sidebar = false;
   let posts: Blogs[] = [];
