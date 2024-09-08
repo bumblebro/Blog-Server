@@ -1,4 +1,4 @@
-function DeSlugify(text: any): string {
+function DeSlugify(text: string): string {
   return text.replace(/-/g, " ");
 }
 

@@ -132,7 +132,7 @@ export async function generateMetadata({ params }: params): Promise<Metadata> {
     }
   }
   return {
-    title: DeSlugify(currentPost?.title),
+    title: currentPost?.title?.replace(/-/g, " "),
     description: (currentPost?.seo as SEOType).ogDescription,
     openGraph: {
       images: [
