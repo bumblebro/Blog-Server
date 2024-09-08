@@ -15,6 +15,7 @@ import GETBLOGPOST from "../api/blogpost/GETBLOGPOST";
 import GETBLOGALL from "../api/blogsall/GETBLOGALL";
 import GenerateSlugs from "../../libs/GenerateSlugs";
 import { subSections } from "@/libs/Section";
+import DeSlugify from "@/libs/DeSlugify";
 
 interface params {
   params: {
@@ -26,19 +27,14 @@ interface JsonValue {
   [key: string]: any;
 }
 
+type SEOType = {
+  ogDescription: string;
+  ogTitle: string;
+  ogImage: string;
+};
+
 export async function generateStaticParams() {
   try {
-    // const response = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogsall`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-
-    // const { blogs } = await response.json(); // Parse the JSON response
     const sluglayer = (await GenerateSlugs(subSections)).slice(0, 5);
 
     const response = await GETBLOGALL();
@@ -136,8 +132,8 @@ export async function generateMetadata({ params }: params): Promise<Metadata> {
     }
   }
   return {
-    title: currentPost?.title,
-    // description: currentPost?.seo?.ogDescription,
+    title: DeSlugify(currentPost?.title),
+    description: (currentPost?.seo as SEOType).ogDescription,
     openGraph: {
       images: [
         {
