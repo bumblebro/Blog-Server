@@ -1,12 +1,12 @@
 import BlogList from "@/components/bloglist/BlogList";
 import Category from "@/components/category/Category";
 import Footer from "@/components/footer/Footer";
-import FeaturedPost from "@/components/homepage/FeaturedPost";
 import Navbar from "@/components/navbar/Navbar";
 import Paginationblog from "@/components/pagination/Paginationblog";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
 import GETBLOG from "./api/blogs/GETBLOG";
+import FeaturedPost from "@/components/featuredPost/FeaturedPost";
 
 async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   let sidebar = false;
