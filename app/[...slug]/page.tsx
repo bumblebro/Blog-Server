@@ -50,6 +50,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: params): Promise<Metadata> {
+  let categoryList: string[] = [];
+
   // await Delay();
   let pageNumber: number = 1;
   let slugs: string[] = [];
@@ -58,90 +60,69 @@ export async function generateMetadata({ params }: params): Promise<Metadata> {
   let decodedslug = slug.map((item: string) => decodeURIComponent(item));
   let pageIndex = decodedslug.indexOf("page");
   let page = 1;
-  // let currentPost: {
-  //   id: string;
-  //   author: string;
-  //   title: string;
-  //   imageurl: string;
-  //   imagealt: string;
-  //   quote: string;
-  //   section: string;
-  //   subsection: string;
-  //   subsubsection: string;
-  //   content: JsonValue[];
-  //   seo: JsonValue;
-  //   creationDate: Date;
-  // } | null = null;
 
   let currentPost: Blogs | null = null;
 
-  // let currentPost: {
-  //   id: string;
-  //   author: string;
-  //   title: string;
-  //   imageurl: string;
-  //   imagealt: string;
-  //   quote: string;
-  //   section: string;
-  //   subsection: string;
-  //   subsubsection: string;
-  //   content: JsonValue[];
-  //   seo: JsonValue;
-  //   creationDate: Date;
-  // } = {
-  //   id: "",
-  //   author: "",
-  //   title: "",
-  //   slug: "",
-  //   imageurl: "",
-  //   imagealt: "",
-  //   quote: "",
-  //   section: "",
-  //   subsection: "",
-  //   subsubsection: "",
-  //   content: [],
-  //   seo: { ogDescription: "" },
-  //   creationDate: Date(),
-  // };
+  const input = decodedslug[decodedslug.length - 1]?.trim().toLowerCase();
+
+  for (const [category, subCategory] of Object.entries(subSections)) {
+    if (input === category.toLowerCase()) {
+      console.log(Object.keys(subCategory));
+      categoryList = Object.keys(subCategory);
+    }
+
+    // Check if the input matches a sub-category
+    for (const [subCategoryKey, items] of Object.entries(subCategory)) {
+      if (input === subCategoryKey.toLowerCase()) {
+        console.log(items);
+        categoryList = items;
+      }
+    }
+  }
 
   if (pageIndex !== -1 && pageIndex < decodedslug.length - 1) {
-    // if (pageIndex !== -1 && decodedslug[decodedslug.length - 1] == "page") {
     pageNumber = parseInt(decodedslug[pageIndex + 1]);
     page = parseInt(decodedslug[pageIndex + 1]);
     decodedslug.splice(pageIndex, 2);
     slugs = decodedslug;
   }
 
-  if (decodedslug.length > 3) {
-    // let response = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
-    //     decodedslug[decodedslug.length - 1]
-    //   }`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
+  if (decodedslug.length < 3) {
+    return {
+      title: `${DeSlugify(
+        decodedslug[decodedslug.length - 1]
+      )} - ${categoryList.map((item) => DeSlugify(` ${item}`))} & More`,
+      description: `Here are the latest on ${DeSlugify(
+        decodedslug[decodedslug.length - 1]
+      )}, ${categoryList.map((item) => DeSlugify(` ${item}`))} & More`,
+    };
+  } else if (decodedslug.length === 3) {
+    return {
+      title: `${decodedslug[decodedslug.length - 1]}`,
+      description: `Here are the latest on ${
+        decodedslug[decodedslug.length - 1]
+      }`,
+    };
+  } else {
     const response = await GETBLOGPOST({
       title: decodedslug[decodedslug.length - 1],
     });
     if (response) {
       currentPost = response;
     }
+
+    return {
+      title: DeSlugify(currentPost?.title || ""),
+      description: (currentPost?.seo as SEOType)?.ogDescription,
+      openGraph: {
+        images: [
+          {
+            url: currentPost?.imageurl || "",
+          },
+        ],
+      },
+    };
   }
-  return {
-    title: DeSlugify(currentPost?.title || ""),
-    description: (currentPost?.seo as SEOType)?.ogDescription,
-    openGraph: {
-      images: [
-        {
-          url: currentPost?.imageurl || "",
-        },
-      ],
-    },
-  };
 }
 
 async function BlogCategory({ params }: params) {
