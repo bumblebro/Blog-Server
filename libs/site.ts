@@ -1,9 +1,9 @@
 import GenerateSlugs from "@/libs/GenerateSlugs";
 import { subSections } from "@/libs/Section";
 import { MetadataRoute } from "next";
-import GETBLOGALL from "../api/blogsall/GETBLOGALL";
+import GETBLOGALL from "../app/api/blogsall/GETBLOGALL";
 import { Blogs } from "@prisma/client";
-import GETBLOG from "../api/blogs/GETBLOG";
+import GETBLOG from "../app/api/blogs/GETBLOG";
 
 export async function generateSitemaps() {
   try {
