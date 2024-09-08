@@ -6,6 +6,15 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import Footer from "@/components/footer/Footer";
 import Paginationblog from "@/components/pagination/Paginationblog";
 import GETBLOG from "../api/blogs/GETBLOG";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Blog",
+    description:
+      "Enjoy access to the complete Word of Many's archived articles—every post and every page we have ever published.",
+  };
+}
 
 async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
   let sidebar = false;

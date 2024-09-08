@@ -7,6 +7,13 @@ import Sidebar from "@/components/sidebar/Sidebar";
 import { Blogs } from "@prisma/client";
 import GETBLOG from "./api/blogs/GETBLOG";
 import FeaturedPost from "@/components/featuredPost/FeaturedPost";
+import { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Word of Many | The latest in Products, Culture & Style",
+  };
+}
 
 async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
   let sidebar = false;
