@@ -1,4 +1,3 @@
-import DeSlugify from "@/libs/DeSlugify";
 import { Blogs } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,7 +61,7 @@ function FeaturedPost({ posts }: posts) {
             >
               {" "}
               <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
-                {DeSlugify(posts[randomNum].subsubsection)}
+                {(posts[randomNum].subsubsection)}
               </h1>
             </Link>
           ) : posts[randomNum]?.subsection ? (
@@ -91,7 +90,7 @@ function FeaturedPost({ posts }: posts) {
             >
               {" "}
               <h1 className="pb-3 text-blue-600 font-semibold md:text-lg md:pb-5">
-                {DeSlugify(posts[randomNum]?.section)}
+                {(posts[randomNum]?.section)}
               </h1>
             </Link>
           )}
@@ -111,7 +110,7 @@ function FeaturedPost({ posts }: posts) {
             }${posts[randomNum]?.title}`}
           >
             <h2 className="text-xl font-semibold md:text-3xl">
-              {DeSlugify(posts[randomNum]?.title)}
+              {(posts[randomNum]?.title)}
             </h2>
           </Link>
         </div>
