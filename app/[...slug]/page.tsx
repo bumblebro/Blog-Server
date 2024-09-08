@@ -39,7 +39,7 @@ export async function generateStaticParams() {
     // );
 
     // const { blogs } = await response.json(); // Parse the JSON response
-    const sluglayer = await GenerateSlugs(subSections);
+    const sluglayer = (await GenerateSlugs(subSections)).slice(0, 5);
 
     const response = await GETBLOGALL();
 

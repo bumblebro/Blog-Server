@@ -6,6 +6,7 @@ const prisma = new PrismaClient().$extends(withAccelerate());
 
 export default async function GETBLOGPOST({ title }: { title: string }) {
   // const { searchParams } = new URL(req.url);
+
   const titlename = title || undefined;
   const blogs = await prisma.blogs.findUnique({
     where: { title: titlename },
