@@ -18,57 +18,62 @@ export default async function GETBLOGSLAYER({
   pageSize?: string;
   pageNo: number;
 }) {
-  // const { searchParams } = new URL(req.url);
-  // const category = searchParams.get("category");
-  // const subCategory = searchParams.get("subCategory");
-  // const subSubCategory = searchParams.get("subSubCategory");
-  const pagSize = parseInt(pageSize || "24");
+  try {
+    // const { searchParams } = new URL(req.url);
+    // const category = searchParams.get("category");
+    // const subCategory = searchParams.get("subCategory");
+    // const subSubCategory = searchParams.get("subSubCategory");
+    const pagSize = parseInt(pageSize || "24");
 
-  const pageNum = pageNo || 1;
+    const pageNum = pageNo || 1;
 
-  const take = pagSize;
-  const skip = (pageNum - 1) * take;
+    const take = pagSize;
+    const skip = (pageNum - 1) * take;
 
-  const whereClause: Prisma.BlogsWhereInput = {};
+    const whereClause: Prisma.BlogsWhereInput = {};
 
-  if (category) {
-    whereClause.section = {
-      contains: category,
-      mode: "insensitive",
+    if (category) {
+      whereClause.section = {
+        contains: category,
+        mode: "insensitive",
+      };
+    }
+
+    if (subCategory) {
+      whereClause.subsection = {
+        contains: subCategory,
+        mode: "insensitive",
+      };
+    }
+
+    if (subSubCategory) {
+      whereClause.subsubsection = {
+        contains: subSubCategory,
+        mode: "insensitive",
+      };
+    }
+
+    const blogs = await prisma.blogs.findMany({
+      skip, // Number of records to skip
+      take, // Number of records to take
+      where: whereClause,
+      cacheStrategy: { ttl: 60 },
+    });
+
+    const totalBlogs = await prisma.blogs.count({
+      where: whereClause,
+      cacheStrategy: { ttl: 60 },
+    });
+    return {
+      blogs: blogs,
+      metaData: {
+        hasNextPage: take + skip < totalBlogs,
+        totalPages: Math.ceil(totalBlogs / take),
+        totalBlogs,
+      },
     };
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch invoice.");
   }
-
-  if (subCategory) {
-    whereClause.subsection = {
-      contains: subCategory,
-      mode: "insensitive",
-    };
-  }
-
-  if (subSubCategory) {
-    whereClause.subsubsection = {
-      contains: subSubCategory,
-      mode: "insensitive",
-    };
-  }
-
-  const blogs = await prisma.blogs.findMany({
-    skip, // Number of records to skip
-    take, // Number of records to take
-    where: whereClause,
-    cacheStrategy: { ttl: 60 },
-  });
-
-  const totalBlogs = await prisma.blogs.count({
-    where: whereClause,
-    cacheStrategy: { ttl: 60 },
-  });
-  return {
-    blogs: blogs,
-    metaData: {
-      hasNextPage: take + skip < totalBlogs,
-      totalPages: Math.ceil(totalBlogs / take),
-      totalBlogs,
-    },
-  };
 }
