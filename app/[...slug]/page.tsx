@@ -16,6 +16,7 @@ import GETBLOGALL from "../api/blogsall/GETBLOGALL";
 import GenerateSlugs from "../../libs/GenerateSlugs";
 import { subSections } from "@/libs/Section";
 import DeSlugify from "@/libs/DeSlugify";
+import { notFound } from "next/navigation";
 
 interface params {
   params: {
@@ -29,8 +30,11 @@ interface JsonValue {
 
 type SEOType = {
   ogDescription: string;
+  metaDescription: string;
   ogTitle: string;
   ogImage: string;
+  primaryKeywords: string[];
+  secondaryKeywords: string[];
 };
 
 export async function generateStaticParams() {
@@ -111,7 +115,11 @@ export async function generateMetadata({ params }: params): Promise<Metadata> {
 
     return {
       title: DeSlugify(currentPost?.title || ""),
-      description: (currentPost?.seo as SEOType)?.ogDescription,
+      description: (currentPost?.seo as SEOType)?.metaDescription,
+      keywords: [
+        ...(currentPost?.seo as SEOType)?.primaryKeywords,
+        ...(currentPost?.seo as SEOType)?.secondaryKeywords,
+      ],
       openGraph: {
         images: [
           {
@@ -164,53 +172,32 @@ async function BlogCategory({ params }: params) {
     slugs = decodedslug;
   }
 
-  if (decodedslug.length === 0) {
-  } else if (decodedslug.length === 1) {
-    // let res = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?category=${decodedslug[0]}&pageNo=${page}`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // const response = await res.json();
-
+  if (decodedslug.length === 1) {
     const response = await GETBLOGSLAYER({
       category: decodedslug[0],
       pageNo: page,
     });
-
-    if (response) {
-      posts = response.blogs;
-      totalPages = response.metaData.totalPages;
-      hasNextPage = response.metaData.hasNextPage;
-      totalBlogs = response.metaData.totalBlogs;
+    if (!response) {
+      return notFound();
     }
-  } else if (decodedslug.length === 2) {
-    // let res = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subCategory=${decodedslug[1]}&pageNo=${page}`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // const response = await res.json();
 
+    posts = response.blogs;
+    totalPages = response.metaData.totalPages;
+    hasNextPage = response.metaData.hasNextPage;
+    totalBlogs = response.metaData.totalBlogs;
+  } else if (decodedslug.length === 2) {
     const response = await GETBLOGSLAYER({
       subCategory: decodedslug[1],
       pageNo: page,
     });
-
-    if (response) {
-      posts = response.blogs;
-      totalPages = response.metaData.totalPages;
-      hasNextPage = response.metaData.hasNextPage;
-      totalBlogs = response.metaData.totalBlogs;
+    if (!response) {
+      return notFound();
     }
+
+    posts = response.blogs;
+    totalPages = response.metaData.totalPages;
+    hasNextPage = response.metaData.hasNextPage;
+    totalBlogs = response.metaData.totalBlogs;
   } else if (decodedslug.length === 3) {
     // let res = await fetch(
     //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subSubCategory=${decodedslug[2]}&pageNo=${page}`,
@@ -227,34 +214,23 @@ async function BlogCategory({ params }: params) {
       subSubCategory: decodedslug[2],
       pageNo: page,
     });
-
-    if (response) {
-      posts = response.blogs;
-      totalPages = response.metaData.totalPages;
-      hasNextPage = response.metaData.hasNextPage;
-      totalBlogs = response.metaData.totalBlogs;
+    if (!response) {
+      return notFound();
     }
-  } else if (decodedslug.length > 3) {
-    // let res = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogpost?title=${
-    //     decodedslug[decodedslug.length - 1]
-    //   }`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // const response = await res.json();
 
+    posts = response.blogs;
+    totalPages = response.metaData.totalPages;
+    hasNextPage = response.metaData.hasNextPage;
+    totalBlogs = response.metaData.totalBlogs;
+  } else if (decodedslug.length > 3) {
     const response = await GETBLOGPOST({
       title: decodedslug[decodedslug.length - 1],
     });
-
-    if (response) {
-      currentPost = response;
+    if (!response) {
+      return notFound();
     }
+
+    currentPost = response;
   }
   // ----------------------------
 
@@ -275,7 +251,7 @@ async function BlogCategory({ params }: params) {
     const response = await GETBLOGSLAYER({
       subSubCategory: currentPost.subsubsection,
       pageNo: 1,
-      pageSize: "12",
+      pageSize: "24",
     });
 
     if (response) {
@@ -298,7 +274,7 @@ async function BlogCategory({ params }: params) {
     const response = await GETBLOGSLAYER({
       subCategory: currentPost.subsection,
       pageNo: 1,
-      pageSize: "12",
+      pageSize: "24",
     });
 
     if (response) {
@@ -321,7 +297,7 @@ async function BlogCategory({ params }: params) {
     const response = await GETBLOGSLAYER({
       category: currentPost.section,
       pageNo: 1,
-      pageSize: "12",
+      pageSize: "24",
     });
 
     if (response) {

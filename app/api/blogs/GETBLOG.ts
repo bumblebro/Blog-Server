@@ -5,23 +5,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 
-const pageSize = 4;
+const pageSize = 24;
 
 export default async function GETBLOG({ pageNo }: { pageNo: string }) {
-  console.log(`BOOOOOOOOOO`, pageNo);
-  // const { searchParams } = new URL(req.url);
   const pageNum = parseInt(pageNo || "1");
   const take = pageSize;
-  const skip = (pageNum - 1) * take;
+  const skip = (pageNum - 1) * pageSize;
 
   const blogs = await prisma.blogs.findMany({
     skip,
     take,
-
     cacheStrategy: { ttl: 60 },
   });
 
   const totalBlogs = await prisma.blogs.count();
+  console.log(`TOTAL BLOGS`, totalBlogs);
+  console.log(`TOTAL BLOGS`, blogs.length);
   return {
     blogs: blogs,
     metaData: {
