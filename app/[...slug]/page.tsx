@@ -49,6 +49,7 @@ export async function generateStaticParams() {
           slug: [item.section, item.subsection, item.subsubsection, item.title],
         };
     });
+    console.log([...sluglayer, ...titlearray]);
     return [...sluglayer, ...titlearray];
   } catch (error) {
     console.error("Error fetching blogs:", error);
