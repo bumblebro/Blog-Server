@@ -23,6 +23,7 @@ export async function generateStaticParams() {
       slug: ["page", i],
     });
   }
+  console.log(`ARRRRRAYYY`, arr);
   return arr;
 }
 

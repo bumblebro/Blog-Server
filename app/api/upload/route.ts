@@ -116,14 +116,14 @@ export async function POST(req: NextRequest) {
     
     The structure of the article should be as follows:
     
-    1. **Introduction**: The introduction should start with a question and end with a compelling promise to the reader about what they’ll gain by reading the blog post and dont send the blog title here.
-    
-    2. **List of Sections**: Break down the article into a series of numbered sections, each covering a distinct aspect of the news story. Each section should include:
-       - A title for the section (numbered if required).
-       - A detailed paragraph explaining the information, with relevant data, quotes, or background context into markdown format, do not send the title of the section here again.
-       - A query for an image that complements the section, if applicable. If an image is not required, set the query field to null.
-    
-    3. **Conclusion**: End with a brief conclusion that wraps up the article and provides any final insights or implications related to the news story. The conclusion should sum up the contents of the post.
+1. **Introduction**: Start with a compelling opening paragraph that sets the context for the news story. This should include the main points and capture the reader's interest to encourage them to continue.
+
+2. **List of Sections**: Break down the article into a series of numbered sections, each covering a distinct aspect of the news story. Each section should include:
+   - A title for the section (numbered if required).
+   - A detailed paragraph explaining the information, with relevant data, quotes, or background context into markdown format.
+   - A query for an image that complements the section, if applicable. If an image is not required, set the query field to null.
+
+3. **Conclusion**: End with a brief conclusion that wraps up the article and provides any final insights or implications related to the news story.
     
     4. **Author and Quote**: Generate a random author name for the article and include a related quote that could be attributed to the author. The quote should align with the article's theme and provide a thoughtful reflection or insightful comment on the news story.
     

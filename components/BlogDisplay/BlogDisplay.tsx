@@ -149,7 +149,10 @@ function BlogDisplay({ decodedslug, currentPost, posts, latposts }: BlogDisp) {
                   <h1 className="px-4 py-4 mt-4 italic bg-[#eeeff1]">
                     {currentPost.quote}
                   </h1>
-                )}
+                )}{" "}
+                <h1 className="px-4 py-4 mt-4 italic bg-[#eeeff1]">
+                  {currentPost.quote}
+                </h1>
               </div>
             );
           })}

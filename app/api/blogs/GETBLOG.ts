@@ -19,8 +19,6 @@ export default async function GETBLOG({ pageNo }: { pageNo: string }) {
   });
 
   const totalBlogs = await prisma.blogs.count();
-  console.log(`TOTAL BLOGS1`, totalBlogs);
-  console.log(`TOTAL BLOGS2`, blogs.length);
   return {
     blogs: blogs,
     metaData: {
