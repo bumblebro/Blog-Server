@@ -46,7 +46,7 @@ function Navbar() {
 
   return (
     <nav className="  w-full z-20 top-0 start-0 fixed bg-black">
-      <div className="max-w-screen-xl  items-center justify-between mx-auto p-4 ">
+      <div className="max-w-screen-xl  items-center justify-between mx-auto px-4 py-2 md:py-4">
         <div className="bg-black  grid grid-cols-3 py-3 md:py-0 xl:max-w-[73rem] mx-auto  my-auto h-full text-white w-full ">
           {" "}
           <div className="flex items-center gap-2">
@@ -117,11 +117,27 @@ function Navbar() {
               </h1>
             </Link>
           </div>
-          <div className="flex justify-end items-center">
-            <h1 className="bg-[#0c50e6] w-fit   uppercase tracking-wider text-xs font-semibold py-1 px-1 rounded-full md:text-base md:px-4 md:py-0 2xl:py-2 2xl:px-6">
+          {/* <div className="flex justify-end items-center">
+            <h1 className="bg-[#0c50e6] w-fit   uppercase tracking-wider text-xs font-semibold py-1 px-1 rounded-full md:text-base md:px-4 md:py-0 2xl:py-2 2xl:px-6 ">
               Subscribe
             </h1>
-          </div>
+          </div> */}
+          <button className="flex justify-end items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6 "
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>{" "}
+          </button>
         </div>
         <div
           className={`  w-full ${

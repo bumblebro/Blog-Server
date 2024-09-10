@@ -89,29 +89,43 @@ function Upload2() {
       );
       console.log(`GETTING IMAGES FOR CONTENT SUCCESSFULL`);
       console.log(`BLOG UPLOAD START...`);
-      const res = await axios.post("/api/dbupload", {
-        section: path[0],
-        title: covertedBlog.pageTitle,
-        imagealt: covertedBlog.imageQuery,
-        imageurl: link,
-        subsection: path[1],
-        subsubsection: path[2],
-        content: results,
-        author: covertedBlog.author,
-        quote: covertedBlog.quote,
-        seo: covertedBlog.seo,
-        slug: `${path[0]}/${path[1]}/${path[2]}/${slugify(
-          covertedBlog.pageTitle
-        )}`,
-      });
-      if (res.status) {
-        console.log("UPLOAD SUCCESSFULL", res.data, "STARTING NEXT CYCLE...");
-        setSuccessCount((prev) => prev + 1);
-        startProcess(); // Continue the process if running
-      } else {
-        console.error("UPLOAD FAILED, RETRYING...");
-        setFailedCount((prev) => prev + 1);
-        startProcess(); // Retry if failed
+
+      if (
+        (path[0],
+        covertedBlog.pageTitle,
+        covertedBlog.imageQuery,
+        link,
+        path[1],
+        path[2],
+        results,
+        covertedBlog.author,
+        covertedBlog.quote,
+        covertedBlog.seo)
+      ) {
+        const res = await axios.post("/api/dbupload", {
+          section: path[0],
+          title: slugify(covertedBlog.pageTitle),
+          imagealt: covertedBlog.imageQuery,
+          imageurl: link,
+          subsection: path[1],
+          subsubsection: path[2],
+          content: results,
+          author: covertedBlog.author,
+          quote: covertedBlog.quote,
+          seo: covertedBlog.seo,
+          slug: `${path[0]}/${path[1]}/${path[2]}/${slugify(
+            covertedBlog.pageTitle
+          )}`,
+        });
+        if (res.status) {
+          console.log("UPLOAD SUCCESSFULL", res.data, "STARTING NEXT CYCLE...");
+          setSuccessCount((prev) => prev + 1);
+          startProcess(); // Continue the process if running
+        } else {
+          console.error("UPLOAD FAILED, RETRYING...");
+          setFailedCount((prev) => prev + 1);
+          startProcess(); // Retry if failed
+        }
       }
     } catch (error) {
       console.error("ERROR OCCURED, RETRYING...");

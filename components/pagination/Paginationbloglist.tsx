@@ -18,7 +18,6 @@ function Paginationbloglist({
 }: Props) {
   const currentPage = pageNo;
 
-
   const getPageRange = () => {
     const range = [];
     const firstPagesToShow = 3;
@@ -92,7 +91,7 @@ function Paginationbloglist({
                 strokeLinejoin="round"
                 d="M15.75 19.5 8.25 12l7.5-7.5"
               />
-            </svg>{" "}
+            </svg>
             <p>Prev</p>
           </div>
         </Link>
@@ -105,7 +104,7 @@ function Paginationbloglist({
             );
           })}
         </div> */}
-        <div className="invisible md:visible md:w-[30%] flex justify-center">
+        <div className="hidden md:flex md:w-[30%] justify-center">
           {pages.map((page, i) => (
             <div
               key={i}

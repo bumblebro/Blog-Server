@@ -14,15 +14,6 @@ interface params {
     pageNo: Number;
   };
 }
-
-export async function generateMetadata({ params }: params): Promise<Metadata> {
-  return {
-    title: `Blog - Page ${params.pageNo}`,
-    description:
-      "Enjoy access to the complete Word of Many's archived articles—every post and every page we have ever published.",
-  };
-}
-
 export async function generateStaticParams() {
   const response = await GETBLOG({ pageNo: "1" });
   const totalpage = response.metaData.totalPages;
@@ -34,6 +25,15 @@ export async function generateStaticParams() {
   }
   return arr;
 }
+
+export async function generateMetadata({ params }: params): Promise<Metadata> {
+  return {
+    title: `Blog - Page ${params.pageNo}`,
+    description:
+      "Enjoy access to the complete Word of Many's archived articles—every post and every page we have ever published.",
+  };
+}
+
 async function BlogPage({ params }: params) {
   let sidebar = false;
   let posts: Blogs[] = [];

@@ -9,18 +9,19 @@ function Footer() {
             Want to join our exclusive community?
           </h1>
           <span className="w-1/12 border-b mb-1"></span>
-          <div className="flex flex-col  gap-3 md:flex-row w-full md:w-[70%] md:gap-0   2xl:w-[50%]">
+          <form className="flex flex-col  gap-3 md:flex-row w-full md:w-[70%] md:gap-0   2xl:w-[50%]">
             <input
-              className="  placeholder-slate-500 font-light w-full rounded-md py-2 text-center  md:text-start md:pl-4 md:rounded-r-none"
+              className="  placeholder-slate-500 font-light w-full rounded-md py-2 text-center  md:text-start md:pl-4 md:rounded-r-none text-black"
               type="text"
               placeholder="Enter your email"
             />
-            <input
-              className="bg-[#ee5631] placeholder-black w-full rounded-md py-2 text-center font-semibold md:w-[50%]  2xl:w-[40%] md:rounded-l-none"
-              type="text"
-              placeholder="Subscribe"
-            />
-          </div>
+            <button
+              type="submit"
+              className="bg-[#ee5631] text-black w-full rounded-md py-2 text-center font-semibold md:w-[50%]  2xl:w-[40%] md:rounded-l-none"
+            >
+              Subscribe
+            </button>
+          </form>
         </div>
         <span className="w-full border-gray-600 border-[0.1px]"></span>
         <div className="flex flex-col  font-normal text-sm gap-4 md:flex-row md:justify-between md:items-center">
@@ -28,8 +29,8 @@ function Footer() {
           <div className="gap-4 flex flex-col md:text-start">
             <Link href={"/"}>Home</Link>
             <Link href={"/about"}>About Us</Link>
-            <Link href={"/about"}>Advertise With Us</Link>
-            <Link href={"/about"}>Contact Us</Link>
+            <Link href={"/advertise"}>Advertise With Us</Link>
+            <Link href={"/contact"}>Contact Us</Link>
           </div>
           <div className="gap-4 flex flex-col md:text-end">
             <Link href={"/privacy-policy"}>Privacy Policy</Link>
