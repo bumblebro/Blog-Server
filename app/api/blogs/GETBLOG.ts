@@ -15,12 +15,12 @@ export default async function GETBLOG({ pageNo }: { pageNo: string }) {
   const blogs = await prisma.blogs.findMany({
     skip,
     take,
-    cacheStrategy: { ttl: 60 },
+    // cacheStrategy: { ttl: 60 },
   });
 
   const totalBlogs = await prisma.blogs.count();
-  console.log(`TOTAL BLOGS`, totalBlogs);
-  console.log(`TOTAL BLOGS`, blogs.length);
+  console.log(`TOTAL BLOGS1`, totalBlogs);
+  console.log(`TOTAL BLOGS2`, blogs.length);
   return {
     blogs: blogs,
     metaData: {

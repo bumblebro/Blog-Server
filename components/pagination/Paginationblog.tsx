@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 interface Props {
@@ -96,7 +95,7 @@ function Paginationblog({ pageNo = "1", totalPages, hasNextPage }: Props) {
             );
           })}
         </div> */}
-        <div className="invisible md:visible md:w-[30%] flex justify-center gap-4">
+        <div className="hidden md:flex md:w-[30%]  justify-center gap-4">
           {pages.map((page, i) => (
             <div
               key={i}

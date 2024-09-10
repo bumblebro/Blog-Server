@@ -16,7 +16,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
-  let sidebar = false;
   let posts: Blogs[] = [];
   let pageNo = "1";
   let totalPages = 1;
@@ -32,25 +31,18 @@ async function Home({ searchParams }: { searchParams: { pageNo: string } }) {
 
   return (
     <>
-      {/* <Navbar SetSideBar={SetSideBar} sidebar={sidebar} /> */}
-      {sidebar ? (
-        <Sidebar />
-      ) : (
-        <>
-          <FeaturedPost posts={posts || []} />
-          <div className="mt-32 md:mt-10 lg:mt-8 ">
-            <h1 className="text-center  text-lg font-semibold tracking-wider">
-              The Latest News
-            </h1>
-            <BlogList posts={posts || []} />
-            <Paginationblog
-              pageNo={pageNo}
-              totalPages={totalPages}
-              hasNextPage={hasNextPage}
-            />
-          </div>
-        </>
-      )}
+      <FeaturedPost posts={posts || []} />
+      <div className="mt-32 md:mt-10 lg:mt-8 ">
+        <h1 className="text-center  text-lg font-semibold tracking-wider">
+          The Latest News
+        </h1>
+        <BlogList posts={posts || []} />
+        <Paginationblog
+          pageNo={pageNo}
+          totalPages={totalPages}
+          hasNextPage={hasNextPage}
+        />
+      </div>
     </>
   );
 }

@@ -138,6 +138,7 @@ async function BlogCategory({ params }: params) {
   let sidebar = false;
   let posts: Blogs[] = [];
   let relposts: Blogs[] = [];
+  let latposts: Blogs[] = [];
   let totalPages = 1;
   let totalBlogs: number = 1;
   let hasNextPage = false;
@@ -307,7 +308,78 @@ async function BlogCategory({ params }: params) {
       relposts = response.blogs;
     }
   }
+  // ----------------------------
 
+  if (currentPost?.subsection) {
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsubsection=${
+    //     currentPost.subsubsection
+    //   }&pageNo=${"1"}&pageSize=${"20"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+
+    const response = await GETBLOGSLAYER({
+      subCategory: currentPost.subsection,
+      pageNo: 1,
+      pageSize: "24",
+    });
+
+    if (response) {
+      latposts = response.blogs;
+    }
+  } else if (currentPost?.section) {
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?subsection=${
+    //     currentPost.subsection
+    //   }&pageNo=${"1"}&pageSize=${"20"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+
+    const response = await GETBLOGSLAYER({
+      category: currentPost.section,
+      pageNo: 1,
+      pageSize: "24",
+    });
+
+    if (response) {
+      latposts = response.blogs;
+    }
+  } else if (currentPost?.subsubsection) {
+    // const res = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blogslayer?section=${
+    //     currentPost.section
+    //   }&pageNo=${"1"}&pageSize=${"20"}`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const response = await res.json();
+
+    const response = await GETBLOGSLAYER({
+      subSubCategory: currentPost.subsubsection,
+      pageNo: 1,
+      pageSize: "24",
+    });
+
+    if (response) {
+      latposts = response.blogs;
+    }
+  }
   return (
     <>
       {currentPost ? (
@@ -317,6 +389,7 @@ async function BlogCategory({ params }: params) {
             decodedslug={decodedslug}
             currentPost={currentPost || []}
             posts={relposts}
+            latposts={latposts}
           />
         </>
       ) : (
