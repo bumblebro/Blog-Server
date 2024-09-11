@@ -170,8 +170,6 @@ function Upload() {
             )}
           </select>
         )}
-
-        <input type="text" placeholder="Write the Title" />
         <button className="border-2">Generate</button>
       </form>
 
