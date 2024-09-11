@@ -34,6 +34,7 @@ function FeaturedPost({ posts }: posts) {
             objectFit="cover"
             quality={100}
             alt={posts[randomNum]?.imagealt}
+            priority={true}
           />{" "}
         </Link>{" "}
         <div className="bg-black text-white left-[5%]  text-center  w-[90%] py-6 absolute top-[80%] px-6 md:relative md:h-full md:top-0 md:flex md:flex-col md:justify-center md:left-0 md:w-full   ">
