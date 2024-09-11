@@ -23,8 +23,8 @@ export async function generateStaticParams() {
       slug: ["page", i],
     });
   }
-  console.log(`ARRRRRAYYY`, arr);
-  return arr;
+  console.log(`blog/pages`, arr.slice(0, 5));
+  return arr.slice(0, 5);
 }
 
 export async function generateMetadata({ params }: params): Promise<Metadata> {
@@ -41,6 +41,7 @@ async function BlogPage({ params }: params) {
   // const [pageNo, setPageNo] = useState("1");
   let totalPages = 1;
   let hasNextPage = false;
+  let totalBlogs = 0;
 
   if (params.pageNo) {
     // const res = await fetch(
@@ -62,6 +63,7 @@ async function BlogPage({ params }: params) {
       // setPageNo(pageNumber);
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
+      totalBlogs = response.metaData.totalBlogs;
     }
   } else {
     // const res = await fetch(
@@ -81,6 +83,7 @@ async function BlogPage({ params }: params) {
       // setPageNo(pageNumber);
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
+      totalBlogs = response.metaData.totalBlogs;
     }
   }
 
@@ -92,8 +95,11 @@ async function BlogPage({ params }: params) {
       ) : (
         <>
           <div className="mt-32 md:mt-22 lg:mt-13">
-            <h1 className="text-center  text-lg font-semibold tracking-wider">
-              The Latest News
+            <h1 className="text-center  text-2xl font-semibold tracking-wider pb-4">
+              The Latest News - Page {params.pageNo.toString()}
+            </h1>
+            <h1 className="text-center  text-sm font-semibold tracking-wider">
+              {totalBlogs} Latest Posts Articles Published
             </h1>
             <BlogList posts={posts || []} />
             <Paginationblog

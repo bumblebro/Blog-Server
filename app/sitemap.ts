@@ -17,7 +17,7 @@ async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  const sluglayer = (await GenerateSlugs(subSections)).slice(0, 5);
+  const sluglayer = await GenerateSlugs(subSections);
   const categoryslug: MetadataRoute.Sitemap = sluglayer.map((item: any) => {
     let str = "";
     item.slug.map((item: any) => {
@@ -27,7 +27,6 @@ async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${process.env.NEXT_PUBLIC_BASE_API_URL}${str}`,
     };
   });
-
   const allblog = await GETBLOGALL();
 
   const titleslug: MetadataRoute.Sitemap = allblog?.map((item: Blogs) => ({

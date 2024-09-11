@@ -23,7 +23,7 @@ model Blogs {
   quote String  
   section  String  
   subsection  String
-  subsubsection String @default("null")
+  subsubsection String 
   content Json[]
   seo Json
   creationDate DateTime @default(now())
