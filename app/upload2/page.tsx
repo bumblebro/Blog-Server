@@ -188,7 +188,7 @@ function Upload2() {
   }, []);
 
   return (
-    <div className="w-7/12 flex flex-col mx-auto my-52 ">
+    <div className="w-7/12 flex flex-col mx-auto my-4 leading-[1.7rem] font-[330] text-black ">
       {/* <div>
         {updatedBlog.map((item, index) => (
           <div key={index} className="flex flex-col gap-5 pb-5">
