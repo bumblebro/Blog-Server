@@ -113,7 +113,7 @@ function Upload() {
       seo,
       slug,
     });
-    console.log("Upload Result", res);
+    console.log("Upload Result", res.data);
   }
 
   return (

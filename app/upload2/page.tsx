@@ -10,6 +10,7 @@ function Upload2() {
   const [isRunning, setIsRunning] = useState(false);
   const [successCount, setSuccessCount] = useState(0);
   const [failedCount, setFailedCount] = useState(0);
+  const [consoleData, setConsoleData] = useState<string[]>([]);
 
   async function getRandomPath(subSections: any) {
     const firstLevel = Object.keys(subSections);
@@ -33,12 +34,19 @@ function Upload2() {
 
   async function startProcess() {
     try {
+      setConsoleData([]);
       const path = await getRandomPath(subSections);
       console.log(`STARTED`);
+      setConsoleData((prev) => [...prev, `STARTED`]);
       console.log(`section : `, path[0]);
+      setConsoleData((prev) => [...prev, `section : ${path[0]}`]);
       console.log(`subSection : `, path[1]);
+      setConsoleData((prev) => [...prev, `subSection : ${path[1]}`]);
       console.log(`subSubSection : `, path[2]);
+      setConsoleData((prev) => [...prev, `subSubSection : ${path[2]}`]);
       console.log(`GETTING BLOG...`);
+      setConsoleData((prev) => [...prev, `GETTING BLOG...`]);
+
       const blogs = await axios.post("/api/upload", {
         section: path[0],
         subSection: path[1],
@@ -46,22 +54,34 @@ function Upload2() {
       });
       const data = await blogs.data;
       const covertedBlog = await JSON.parse(data);
+      setConsoleData((prev) => [...prev, `GOT BLOG ${covertedBlog}`]);
       console.log(`GOT BLOG`, covertedBlog);
+      setConsoleData((prev) => [...prev, `GETTING IMAGE FOR MAIN TITLE...`]);
       console.log(`GETTING IMAGE FOR MAIN TITLE...`);
 
       if (
         covertedBlog.imageQuery == null ||
         covertedBlog.imageQuery == "null"
       ) {
+        setConsoleData((prev) => [
+          ...prev,
+          `GETTING IMAGE FOR MAIN TITLE FAILED`,
+        ]);
         console.log(`GETTING IMAGE FOR MAIN TITLE FAILED`);
         setFailedCount((prev) => prev + 1);
+        setConsoleData((prev) => [...prev, `RETRYING...`]);
         console.log(`RETRYING...`);
         startProcess();
         return;
       }
       const link = await searchImages(covertedBlog.imageQuery);
-      console.log(`GETTING IMAGE FOR MAIN TITLE SUCCESSFULL`);
+      setConsoleData((prev) => [
+        ...prev,
+        `GETTING IMAGE FOR MAIN TITLE SUCCESSFULL`,
+      ]);
 
+      console.log(`GETTING IMAGE FOR MAIN TITLE SUCCESSFULL`);
+      setConsoleData((prev) => [...prev, `GETTING IMAGES FOR CONTENT...`]);
       console.log(`GETTING IMAGES FOR CONTENT...`);
 
       const results = await Promise.all(
@@ -77,6 +97,8 @@ function Upload2() {
             } else {
               link = await searchImages(item.query);
             }
+            setConsoleData((prev) => [...prev, `IMAGE GENERATED, ${link}`]);
+
             console.log("IMAGE GENERATED", link);
             return {
               title: item.title,
@@ -87,7 +109,13 @@ function Upload2() {
           }
         )
       );
+      setConsoleData((prev) => [
+        ...prev,
+        `GETTING IMAGES FOR CONTENT SUCCESSFULL`,
+      ]);
+
       console.log(`GETTING IMAGES FOR CONTENT SUCCESSFULL`);
+      setConsoleData((prev) => [...prev, `BLOG UPLOAD START...`]);
       console.log(`BLOG UPLOAD START...`);
 
       if (
@@ -118,16 +146,24 @@ function Upload2() {
           )}`,
         });
         if (res.status) {
+          setConsoleData((prev) => [
+            ...prev,
+            `UPLOAD SUCCESSFULL, ${res.data}, STARTING NEXT CYCLE...`,
+          ]);
+
           console.log("UPLOAD SUCCESSFULL", res.data, "STARTING NEXT CYCLE...");
           setSuccessCount((prev) => prev + 1);
           startProcess(); // Continue the process if running
         } else {
+          setConsoleData((prev) => [...prev, `UPLOAD FAILED, RETRYING...`]);
+
           console.error("UPLOAD FAILED, RETRYING...");
           setFailedCount((prev) => prev + 1);
           startProcess(); // Retry if failed
         }
       }
     } catch (error) {
+      setConsoleData((prev) => [...prev, `ERROR OCCURED, RETRYING...`]);
       console.error("ERROR OCCURED, RETRYING...");
       setFailedCount((prev) => prev + 1);
       startProcess(); // Handle errors and retry
@@ -171,6 +207,11 @@ function Upload2() {
         <button onClick={startRunning} disabled={isRunning}>
           Start
         </button>
+        <div className="mx-auto">
+          {consoleData.map((item, i) => (
+            <h1 key={i}>{item}</h1>
+          ))}
+        </div>
         {/* <button onClick={stopRunning} disabled={!isRunning}>
           Stop
         </button> */}
