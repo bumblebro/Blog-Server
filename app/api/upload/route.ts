@@ -103,24 +103,63 @@ export async function POST(req: NextRequest) {
     //   }
     // `;
 
+    //     const promptForTitle = `
+    // I'm writing a blog post. Come up with 100 possible, unique, non-repetitive, and click-bait titles for a blog under the sub-subsection "${body?.subSubSection}", which falls under the subsection "${body?.subSection}" and section "${body?.section}".
+
+    // Each title should be based on one of the following blog formats:
+    //   - Listicles
+    //   - Review Blogs
+    //   - Comparison Blogs
+    //   - How-To/Tutorial Blogs
+    //   - Roundup Blogs
+    //   - Buying Guides
+    //   - Opinion Blogs
+
+    // Please ensure the titles are:
+    // - Creative and captivating, making the reader want to click.
+    // - Reflecting the specific blog format chosen (e.g., "How-To", "Review", "Comparison", etc.).
+    // - Clearly associated with the topic hierarchy: ${body?.section}, ${body?.subSection}, and ${body?.subSubSection}.
+
+    // The response should be structured according to the following JSON schema:
+
+    // {
+    //   "type": "array",
+    //   "items": {
+    //     "type": "object",
+    //     "properties": {
+    //       "title": { "type": "string", "nullable": false }
+    //     },
+    //     "required": ["title"]
+    //   }
+    // }
+    // `;
+
     const promptForTitle = `
-I'm writing a blog post. Come up with 100 possible, unique, non-repetitive, and click-bait titles for a blog under the sub-subsection "${body?.subSubSection}", which falls under the subsection "${body?.subSection}" and section "${body?.section}". 
+Generate 100 possible, unique, non-repetitive, and captivating click-bait titles for a blog under the sub-subsection "${body?.subSubSection}", which falls under the subsection "${body?.subSection}" and section "${body?.section}". 
 
-Each title should be based on one of the following blog formats:
-  - Listicles
-  - Review Blogs
-  - Comparison Blogs
-  - How-To/Tutorial Blogs
-  - Roundup Blogs
-  - Buying Guides
-  - Opinion Blogs
+Each title should follow one of these blog formats:
+  - Listicles (e.g., "10 Best... ")
+  - Review Blogs (e.g., "In-Depth Review of...")
+  - Comparison Blogs (e.g., "Product A vs. Product B: Which Is Better?")
+  - How-To/Tutorial Blogs (e.g., "How to...")
+  - Roundup Blogs (e.g., "Top 5...")
+  - Buying Guides (e.g., "Ultimate Buying Guide for...")
+  - Opinion Blogs (e.g., "Why I Think...")
 
-Please ensure the titles are:
-- Creative and captivating, making the reader want to click.
-- Reflecting the specific blog format chosen (e.g., "How-To", "Review", "Comparison", etc.).
-- Clearly associated with the topic hierarchy: ${body?.section}, ${body?.subSection}, and ${body?.subSubSection}.
+The titles must be:
+- Creative, captivating, and designed to make the reader want to click.
+- Reflective of the specific blog format chosen.
+- Clearly associated with the following topic hierarchy: 
+  - Section: ${body?.section}
+  - Subsection: ${body?.subSection}
+  - Sub-subsection: ${body?.subSubSection}
 
-The response should be structured according to the following JSON schema:
+Ensure that the titles:
+- Vary across different blog formats.
+- Are meaningful and relevant to the topic, avoiding repetition or placeholder titles.
+- Include a mix of popular and engaging title strategies (e.g., numbers, questions, controversial opinions, etc.).
+
+The response should be structured as a JSON array of objects with the following schema:
 
 {
   "type": "array",
