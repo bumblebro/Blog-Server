@@ -82,10 +82,11 @@ function Category({ decodedslug, totalBlogs }: Category) {
         The latest news and reviews of everything Apple. From AppleTV to
         AirPods, MacBooks to iPads, Apple Watches, accessories and more.
       </p>
-      <div className="overflow-scroll  no-scrollbar w-full">
-        <ul className="flex items-center text-xs  pt-8 gap-12 justify-center md:gap-16 underline ">
+      <div className="overflow-scroll  no-scrollbar w-full xl:max-w-[73rem] ">
+        <ul className="flex items-center text-xs  pt-8 gap-12 justify-center md:gap-16 underline  ">
           {categoryList.map((item, i) => (
             <Link
+              className="w-max"
               key={i}
               href={`${decodedslug[decodedslug.length - 1]}/${item}`}
             >

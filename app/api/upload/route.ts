@@ -307,12 +307,13 @@ The response should be structured according to the following JSON schema:
     // `;
 
     const prompt = `
-    Generate an engaging and well-structured news article (around 1300 words) with the title "${title}". The article must be written in a clear, informative, and professional tone. Ensure the content is:
+    Generate a well-researched, engaging, and structured news article (around 1300 words) with the title "${title}". The article must be written in a clear, informative, and professional tone. Ensure the content is:
     
     - Human Written
     - 100% Unique
     - SEO Optimized
     - Plagiarism Free
+    - Relevant to the title
     
     The structure of the article should be as follows:
     
@@ -321,7 +322,7 @@ The response should be structured according to the following JSON schema:
        - Include a relevant quote from the author that aligns with the theme of the article. The quote should provide a thoughtful reflection or insightful comment on the news story.
     
     2. **Conclusion**:
-       - Provide a summary or closing thoughts that wrap up the article. This section should succinctly reinforce the main points and offer a final perspective on the news story.
+       - Provide a well-written conclusion that summarizes the key points of the article. This section should reinforce the main argument or information and offer final thoughts on the news story.
     
     3. **SEO Information**:
        - "metaDescription": A brief description of the page content for the meta description tag.
@@ -331,12 +332,12 @@ The response should be structured according to the following JSON schema:
        - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
     
     4. **Content**:
-       - The article content should be structured into an array of sections, each containing:
+       - The article content should be broken down into sections, each with the following structure:
          - "title": The title of the section.
-         - "description": A detailed paragraph explaining the news content related to the section. The description should provide thorough and relevant information about the topic mentioned in the title.
+         - "description": A detailed, meaningful paragraph that thoroughly explains the content for that section. The content should be informative and directly relevant to the section title, avoiding any placeholder or generic text.
          - "query": An image query that complements the section. If no image is needed, set the query field to null.
     
-    Ensure that the article is well-researched, engaging, free of plagiarism, and optimized for SEO. The language should appear as if it were written by a human, ensuring natural flow and readability.
+    Make sure the content is thoroughly researched and provides value to readers. Avoid filler content or placeholders, and focus on delivering substantial, fact-based information in every section.
     
     The response should be structured as an object with two main fields:
     - **seo**: An object containing all the SEO-related fields.
