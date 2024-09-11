@@ -384,42 +384,42 @@ The response should be structured as a JSON array of objects with the following 
     // `;
 
     const prompt = `
-Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, and conversational tone. Ensure the content is:
-
-- Human Written
-- 100% Unique
-- SEO Optimized
-- Plagiarism Free
-- Relevant to the title
-
-The structure of the blog should be as follows:
-
-1. **Author and Quote**:
-   - Generate a random author name for the blog.
-   - Include a relevant quote from the author that aligns with the theme of the blog. The quote should provide a thoughtful reflection or insightful comment on the blog’s topic.
-
-2. **Conclusion**:
-   - Provide a well-written conclusion that summarizes the key points of the blog. This section should reinforce the main message or takeaways and offer final thoughts or a call to action for the reader.
-
-3. **SEO Information**:
-   - "metaDescription": A brief description of the page content for the meta description tag.
-   - "ogTitle": The Open Graph title, used when sharing the blog on social media platforms.
-   - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
-   - **Primary Keywords**: The main keywords or phrases that are most relevant to the blog’s content.
-   - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
-
-4. **Content**:
-   - The blog content should be broken down into sections, each with the following structure:
-     - "title": The title of the section.
-     - "description": A detailed, meaningful paragraph that thoroughly explains the content for that section. The content should be informative, engaging, and directly relevant to the section title, avoiding any placeholder or generic text.
-     - "query": An image query that complements the section. If no image is needed, set the query field to null.
-
-Ensure that the blog provides value to the reader and maintains an engaging, conversational tone throughout. Avoid filler content or placeholders, and focus on delivering substantial, fact-based information in every section.
-
-The response should be structured as an object with two main fields:
-- **seo**: An object containing all the SEO-related fields.
-- **content**: An array of objects where each object contains the title, description, and query for the section.
-`;
+    Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, and conversational tone. Ensure the content is:
+    
+    - Human Written
+    - 100% Unique
+    - SEO Optimized
+    - Plagiarism Free
+    - Relevant to the title
+    
+    The structure of the blog should be as follows:
+    
+    1. **Author and Quote**:
+       - Generate a random author name for the blog.
+       - Include a relevant quote from the author that aligns with the theme of the blog. The quote should provide a thoughtful reflection or insightful comment on the blog’s topic.
+    
+    2. **Content**:
+       - The blog content should be broken down into sections, each with the following structure:
+         - "title": The title of the section.
+         - "description": A detailed, meaningful paragraph that thoroughly explains the content for that section. Ensure the "description" provides valuable information and is directly relevant to the section title. The title of the section should not be repeated in the description.
+         - "query": An image query that complements the section. If no image is needed, set the query field to null.
+    
+    3. **Conclusion**:
+       - Provide a well-written conclusion that summarizes the key points of the blog. This section should reinforce the main message or takeaways and offer final thoughts or a call to action for the reader.
+    
+    4. **SEO Information**:
+       - "metaDescription": A brief description of the page content for the meta description tag.
+       - "ogTitle": The Open Graph title, used when sharing the blog on social media platforms.
+       - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
+       - **Primary Keywords**: The main keywords or phrases that are most relevant to the blog’s content.
+       - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
+    
+    Ensure that the blog provides value to the reader and maintains an engaging, conversational tone throughout. Avoid filler content or placeholders, and focus on delivering substantial, fact-based information in every section.
+    
+    The response should be structured as an object with two main fields:
+    - **seo**: An object containing all the SEO-related fields.
+    - **content**: An array of objects where each object contains the title, description, and query for the section.
+    `;
 
     const schema = {
       description: "Schema for content with SEO and author information",
