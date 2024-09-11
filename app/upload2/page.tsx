@@ -26,12 +26,9 @@ function Upload2() {
   }
 
   const searchImages = async (query: string) => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/scrape`,
-      {
-        query,
-      }
-    );
+    const response = await axios.post("/api/scrape", {
+      query,
+    });
     return response.data.results.url;
   };
 
@@ -50,14 +47,11 @@ function Upload2() {
       console.log(`GETTING BLOG...`);
       setConsoleData((prev) => [...prev, `GETTING BLOG...`]);
 
-      const blogs = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/upload`,
-        {
-          section: path[0],
-          subSection: path[1],
-          subSubSection: path[2],
-        }
-      );
+      const blogs = await axios.post("/api/upload", {
+        section: path[0],
+        subSection: path[1],
+        subSubSection: path[2],
+      });
       const data = await blogs.data;
       const covertedBlog = await JSON.parse(data);
       setConsoleData((prev) => [...prev, `GOT BLOG ${covertedBlog}`]);
@@ -136,24 +130,21 @@ function Upload2() {
         covertedBlog.quote,
         covertedBlog.seo)
       ) {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/dbupload`,
-          {
-            section: path[0],
-            title: slugify(covertedBlog.pageTitle),
-            imagealt: covertedBlog.imageQuery,
-            imageurl: link,
-            subsection: path[1],
-            subsubsection: path[2],
-            content: results,
-            author: covertedBlog.author,
-            quote: covertedBlog.quote,
-            seo: covertedBlog.seo,
-            slug: `${path[0]}/${path[1]}/${path[2]}/${slugify(
-              covertedBlog.pageTitle
-            )}`,
-          }
-        );
+        const res = await axios.post("/api/dbupload", {
+          section: path[0],
+          title: slugify(covertedBlog.pageTitle),
+          imagealt: covertedBlog.imageQuery,
+          imageurl: link,
+          subsection: path[1],
+          subsubsection: path[2],
+          content: results,
+          author: covertedBlog.author,
+          quote: covertedBlog.quote,
+          seo: covertedBlog.seo,
+          slug: `${path[0]}/${path[1]}/${path[2]}/${slugify(
+            covertedBlog.pageTitle
+          )}`,
+        });
         if (res.status) {
           setConsoleData((prev) => [
             ...prev,
