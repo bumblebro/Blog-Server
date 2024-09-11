@@ -133,7 +133,7 @@ function BlogDisplay({ decodedslug, currentPost, posts, latposts }: BlogDisp) {
                 {contentItem.url == "null" || contentItem.url == null ? null : (
                   <div className="mb-4 flex flex-col gap-2">
                     <img
-                      className="h-[17rem] object-cover bg-[#eeeff1]  md:h-[21rem] lg:h-[31.5rem] xl:h-[39.5rem] sm:h-[28.5rem] 2xl:h-[38rem]"
+                      className="h-[17rem] object-contain md:h-[21rem] lg:h-[31.5rem] xl:h-[39.5rem] sm:h-[28.5rem] 2xl:h-[38rem]"
                       src={contentItem.url}
                       alt=""
                     />

@@ -22,6 +22,7 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
   let pageNo = "1";
   let totalPages = 1;
   let hasNextPage = false;
+  let totalBlogs = 0;
 
   if (searchParams.pageNo) {
     // const res = await fetch(
@@ -41,6 +42,7 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
       pageNo = searchParams.pageNo;
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
+      totalBlogs = response.metaData.totalBlogs;
     }
   } else {
     // const res = await fetch(
@@ -60,6 +62,7 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
       pageNo = "1";
       totalPages = response.metaData.totalPages;
       hasNextPage = response.metaData.hasNextPage;
+      totalBlogs = response.metaData.totalBlogs;
     }
   }
 
@@ -70,8 +73,11 @@ async function Blog({ searchParams }: { searchParams: { pageNo: string } }) {
       ) : (
         <>
           <div className="mt-28 px-4">
-            <h1 className="text-center  text-lg font-semibold ">
-              The Latest News
+            <h1 className="text-center  text-2xl font-semibold tracking-wider pb-4">
+              The Latest News - Page 1
+            </h1>
+            <h1 className="text-center  text-sm font-semibold tracking-wider">
+              {totalBlogs} Latest Posts Articles Published
             </h1>
             <BlogList posts={posts || []} />
             <Paginationblog

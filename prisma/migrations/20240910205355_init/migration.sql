@@ -9,7 +9,7 @@ CREATE TABLE "Blogs" (
     "quote" TEXT NOT NULL,
     "section" TEXT NOT NULL,
     "subsection" TEXT NOT NULL,
-    "subsubsection" TEXT NOT NULL DEFAULT 'null',
+    "subsubsection" TEXT NOT NULL,
     "content" JSONB[],
     "seo" JSONB NOT NULL,
     "creationDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

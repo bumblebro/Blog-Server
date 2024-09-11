@@ -14,14 +14,12 @@ function CategoryPost({ decodedslug, totalBlogs }: CategoryPost) {
   const input = decodedslug[decodedslug.length - 1].trim().toLowerCase();
   for (const [category, subCategory] of Object.entries(subSections)) {
     if (input === category.toLowerCase()) {
-      console.log(Object.keys(subCategory));
       categoryList = Object.keys(subCategory);
     }
 
     // Check if the input matches a sub-category
     for (const [subCategoryKey, items] of Object.entries(subCategory)) {
       if (input === subCategoryKey.toLowerCase()) {
-        console.log(items);
         categoryList = items;
       }
     }

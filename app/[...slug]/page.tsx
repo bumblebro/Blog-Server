@@ -43,13 +43,21 @@ export async function generateStaticParams() {
 
     const response = await GETBLOGALL();
 
-    const titlearray = response?.map((item: Blogs) => {
-      if (item.section && item.subsection && item.subsubsection)
-        return {
-          slug: [item.section, item.subsection, item.subsubsection, item.title],
-        };
-    });
-    console.log([...sluglayer, ...titlearray]);
+    const titlearray = response
+      ?.map((item: Blogs) => {
+        if (item.section && item.subsection && item.subsubsection)
+          return {
+            slug: [
+              item.section,
+              item.subsection,
+              item.subsubsection,
+              item.title,
+            ],
+          };
+      })
+      .slice(0, 5);
+    console.log(`sluglayer`, sluglayer);
+    console.log(`titlearray`, titlearray);
     return [...sluglayer, ...titlearray];
   } catch (error) {
     console.error("Error fetching blogs:", error);

@@ -64,8 +64,6 @@ function Paginationbloglist({
   const pages = getPageRange();
 
   const slugPath = slug?.join("/");
-  console.log("paaaath", slugPath, slug);
-
   if (totalPages === 1) return null;
 
   return (
