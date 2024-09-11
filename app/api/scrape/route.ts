@@ -23,7 +23,9 @@ export async function POST(req: NextRequest) {
   // }
 
   try {
-    const results = await gis(body.query);
+    const results = await gis(body.query, {
+      query: { safe: "on" },
+    });
     console.log(results.slice(0, 10));
     return Response.json({ results: results[1] });
   } catch (e) {
