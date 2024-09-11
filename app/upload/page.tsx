@@ -189,6 +189,9 @@ function Upload() {
       ) : (
         <div>
           <button onClick={createBlog}>Add to DB</button>
+          <h1>{title}</h1>
+          <h1>{author}</h1>
+          <h1>{quote}</h1>
           {updatedBlog.map((item, index) => (
             <div key={index} className="flex flex-col gap-5 pb-5">
               <h1 className="text-2xl font-bold">{item?.title}</h1>

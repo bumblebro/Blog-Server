@@ -78,8 +78,35 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const promptForTitle = `I’m writing a blog post,
-  Come up with 100 possible, unique, non-repetitive, click-bait title for a blog for "${body?.subSubSection}" which comes under "${body?.subSection}" which comes under "${body?.section}". The title should be based on one of the following type:
+    //   const promptForTitle = `I’m writing a blog post,
+    // Come up with 100 possible, unique, non-repetitive, click-bait title for a blog for "${body?.subSubSection}" which comes under "${body?.subSection}" which comes under "${body?.section}". The title should be based on one of the following type:
+    // - Listicles
+    // - Review Blogs
+    // - Comparison Blogs
+    // - How-To/Tutorial Blogs
+    // - Roundup Blogs
+    // - Buying Guides
+    // - Opinion Blogs
+
+    // Please ensure the title reflects the chosen format and provides a creative and captivating approach.
+
+    // Use the following JSON schema for the response:
+    //   {
+    //     "type": "array",
+    //     "items": {
+    //       "type": "object",
+    //       "properties": {
+    //         "title": { "type": "string", "nullable": true },
+    //       },
+    //       "required": ["title"]
+    //     }
+    //   }
+    // `;
+
+    const promptForTitle = `
+I'm writing a blog post. Come up with 100 possible, unique, non-repetitive, and click-bait titles for a blog under the sub-subsection "${body?.subSubSection}", which falls under the subsection "${body?.subSection}" and section "${body?.section}". 
+
+Each title should be based on one of the following blog formats:
   - Listicles
   - Review Blogs
   - Comparison Blogs
@@ -87,21 +114,60 @@ export async function POST(req: NextRequest) {
   - Roundup Blogs
   - Buying Guides
   - Opinion Blogs
-  
-  Please ensure the title reflects the chosen format and provides a creative and captivating approach.
-  
-  Use the following JSON schema for the response:
-    {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "title": { "type": "string", "nullable": true },
-        },
-        "required": ["title"]
-      }
-    }
-  `;
+
+Please ensure the titles are:
+- Creative and captivating, making the reader want to click.
+- Reflecting the specific blog format chosen (e.g., "How-To", "Review", "Comparison", etc.).
+- Clearly associated with the topic hierarchy: ${body?.section}, ${body?.subSection}, and ${body?.subSubSection}.
+
+The response should be structured according to the following JSON schema:
+
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "title": { "type": "string", "nullable": false }
+    },
+    "required": ["title"]
+  }
+}
+`;
+
+    //     const promptForTitle = `
+    // I'm writing a blog post. Generate 100 possible, unique, non-repetitive, and click-bait titles for a blog under the sub-subsection "${body?.subSubSection}", which is part of the subsection "${body?.subSection}" and section "${body?.section}".
+
+    // Each title should align with one of the following blog formats:
+    //   - Listicles
+    //   - Review Blogs
+    //   - Comparison Blogs
+    //   - How-To/Tutorial Blogs
+    //   - Roundup Blogs
+    //   - Buying Guides
+    //   - Opinion Blogs
+
+    // The generated titles should:
+    // - Be Human Written (natural, engaging language).
+    // - 100% Unique (original titles with no plagiarism).
+    // - SEO Optimized (include keywords that will help improve search engine ranking).
+    // - Plagiarism Free (no copied or repetitive content).
+    // - Creative, compelling, and tailored to the blog format (e.g., "How-To", "Review", "Listicle").
+
+    // Ensure each title has a creative and captivating approach that reflects the selected blog format while addressing the theme of "${body?.section}, ${body?.subSection}, ${body?.subSubSection}."
+
+    // The response should be structured as per the following JSON schema:
+
+    // {
+    //   "type": "array",
+    //   "items": {
+    //     "type": "object",
+    //     "properties": {
+    //       "title": { "type": "string", "nullable": false }
+    //     },
+    //     "required": ["title"]
+    //   }
+    // }
+    // `;
 
     const res = await model.generateContent(promptForTitle);
     const response = await res.response;
@@ -109,75 +175,173 @@ export async function POST(req: NextRequest) {
     const titlelist = JSON.parse(data);
     const title = await titlelist[Math.floor(Math.random() * 100) + 1].title;
 
-//     const prompt = `
-//     Write a 1,500 word (minimum) Human Written, Plagiarism Free, SEO Optimized Long-Form Article for the title "${title}". Structure the format of the article for maximum scannability and readability. Gather inspiration from other successful articles on this topic to make sure we’re not leaving out any important points and sections. Use SEO best practices to ensure proper use of keywords in headings.
-    
-//     The structure of the article should be as follows:
-    
-// 1. Introduction**: Start with a compelling opening paragraph that sets the context for the news story. This should include the main points and capture the reader's interest to encourage them to continue.
+    //     const prompt = `
+    //     Write a 1,500 word (minimum) Human Written, Plagiarism Free, SEO Optimized Long-Form Article for the title "${title}". Structure the format of the article for maximum scannability and readability. Gather inspiration from other successful articles on this topic to make sure we’re not leaving out any important points and sections. Use SEO best practices to ensure proper use of keywords in headings.
 
-// 2. List of Sections**: Break down the article into a series of numbered sections, each covering a distinct aspect of the news story. Each section should include:
-//    - A title for the section (numbered if required).
-//    - A detailed paragraph explaining the information, with relevant data, quotes, or background context into markdown format.
-//    - A query for an image that complements the section, if applicable. If an image is not required, set the query field to null.
+    //     The structure of the article should be as follows:
 
-// 3. Conclusion**: End with a brief conclusion that wraps up the article and provides any final insights or implications related to the news story.
-    
-//     4. **Author and Quote**: Generate a random author name for the article and include a related quote that could be attributed to the author. The quote should align with the article's theme and provide a thoughtful reflection or insightful comment on the news story.
-    
-//     Additionally, include the following SEO-related fields:
-    
-//     - "metaDescription": A brief description of the page content for the meta description tag.
-//     - "ogTitle": The Open Graph title, used when sharing the article on social media platforms.
-//     - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
-//     - **Primary Keywords**: The main keywords or phrases that are most relevant to the article's content.
-//     - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
-    
-//     The response should be structured as an object with two main fields:
-//     - "seo": An object containing all the SEO-related fields.
-//     - "content": An array of objects, where each object contains:
-//        - "title": The title of the section.
-//        - "description": The detailed paragraph explaining the news content into markdown format.
-//        - "query": The image query related to the section's content (or null if not needed).
-    
-//     Ensure that the overall article title is included as a headline at the top of the response.
-    
-//     `;
+    // 1. Introduction**: Start with a compelling opening paragraph that sets the context for the news story. This should include the main points and capture the reader's interest to encourage them to continue.
+
+    // 2. List of Sections**: Break down the article into a series of numbered sections, each covering a distinct aspect of the news story. Each section should include:
+    //    - A title for the section (numbered if required).
+    //    - A detailed paragraph explaining the information, with relevant data, quotes, or background context into markdown format.
+    //    - A query for an image that complements the section, if applicable. If an image is not required, set the query field to null.
+
+    // 3. Conclusion**: End with a brief conclusion that wraps up the article and provides any final insights or implications related to the news story.
+
+    //     4. **Author and Quote**: Generate a random author name for the article and include a related quote that could be attributed to the author. The quote should align with the article's theme and provide a thoughtful reflection or insightful comment on the news story.
+
+    //     Additionally, include the following SEO-related fields:
+
+    //     - "metaDescription": A brief description of the page content for the meta description tag.
+    //     - "ogTitle": The Open Graph title, used when sharing the article on social media platforms.
+    //     - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
+    //     - **Primary Keywords**: The main keywords or phrases that are most relevant to the article's content.
+    //     - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
+
+    //     The response should be structured as an object with two main fields:
+    //     - "seo": An object containing all the SEO-related fields.
+    //     - "content": An array of objects, where each object contains:
+    //        - "title": The title of the section.
+    //        - "description": The detailed paragraph explaining the news content into markdown format.
+    //        - "query": The image query related to the section's content (or null if not needed).
+
+    //     Ensure that the overall article title is included as a headline at the top of the response.
+
+    //     `;
+
+    //     const prompt = `
+    // Generate an engaging brief (with total of around 1300 words) news article for the title "${title}". The article should be written in a clear, informative, and professional tone, with a focus on delivering current and relevant information.
+
+    // The structure of the article should be as follows:
+
+    // 1. **Introduction**: Start with a compelling opening paragraph that sets the context for the news story. This should include the main points and capture the reader's interest to encourage them to continue.
+
+    // 2. **List of Sections**: Break down the article into a series of numbered sections, each covering a distinct aspect of the news story. Each section should include:
+    //    - A title for the section (numbered if required).
+    //    - A detailed paragraph explaining the information, with relevant data, quotes, or background context into markdown format.
+    //    - A query for an image that complements the section, if applicable. If an image is not required, set the query field to null.
+
+    // 3. **Conclusion**: End with a brief conclusion that wraps up the article and provides any final insights or implications related to the news story.
+
+    // 4. **Author and Quote**: Generate a random author name for the article and include a related quote that could be attributed to the author. The quote should align with the article's theme and provide a thoughtful reflection or insightful comment on the news story.
+
+    // Additionally, include the following SEO-related fields:
+
+    // - "metaDescription": A brief description of the page content for the meta description tag.
+    // - "ogTitle": The Open Graph title, used when sharing the article on social media platforms.
+    // - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
+    // - **Primary Keywords**: The main keywords or phrases that are most relevant to the article's content.
+    // - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
+
+    // The response should be structured as an object with two main fields:
+    // - "seo": An object containing all the SEO-related fields.
+    // - "content": An array of objects, where each object contains:
+    //    - "title": The title of the section.
+    //    - "description": The detailed paragraph explaining the news content into markdown format.
+    //    - "query": The query for an image that complements the section, if applicable. If an image is not required, set the query field to null.
+
+    // Ensure that the overall article title is included as a headline at the top of the response.
+
+    // `;
+
+    // const prompt = `
+    // Generate an engaging news article (around 1300 words) with the title "${title}". The article should be written in a clear, informative, and professional tone, focusing on delivering current and relevant information.
+
+    // The structure of the article should be as follows:
+
+    // 1. **Author and Quote**:
+    //    - Generate a random author name for the article.
+    //    - Include a relevant quote from the author that aligns with the theme of the article. The quote should provide a thoughtful reflection or insightful comment on the news story.
+
+    // 2. **SEO Information**:
+    //    - "metaDescription": A brief description of the page content for the meta description tag.
+    //    - "ogTitle": The Open Graph title, used when sharing the article on social media platforms.
+    //    - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
+    //    - **Primary Keywords**: The main keywords or phrases that are most relevant to the article’s content.
+    //    - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
+
+    // 3. **Content**:
+    //    - The article content should be structured into an array of sections, each containing:
+    //      - "title": The title of the section.
+    //      - "description": A detailed paragraph explaining the news content in markdown format.
+    //      - "query": An image query that complements the section. If no image is needed, set the query field to null.
+
+    // The response should be structured as an object with two main fields:
+    // - **seo**: An object containing all the SEO-related fields.
+    // - **content**: An array of objects where each object contains the title, description, and query for the section if needed only.
+    // `;
+
+    //     const prompt = `
+    // Generate an engaging and well-structured news article (around 1300 words) with the title "${title}". The article must be written in a clear, informative, and professional tone. Ensure the content is:
+
+    // - Human Written
+    // - 100% Unique
+    // - SEO Optimized
+    // - Plagiarism Free
+
+    // The structure of the article should be as follows:
+
+    // 1. **Author and Quote**:
+    //    - Generate a random author name for the article.
+    //    - Include a relevant quote from the author that aligns with the theme of the article. The quote should provide a thoughtful reflection or insightful comment on the news story.
+
+    // 2. **SEO Information**:
+    //    - "metaDescription": A brief description of the page content for the meta description tag.
+    //    - "ogTitle": The Open Graph title, used when sharing the article on social media platforms.
+    //    - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
+    //    - **Primary Keywords**: The main keywords or phrases that are most relevant to the article’s content.
+    //    - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
+
+    // 3. **Content**:
+    //    - The article content should be structured into an array of sections, each containing:
+    //      - "title": The title of the section.
+    //      - "description": A detailed paragraph explaining the news content in markdown format.
+    //      - "query": An image query that complements the section. If no image is needed, set the query field to null.
+
+    // Ensure that the article is well-researched, engaging, free of plagiarism, and optimized for SEO. The language should appear as if it were written by a human, ensuring natural flow and readability.
+
+    // The response should be structured as an object with two main fields:
+    // - **seo**: An object containing all the SEO-related fields.
+    // - **content**: An array of objects where each object contains the title, description, and query for the section.
+    // `;
 
     const prompt = `
-Generate an engaging brief (with total of around 1300 words) news article for the title "${title}". The article should be written in a clear, informative, and professional tone, with a focus on delivering current and relevant information.
-
-The structure of the article should be as follows:
-
-1. **Introduction**: Start with a compelling opening paragraph that sets the context for the news story. This should include the main points and capture the reader's interest to encourage them to continue.
-
-2. **List of Sections**: Break down the article into a series of numbered sections, each covering a distinct aspect of the news story. Each section should include:
-   - A title for the section (numbered if required).
-   - A detailed paragraph explaining the information, with relevant data, quotes, or background context into markdown format.
-   - A query for an image that complements the section, if applicable. If an image is not required, set the query field to null.
-
-3. **Conclusion**: End with a brief conclusion that wraps up the article and provides any final insights or implications related to the news story.
-
-4. **Author and Quote**: Generate a random author name for the article and include a related quote that could be attributed to the author. The quote should align with the article's theme and provide a thoughtful reflection or insightful comment on the news story.
-
-Additionally, include the following SEO-related fields:
-
-- "metaDescription": A brief description of the page content for the meta description tag.
-- "ogTitle": The Open Graph title, used when sharing the article on social media platforms.
-- "ogDescription": The Open Graph description, providing a summary of the page content for social media.
-- **Primary Keywords**: The main keywords or phrases that are most relevant to the article's content.
-- **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
-
-The response should be structured as an object with two main fields:
-- "seo": An object containing all the SEO-related fields.
-- "content": An array of objects, where each object contains:
-   - "title": The title of the section.
-   - "description": The detailed paragraph explaining the news content into markdown format.
-   - "query": The image query related to the section's content (or null if not needed).
-
-Ensure that the overall article title is included as a headline at the top of the response.
-
-`;
+    Generate an engaging and well-structured news article (around 1300 words) with the title "${title}". The article must be written in a clear, informative, and professional tone. Ensure the content is:
+    
+    - Human Written
+    - 100% Unique
+    - SEO Optimized
+    - Plagiarism Free
+    
+    The structure of the article should be as follows:
+    
+    1. **Author and Quote**:
+       - Generate a random author name for the article.
+       - Include a relevant quote from the author that aligns with the theme of the article. The quote should provide a thoughtful reflection or insightful comment on the news story.
+    
+    2. **Conclusion**:
+       - Provide a summary or closing thoughts that wrap up the article. This section should succinctly reinforce the main points and offer a final perspective on the news story.
+    
+    3. **SEO Information**:
+       - "metaDescription": A brief description of the page content for the meta description tag.
+       - "ogTitle": The Open Graph title, used when sharing the article on social media platforms.
+       - "ogDescription": The Open Graph description, providing a summary of the page content for social media.
+       - **Primary Keywords**: The main keywords or phrases that are most relevant to the article’s content.
+       - **Secondary Keywords**: Related keywords that support the primary keywords and help with ranking in search engines.
+    
+    4. **Content**:
+       - The article content should be structured into an array of sections, each containing:
+         - "title": The title of the section.
+         - "description": A detailed paragraph explaining the news content related to the section. The description should provide thorough and relevant information about the topic mentioned in the title.
+         - "query": An image query that complements the section. If no image is needed, set the query field to null.
+    
+    Ensure that the article is well-researched, engaging, free of plagiarism, and optimized for SEO. The language should appear as if it were written by a human, ensuring natural flow and readability.
+    
+    The response should be structured as an object with two main fields:
+    - **seo**: An object containing all the SEO-related fields.
+    - **content**: An array of objects where each object contains the title, description, and query for the section.
+    `;
 
     const schema = {
       description: "Schema for content with SEO and author information",
