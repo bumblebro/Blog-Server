@@ -5,6 +5,7 @@ import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import slugify from "slugify";
+import UPLOAD from "../api/upload/Upload";
 
 interface blogs {
   blog: string;
@@ -51,14 +52,19 @@ function Upload() {
     console.log("Clicked");
     setLoading(true);
     setUpdatedBlog([]);
-    const blogs = await axios.post("/api/upload", {
+    // const blogs = await axios.post("/api/upload", {
+    //   section,
+    //   subSection,
+    //   subSubSection,
+    // });
+
+    const blogs: any = await UPLOAD({
       section,
       subSection,
       subSubSection,
-      title,
     });
-    const data = await blogs.data;
-    const covertedBlog = await JSON.parse(data);
+    // const data = await blogs.data;
+    const covertedBlog = await JSON.parse(blogs);
     console.log(`blog`, covertedBlog);
     const link = await searchImages(covertedBlog.imageQuery);
     setAuthor(covertedBlog.author);
