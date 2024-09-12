@@ -9,13 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Word of Many",
-    template: "%s | Word of Many",
-  },
-  description:
-    "Discover the world's leading lifestyle platform, Word of Many, featuring the latest trends in products, culture, and style from all categories around the globe.",
-  twitter: {
-    card: "summary_large_image",
+    default: "Blog Upload",
+    template: "Blog Upload",
   },
 };
 
