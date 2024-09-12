@@ -64,7 +64,15 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 
 const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
 
-export default async function UPLOAD({ section, subSection, subSubSection }) {
+export default async function UPLOAD({
+  section,
+  subSection,
+  subSubSection,
+}: {
+  section: string;
+  subSection: string;
+  subSubSection: string;
+}) {
   try {
     // const body = await req.json();
     console.log("Start");

@@ -48,7 +48,7 @@ function Upload2() {
       console.log(`GETTING BLOG...`);
       setConsoleData((prev) => [...prev, `GETTING BLOG...`]);
 
-      const blogs = await UPLOAD({
+      const blogs: any = await UPLOAD({
         section: path[0],
         subSection: path[1],
         subSubSection: path[2],
