@@ -5,6 +5,7 @@ import axios from "axios";
 import { error } from "console";
 import { useEffect, useState } from "react";
 import slugify from "slugify";
+import UPLOAD from "../api/upload/Upload";
 
 function Upload2() {
   const [isRunning, setIsRunning] = useState(false);
@@ -47,13 +48,13 @@ function Upload2() {
       console.log(`GETTING BLOG...`);
       setConsoleData((prev) => [...prev, `GETTING BLOG...`]);
 
-      const blogs = await axios.post("/api/upload", {
+      const blogs = await UPLOAD({
         section: path[0],
         subSection: path[1],
         subSubSection: path[2],
       });
-      const data = await blogs.data;
-      const covertedBlog = await JSON.parse(data);
+      // const data = await blogs.data;
+      const covertedBlog = await JSON.parse(blogs);
       setConsoleData((prev) => [...prev, `GOT BLOG ${covertedBlog}`]);
       console.log(`GOT BLOG`, covertedBlog);
       setConsoleData((prev) => [...prev, `GETTING IMAGE FOR MAIN TITLE...`]);

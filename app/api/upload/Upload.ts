@@ -1,7 +1,6 @@
 import { SchemaType, GoogleGenerativeAI } from "@google/generative-ai";
 import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { NextRequest } from "next/server";
 
 // const promptForTitle = `
 // Generate a 100 random, unique, non-repetitive title for a blog for "${body?.subSubSection}" which comes under "${body?.subSection}" which comes under "${body?.section}". The title should be based on one of the following type:
@@ -64,11 +63,10 @@ import { NextRequest } from "next/server";
 // `;
 
 const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
-const prisma = new PrismaClient().$extends(withAccelerate());
 
-export async function POST(req: NextRequest) {
+export default async function UPLOAD({ section, subSection, subSubSection }) {
   try {
-    const body = await req.json();
+    // const body = await req.json();
     console.log("Start");
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
     const model = genAI.getGenerativeModel({
@@ -135,7 +133,7 @@ export async function POST(req: NextRequest) {
     // `;
 
     const promptForTitle = `
-Generate 100 possible, unique, non-repetitive, and captivating click-bait titles for a blog under the sub-subsection "${body?.subSubSection}", which falls under the subsection "${body?.subSection}" and section "${body?.section}". 
+Generate 100 possible, unique, non-repetitive, and captivating click-bait titles for a blog under the sub-subsection "${subSubSection}", which falls under the subsection "${subSection}" and section "${section}". 
 
 Each title should follow one of these blog formats:
   - Listicles (e.g., "10 Best... ")
@@ -150,9 +148,9 @@ The titles must be:
 - Creative, captivating, and designed to make the reader want to click.
 - Reflective of the specific blog format chosen.
 - Clearly associated with the following topic hierarchy: 
-  - Section: ${body?.section}
-  - Subsection: ${body?.subSection}
-  - Sub-subsection: ${body?.subSubSection}
+  - Section: ${section}
+  - Subsection: ${subSection}
+  - Sub-subsection: ${subSubSection}
 
 Ensure that the titles:
 - Vary across different blog formats.
@@ -532,9 +530,9 @@ The response should be structured as a JSON array of objects with the following 
     // console.log(response);
     const data1 = response1.text();
     console.log(data1);
-    console.log(title, body.section, body.subSection, body.subSubSection);
-    return Response.json(data1);
+    console.log(title, section, subSection, subSubSection);
+    return data1;
   } catch (error) {
-    Response.json(error);
+    return error;
   }
 }
