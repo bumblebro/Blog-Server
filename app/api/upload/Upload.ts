@@ -62,7 +62,21 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 
 // `;
 
-const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
+// const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
+// const genAI = new GoogleGenerativeAI("AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc");
+
+const apiKeys = [
+  "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
+  "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
+];
+
+// Generate a random index
+const randomIndex = Math.floor(Math.random() * apiKeys.length);
+
+// Select the random API key
+const selectedApiKey = apiKeys[2];
+
+const genAI = new GoogleGenerativeAI(selectedApiKey);
 
 export default async function UPLOAD({
   section,
