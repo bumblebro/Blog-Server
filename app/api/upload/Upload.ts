@@ -479,50 +479,143 @@ The response should be structured as a JSON array of objects with the following 
     // The blog should be structured logically, flowing naturally from section to section. Provide substantial, fact-based information, avoid placeholders or filler, and maintain an engaging, conversational tone throughout.
     // `;
 
+    //   NEW 2  const prompt = `
+    // Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, and conversational tone. Ensure the content is:
+
+    // - Human Written
+    // - 100% Unique
+    // - SEO Optimized
+    // - Plagiarism Free
+    // - Relevant to the title
+
+    // The structure of the blog should be strictly organized as follows:
+
+    // 1. **Author and Quote:**
+
+    //    - Start with the author's name (generate a random name).
+    //    - Include a relevant quote from the author that reflects the theme of the blog and sets the tone.
+
+    // 2. **Blog Content:**
+
+    //    - **Title Section:** Provide a clear and descriptive title for this section. If no title is necessary, explicitly set this to "null".
+    //    - **Description Section:** Provide a thorough and valuable description for this section. Ensure that the description does not include the title or any image query. The description should stay relevant to the section's content and avoid filler content.
+    //    - **Image Query Section:** Provide an appropriate image query that complements the section's content. If no image is necessary, explicitly set this to "null".
+
+    //    Follow the above structure strictly for each section of the blog. Do not combine the title, description, or image query fields into a single field.
+
+    // 3. **Conclusion:**
+
+    //    - Summarize the key points of the blog in a concluding section. Reinforce the main takeaways and offer final thoughts or a call to action.
+    //    - Follow the same flow of title, description, and query as described above for the conclusion section.
+
+    // 4. **SEO Information:**
+
+    //    - **metaDescription:** A brief summary of the blog’s content to be used as the meta description tag.
+    //    - **ogTitle:** The Open Graph title, used for sharing the blog on social media.
+    //    - **ogDescription:** The Open Graph description, summarizing the content for social sharing.
+    //    - **Primary Keywords:** The most important keywords or phrases relevant to the blog’s topic.
+    //    - **Secondary Keywords:** Related or supporting keywords to assist with search engine rankings.
+
+    // The response should be formatted as an object with two main fields:
+
+    // - **seo:** An object containing all the SEO-related fields.
+    // - **content:** An array of objects where each object includes the title, description, and query for each section.
+
+    // Ensure that titles, descriptions, and image queries are not mixed or included in the wrong fields. Each field should be strictly adhered to as described above, and the blog should flow logically from section to section. Provide substantial, fact-based information, avoid placeholders or filler, and maintain an engaging, conversational tone throughout.
+    // `;
+
     const prompt = `
-Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, and conversational tone. Ensure the content is:
+    Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, conversational, and personal tone, similar to the style of storytelling in personal finance blogs. Ensure the content is:
+    
+    - Human Written
+    - 100% Unique
+    - SEO Optimized
+    - Plagiarism Free
+    - Relevant to the title
+    
+    ### Additional Instructions for Tone:
+    
+    - Begin the blog with a relatable, personal anecdote or story that ties into the topic.
+    - Maintain a conversational flow, making the reader feel as if they're being spoken to directly.
+    - Use humor, informal language, and personal insights where appropriate.
+    - Encourage reflection by posing questions to the reader and addressing them directly (e.g., "What does this mean for you?").
+    - Balance the casual tone with useful, actionable advice.
+    
+    The structure of the blog should follow this format:
+    
+    1. **Author and Quote:**
+       - Generate a random author's name.
+       - Include a relevant quote from the author that reflects the theme of the blog and sets the tone.
+    
+    2. **Page Title:**
+       - The main title of the blog post.
+    
+    3. **Image Query:**
+       - Generate a query for the main image that aligns with the blog content.
+    
+    4. **Blog Content:**
+       - For each section, generate an object with the following fields:
+         - **Title:** (This field can be null if no title is necessary.)
+         - **Description:** This field should provide detailed content about the section. The description should not include the title or any image query.
+         - **Query:** This field should contain an image query related to the section content, or set to null if no image is required.
+    
+    5. **SEO Information:**
+       - Include meta description, Open Graph title and description, primary keywords, and secondary keywords (optional).
+    
+    ### Example Output:
+    
+    {
+  "author": "Jane Smith",
+  "quote": "Mastering your finances isn't just about numbers—it's about creating a life that truly reflects your values.",
+  "pageTitle": "How to Take Control of Your Finances and Build a Life You Love",
+  "imageQuery": "person managing finances at home",
+  "seo": {
+    "metaDescription": "Discover how to manage your finances wisely and build a life that aligns with your values and goals.",
+    "ogTitle": "How to Take Control of Your Finances and Build a Life You Love",
+    "ogDescription": "Learn the key steps to take control of your finances and start building a life that reflects your personal goals and values.",
+    "primaryKeywords": ["personal finance", "money management", "budgeting tips"],
+    "secondaryKeywords": ["financial freedom", "value-based spending", "savings goals"]
+  },
+  "content": [
+    {
+      "title": null,
+      "description": "Growing up, my family didn’t take expensive vacations. In fact, I remember the times we squeezed into a tiny, two-bed motel room—four of us, in a space made for two. My parents were always looking for ways to stretch a dollar. Back then, I thought this was just how things were, but now, looking back, I realize it was my first lesson in personal finance. Managing money isn't just about earning more, it’s about getting the most value out of what you have.",
+      "query": "family road trip in a small car"
+    },
+    {
+      "title": "Why Budgeting is the First Step",
+      "description": "Years later, when I started managing my own money, that lesson stuck with me. The first real step to financial freedom is learning how to budget. Just like my parents, who carefully planned every dollar, I realized that a budget doesn’t limit you—it actually gives you freedom. When you know where your money is going, you’re in control. You can start making decisions that support the life you want to live.",
+      "query": "person creating a budget at a kitchen table"
+    },
+    {
+      "title": "The Power of Value-Based Spending",
+      "description": "Not long ago, I took a trip to Italy with a few friends. We didn’t hold back on experiences—fine dining, boat rides, and exploring beautiful towns. But here’s the thing: we planned for it. I cut back on things that didn’t matter to me, like fancy gadgets and expensive clothes, so I could spend more on what did—travel, memories, and experiences. This is what I call value-based spending, and it’s key to building your rich life.",
+      "query": "person enjoying a luxurious vacation"
+    },
+    {
+      "title": "Savings: Your Secret Weapon",
+      "description": "I’ll admit, saving didn’t always come naturally to me. I used to think it was about depriving myself of the things I enjoyed. But then I learned how powerful savings can be. It’s not about what you can’t spend—it’s about what you’re saving for. Whether it's an emergency fund, a new home, or a dream vacation, every dollar saved gets you closer to the things that matter most.",
+      "query": "person putting money in a savings jar"
+    },
+    {
+      "title": "Investing in Your Future",
+      "description": "Once you’ve mastered saving, the next step is investing. When I got my first paycheck, I spent most of it right away. But now, I see investing as planting seeds for the future. The earlier you start, the more time your money has to grow. Whether it's stocks, real estate, or retirement funds, investing is about building a future that gives you the freedom to live on your terms.",
+      "query": "person investing in the stock market"
+    },
+    {
+      "title": "Design Your Financial Plan",
+      "description": "Now, here’s where it all comes together. Just like my parents did with our vacations, you can design a financial plan that reflects your values. It’s not about making more money—it's about making your money work for you. Maybe you want to travel, spend more time with family, or simply enjoy peace of mind knowing you have financial security. Whatever it is, start designing your plan today and take control of your financial future.",
+      "query": "person planning finances on a notebook"
+    },
+    {
+      "title": "Conclusion: Your Rich Life Awaits",
+      "description": "Living a rich life isn’t about having the most money—it’s about living in alignment with what matters most to you. Whether it’s budgeting, saving, or investing, the key is to start taking small steps today. Just like those family road trips taught me the value of money, you can start applying these lessons to create a life filled with the things that bring you joy. Your rich life is waiting—start building it today.",
+      "query": "person living a happy, fulfilled life"
+    }
+  ]
+}
 
-- Human Written
-- 100% Unique
-- SEO Optimized
-- Plagiarism Free
-- Relevant to the title
-
-The structure of the blog should be strictly organized as follows:
-
-1. **Author and Quote:**
-
-   - Start with the author's name (generate a random name).
-   - Include a relevant quote from the author that reflects the theme of the blog and sets the tone.
-
-2. **Blog Content:**
-
-   - **Title Section:** Provide a clear and descriptive title for this section. If no title is necessary, explicitly set this to "null".
-   - **Description Section:** Provide a thorough and valuable description for this section. Ensure that the description does not include the title or any image query. The description should stay relevant to the section's content and avoid filler content.
-   - **Image Query Section:** Provide an appropriate image query that complements the section's content. If no image is necessary, explicitly set this to "null".
-
-   Follow the above structure strictly for each section of the blog. Do not combine the title, description, or image query fields into a single field.
-
-3. **Conclusion:**
-
-   - Summarize the key points of the blog in a concluding section. Reinforce the main takeaways and offer final thoughts or a call to action.
-   - Follow the same flow of title, description, and query as described above for the conclusion section.
-
-4. **SEO Information:**
-
-   - **metaDescription:** A brief summary of the blog’s content to be used as the meta description tag.
-   - **ogTitle:** The Open Graph title, used for sharing the blog on social media.
-   - **ogDescription:** The Open Graph description, summarizing the content for social sharing.
-   - **Primary Keywords:** The most important keywords or phrases relevant to the blog’s topic.
-   - **Secondary Keywords:** Related or supporting keywords to assist with search engine rankings.
-
-The response should be formatted as an object with two main fields:
-
-- **seo:** An object containing all the SEO-related fields.
-- **content:** An array of objects where each object includes the title, description, and query for each section.
-
-Ensure that titles, descriptions, and image queries are not mixed or included in the wrong fields. Each field should be strictly adhered to as described above, and the blog should flow logically from section to section. Provide substantial, fact-based information, avoid placeholders or filler, and maintain an engaging, conversational tone throughout.
-`;
+    `;
 
     // const prompt = `
     // Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, and conversational tone. Ensure the content is:
