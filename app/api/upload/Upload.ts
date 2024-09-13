@@ -527,19 +527,17 @@ The response should be structured as a JSON array of objects with the following 
     const prompt = `
     Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, conversational, and personal tone, similar to the style of storytelling in personal finance blogs. Ensure the content is:
     
-    - Human Written
-    - 100% Unique
-    - SEO Optimized
-    - Plagiarism Free
-    - Relevant to the title
-    
-    ### Additional Instructions for Tone:
-    
+ 
     - Begin the blog with a relatable, personal anecdote or story that ties into the topic.
     - Maintain a conversational flow, making the reader feel as if they're being spoken to directly.
     - Use humor, informal language, and personal insights where appropriate.
     - Encourage reflection by posing questions to the reader and addressing them directly (e.g., "What does this mean for you?").
     - Balance the casual tone with useful, actionable advice.
+    - Human Written
+    - 100% Unique
+    - SEO Optimized
+    - Plagiarism Free
+    - Relevant to the title
     
     The structure of the blog should follow this format:
     
