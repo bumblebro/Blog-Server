@@ -1,6 +1,4 @@
 import { SchemaType, GoogleGenerativeAI } from "@google/generative-ai";
-import { PrismaClient } from "@prisma/client";
-import { withAccelerate } from "@prisma/extension-accelerate";
 
 // const promptForTitle = `
 // Generate a 100 random, unique, non-repetitive title for a blog for "${body?.subSubSection}" which comes under "${body?.subSection}" which comes under "${body?.section}". The title should be based on one of the following type:
@@ -61,22 +59,23 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 // Ensure that the overall article title is included as a headline at the top of the response.
 
 // `;
+let GenAPI = process.env.NEXT_PUBLIC_AI as string;
 
 // const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
-// const genAI = new GoogleGenerativeAI("AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc");
+const genAI = new GoogleGenerativeAI(GenAPI);
 
-const apiKeys = [
-  "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
-  "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
-];
+// const apiKeys = [
+//   "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
+//   "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
+// ];
 
-// Generate a random index
-const randomIndex = Math.floor(Math.random() * apiKeys.length);
+// // Generate a random index
+// const randomIndex = Math.floor(Math.random() * apiKeys.length);
 
-// Select the random API key
-const selectedApiKey = apiKeys[2];
+// // Select the random API key
+// const selectedApiKey = apiKeys[2];
 
-const genAI = new GoogleGenerativeAI(selectedApiKey);
+// const genAI = new GoogleGenerativeAI(selectedApiKey);
 
 export default async function UPLOAD({
   section,
