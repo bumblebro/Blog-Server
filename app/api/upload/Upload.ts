@@ -618,7 +618,8 @@ The response should be structured as a JSON array of objects with the following 
         - 100% Unique
         - SEO Optimized
         - Relevant to the title
-        - Avoid words like "Remember", "Let's face it", "Embrace"
+        - Avoid filler phrases that may suggest AI-generated content, like "Remember," "Let’s face it," or "Embrace.
+        - Avoid filler content or placeholders
     
         The structure of the blog should follow this format:
     
