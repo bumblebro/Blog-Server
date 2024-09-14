@@ -64,20 +64,6 @@ import { SchemaType, GoogleGenerativeAI } from "@google/generative-ai";
 // const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
 // const genAI = new GoogleGenerativeAI(GenAPI);
 
-const apiKeys = [
-  "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
-  "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
-  "AIzaSyBwzqeVWzLPb-TjfbaqV5UIEBbN-xuF7Lg",
-];
-
-// Generate a random index
-const randomIndex = Math.floor(Math.random() * apiKeys.length);
-
-// Select the random API key
-const selectedApiKey = apiKeys[randomIndex];
-
-const genAI = new GoogleGenerativeAI(selectedApiKey);
-
 export default async function UPLOAD({
   section,
   subSection,
@@ -88,6 +74,20 @@ export default async function UPLOAD({
   subSubSection: string;
 }) {
   try {
+    const apiKeys = [
+      "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
+      "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
+      "AIzaSyBwzqeVWzLPb-TjfbaqV5UIEBbN-xuF7Lg",
+    ];
+
+    // Generate a random index
+    const randomIndex = Math.floor(Math.random() * apiKeys.length);
+
+    // Select the random API key
+    const selectedApiKey = apiKeys[randomIndex];
+    console.log(`API Used`, randomIndex, selectedApiKey);
+
+    const genAI = new GoogleGenerativeAI(selectedApiKey);
     // const body = await req.json();
     console.log("Start");
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
