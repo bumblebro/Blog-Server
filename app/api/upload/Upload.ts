@@ -59,23 +59,24 @@ import { SchemaType, GoogleGenerativeAI } from "@google/generative-ai";
 // Ensure that the overall article title is included as a headline at the top of the response.
 
 // `;
-let GenAPI = process.env.NEXT_PUBLIC_AI as string;
+// let GenAPI = process.env.NEXT_PUBLIC_AI as string;
 
 // const genAI = new GoogleGenerativeAI("AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww");
-const genAI = new GoogleGenerativeAI(GenAPI);
+// const genAI = new GoogleGenerativeAI(GenAPI);
 
-// const apiKeys = [
-//   "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
-//   "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
-// ];
+const apiKeys = [
+  "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
+  "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
+  "AIzaSyBwzqeVWzLPb-TjfbaqV5UIEBbN-xuF7Lg",
+];
 
-// // Generate a random index
-// const randomIndex = Math.floor(Math.random() * apiKeys.length);
+// Generate a random index
+const randomIndex = Math.floor(Math.random() * apiKeys.length);
 
-// // Select the random API key
-// const selectedApiKey = apiKeys[2];
+// Select the random API key
+const selectedApiKey = apiKeys[randomIndex];
 
-// const genAI = new GoogleGenerativeAI(selectedApiKey);
+const genAI = new GoogleGenerativeAI(selectedApiKey);
 
 export default async function UPLOAD({
   section,
