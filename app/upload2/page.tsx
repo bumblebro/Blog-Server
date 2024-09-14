@@ -89,7 +89,7 @@ function Upload2() {
         covertedBlog.content.map(
           async (item: {
             query: string;
-            title: string;
+            // title: string;
             description: string;
           }) => {
             let link;
@@ -102,7 +102,7 @@ function Upload2() {
 
             console.log("IMAGE GENERATED", link);
             return {
-              title: item.title,
+              // title: item.title,
               description: item.description,
               url: link,
               alt: item.query,
@@ -121,7 +121,7 @@ function Upload2() {
 
       if (
         (path[0],
-        covertedBlog.pageTitle,
+        // covertedBlog.pageTitle,
         covertedBlog.imageQuery,
         link,
         path[1],
