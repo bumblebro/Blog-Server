@@ -118,7 +118,7 @@ The response should be structured as a JSON array of objects with the following 
     const response = await res.response;
     const data = response.text();
     const titlelist = JSON.parse(data);
-    console.log(`Title list`, titlelist);
+    // console.log(`Title list`, titlelist);
     const title = await titlelist[Math.floor(Math.random() * 100) + 1].title;
 
     // const prompt = `
