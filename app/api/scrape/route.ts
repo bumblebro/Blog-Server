@@ -27,7 +27,10 @@ export async function POST(req: NextRequest) {
       query: { safe: "on" },
     });
     console.log(results.slice(0, 10));
-    return Response.json({ results: results[1] });
+
+    const url = results.find((item) => item.url.startsWith("https:"));
+
+    return Response.json({ results: url });
   } catch (e) {
     console.error(e);
     return Response.json({ e });

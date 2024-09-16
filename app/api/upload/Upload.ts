@@ -73,21 +73,22 @@ export default async function UPLOAD({
   subSection: string;
   subSubSection: string;
 }) {
+  const apiKeys = [
+    "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
+    "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
+    "AIzaSyBwzqeVWzLPb-TjfbaqV5UIEBbN-xuF7Lg",
+  ];
+
+  // Generate a random index
+  const randomIndex = Math.floor(Math.random() * apiKeys.length);
+
+  // Select the random API key
+  const selectedApiKey = apiKeys[randomIndex];
+  console.log(`API Used`, randomIndex, selectedApiKey);
+
+  const genAI = new GoogleGenerativeAI(selectedApiKey);
+
   try {
-    const apiKeys = [
-      "AIzaSyCXDKoQVeO41DjXic40S9ONZwF8oiMFTww",
-      "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
-      "AIzaSyBwzqeVWzLPb-TjfbaqV5UIEBbN-xuF7Lg",
-    ];
-
-    // Generate a random index
-    const randomIndex = Math.floor(Math.random() * apiKeys.length);
-
-    // Select the random API key
-    const selectedApiKey = apiKeys[randomIndex];
-    console.log(`API Used`, randomIndex, selectedApiKey);
-
-    const genAI = new GoogleGenerativeAI(selectedApiKey);
     // const body = await req.json();
     console.log("Start");
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
@@ -748,7 +749,7 @@ The response should be structured as a JSON array of objects with the following 
               items: {
                 type: SchemaType.STRING,
               },
-              nullable: true,
+              nullable: false,
             },
           },
           required: ["metaDescription", "primaryKeywords"],
