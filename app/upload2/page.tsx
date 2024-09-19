@@ -75,7 +75,17 @@ function Upload2() {
         startProcess();
         return;
       }
-      const link = await searchImages(covertedBlog.imageQuery);
+      let link;
+      if (
+        covertedBlog.imageQuery == null ||
+        covertedBlog.imageQuery == "null"
+      ) {
+        console.log("Failed to have imagequery for main");
+        throw new Error("Failed to have imagequery for main");
+      } else {
+        link = await searchImages(covertedBlog.imageQuery);
+      }
+      // const link = await searchImages(covertedBlog.imageQuery);
       setConsoleData((prev) => [
         ...prev,
         `GETTING IMAGE FOR MAIN TITLE SUCCESSFULL`,
@@ -93,7 +103,7 @@ function Upload2() {
             description: string;
           }) => {
             let link;
-            if (item.query == null) {
+            if (item.query == null || item.query == "null") {
               link = "null";
             } else {
               link = await searchImages(item.query);

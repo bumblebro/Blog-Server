@@ -24,6 +24,16 @@ export default async function UPLOAD({
 
   const genAI = new GoogleGenerativeAI(selectedApiKey);
 
+  const today = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const formattedDate = today.toLocaleDateString("en-US", options);
+
+  console.log(formattedDate); // Output: "September 19, 2024"
+
   try {
     // const body = await req.json();
     console.log("Start");
@@ -75,7 +85,7 @@ export default async function UPLOAD({
     // `;
 
     const promptForTitle = `
-Generate 100 possible, unique, non-repetitive, and captivating click-bait titles for a blog under the sub-subsection "${subSubSection}", which falls under the subsection "${subSection}" and section "${section}".
+Generate 100 possible, unique, non-repetitive, and captivating click-bait titles for a blog under the sub-subsection "${subSubSection}", which falls under the subsection "${subSection}" and section "${section}" updated as of ${formattedDate}.
 
 Each title should follow one of these blog formats:
   - Listicles (e.g., "10 Best... ")
@@ -206,7 +216,7 @@ The response should be structured as a JSON array of objects with the following 
     //   `;
 
     const prompt = `
-    Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}". The blog should be written in a clear, informative, conversational, personal tone and style of storytelling. Ensure the content is:
+    Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}" updated as of ${formattedDate}. The blog should be written in a clear, informative, conversational, personal tone and style of storytelling. Ensure the content is:
     
     - Begin the blog with a relatable, personal anecdote or story that ties into the topic.
     - Maintain a conversational flow, making the reader feel as if they're being spoken to directly.

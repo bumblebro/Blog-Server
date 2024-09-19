@@ -82,7 +82,7 @@ function Upload() {
       covertedBlog.content.map(
         async (item: { query: string; title: string; description: string }) => {
           let link;
-          if (item.query == null) {
+          if (item.query == null || item.query == "null") {
             link = "null";
           } else {
             link = await searchImages(item.query);
