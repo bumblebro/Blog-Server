@@ -7,11 +7,20 @@ import { useEffect, useState } from "react";
 import slugify from "slugify";
 import UPLOAD from "../api/upload/Upload";
 
+// Refreshes the current page
+function refreshPage() {
+  location.reload();
+}
+
 function Upload2() {
   const [isRunning, setIsRunning] = useState(false);
   const [successCount, setSuccessCount] = useState(0);
   const [failedCount, setFailedCount] = useState(0);
   const [consoleData, setConsoleData] = useState<string[]>([]);
+
+  if (successCount == 10) {
+    refreshPage();
+  }
 
   async function getRandomPath(subSections: any) {
     const firstLevel = Object.keys(subSections);
@@ -215,7 +224,11 @@ function Upload2() {
       <div>
         <h1 className="bg-green-500">SUCCESS: {successCount}</h1>
         <h1 className="bg-red-500">FAILED: {failedCount}</h1>
-        <button onClick={startRunning} disabled={isRunning}>
+        <button
+          onClick={startRunning}
+          disabled={isRunning}
+          className={`${isRunning && "hidden"}`}
+        >
           Start
         </button>
         <div className="mx-auto">
