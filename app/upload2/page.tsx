@@ -18,7 +18,7 @@ function Upload2() {
   const [failedCount, setFailedCount] = useState(0);
   const [consoleData, setConsoleData] = useState<string[]>([]);
 
-  if (successCount == 10) {
+  if (successCount == 50) {
     refreshPage();
   }
 
