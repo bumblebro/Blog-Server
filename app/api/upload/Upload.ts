@@ -247,7 +247,9 @@ The response should be structured as a JSON array of objects with the following 
          - **Description:** This field should provide detailed content about the section. Use Markdown language for formatting, including headers (e.g., ##), bullet points, and **bold text** where appropriate. Do not use any placeholders or vague product names.
     
     5. **SEO Information:**
-       - Include meta description, Open Graph title and description, primary keywords, and secondary keywords (optional).
+       - Include meta description, Open Graph title and description, primary keywords, and secondary keywords.
+       - Primary Keywords: Focus on high search volume and medium-to-high competition.
+       - Secondary Keywords: Focus on moderate search volume and competition, with a related but distinct focus.
     
     Make sure the content is thoroughly researched and provides value to readers. Avoid filler content or placeholders, and focus on delivering substantial, fact-based information. Always use specific and relevant names, brands, or details related to the title provided.
     
