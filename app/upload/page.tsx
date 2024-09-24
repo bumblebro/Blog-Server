@@ -66,6 +66,22 @@ function Upload() {
     // const data = await blogs.data;
     const covertedBlog = await JSON.parse(blogs);
     console.log(`blog`, covertedBlog);
+    if (
+      covertedBlog.pageTitle.includes("[") ||
+      covertedBlog.pageTitle.includes("]")
+    ) {
+      throw new Error(
+        'String contains forbidden characters "[" or "]". in the Title'
+      );
+    }
+
+    covertedBlog.content.map((item: any) => {
+      if (item.description.includes("[") || item.description.includes("]")) {
+        throw new Error(
+          'String contains forbidden characters "[" or "]". in the description'
+        );
+      }
+    });
     const link = await searchImages(covertedBlog.imageQuery);
     setAuthor(covertedBlog.author);
     setQuote(covertedBlog.quote);

@@ -64,6 +64,23 @@ function Upload2() {
       });
       // const data = await blogs.data;
       const covertedBlog = await JSON.parse(blogs);
+      if (
+        covertedBlog.pageTitle.includes("[") ||
+        covertedBlog.pageTitle.includes("]")
+      ) {
+        throw new Error(
+          'String contains forbidden characters "[" or "]". in the Title'
+        );
+      }
+
+      covertedBlog.content.map((item: any) => {
+        if (item.description.includes("[") || item.description.includes("]")) {
+          throw new Error(
+            'String contains forbidden characters "[" or "]". in the description'
+          );
+        }
+      });
+
       setConsoleData((prev) => [...prev, `GOT BLOG ${covertedBlog}`]);
       console.log(`GOT BLOG`, covertedBlog);
       setConsoleData((prev) => [...prev, `GETTING IMAGE FOR MAIN TITLE...`]);
