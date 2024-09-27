@@ -216,7 +216,7 @@ The response should be structured as a JSON array of objects with the following 
     //   `;
 
     const prompt = `
-    Generate a well-researched, engaging, and structured blog post (around 1300 words) with the title "${title}" updated as of ${formattedDate}. The blog should be written in a clear, informative, conversational, personal tone and style of storytelling. Ensure the content is:
+    Generate a well-researched, engaging, and structured blog post around 1500 to 2500 words with the title "${title}" updated as of ${formattedDate}. The blog should be written in a clear, informative, conversational, personal tone and style of storytelling. Ensure the content is:
     
     - Begin the blog with a relatable, personal anecdote or story that ties into the topic.
     - Maintain a conversational flow, making the reader feel as if they're being spoken to directly.
