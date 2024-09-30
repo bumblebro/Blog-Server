@@ -68,7 +68,8 @@ function Upload() {
     console.log(`blog`, covertedBlog);
     if (
       covertedBlog.pageTitle.includes("[") ||
-      covertedBlog.pageTitle.includes("]")
+      covertedBlog.pageTitle.includes("]") ||
+      covertedBlog.pageTitle.includes("Image Query")
     ) {
       throw new Error(
         'String contains forbidden characters "[" or "]". in the Title'
@@ -76,7 +77,11 @@ function Upload() {
     }
 
     covertedBlog.content.map((item: any) => {
-      if (item.description.includes("[") || item.description.includes("]")) {
+      if (
+        item.description.includes("[") ||
+        item.description.includes("]") ||
+        item.description.includes("Image Query")
+      ) {
         throw new Error(
           'String contains forbidden characters "[" or "]". in the description'
         );

@@ -66,7 +66,8 @@ function Upload2() {
       const covertedBlog = await JSON.parse(blogs);
       if (
         covertedBlog.pageTitle.includes("[") ||
-        covertedBlog.pageTitle.includes("]")
+        covertedBlog.pageTitle.includes("]") ||
+        covertedBlog.pageTitle.includes("Image Query")
       ) {
         throw new Error(
           'String contains forbidden characters "[" or "]". in the Title'
@@ -74,7 +75,11 @@ function Upload2() {
       }
 
       covertedBlog.content.map((item: any) => {
-        if (item.description.includes("[") || item.description.includes("]")) {
+        if (
+          item.description.includes("[") ||
+          item.description.includes("]") ||
+          item.description.includes("Image Query")
+        ) {
           throw new Error(
             'String contains forbidden characters "[" or "]". in the description'
           );
