@@ -271,14 +271,14 @@ function Upload2() {
 
           console.log("UPLOAD SUCCESSFULL", res.data, "STARTING NEXT CYCLE...");
           setSuccessCount((prev) => prev + 1);
-          console.clear(); // Clears the console
+          // console.clear(); // Clears the console
           startProcess(); // Continue the process if running
         } else {
           setConsoleData((prev) => [...prev, `UPLOAD FAILED, RETRYING...`]);
 
           console.error("UPLOAD FAILED, RETRYING...");
           setFailedCount((prev) => prev + 1);
-          console.clear(); // Clears the console
+          // console.clear(); // Clears the console
           startProcess(); // Retry if failed
         }
       }
@@ -286,7 +286,7 @@ function Upload2() {
       setConsoleData((prev) => [...prev, `ERROR OCCURED, RETRYING...`]);
       console.error("ERROR OCCURED, RETRYING...");
       setFailedCount((prev) => prev + 1);
-      console.clear(); // Clears the console
+      // console.clear(); // Clears the console
       startProcess(); // Handle errors and retry
     }
   }
