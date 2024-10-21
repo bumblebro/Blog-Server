@@ -266,8 +266,8 @@ The algorithms you use should account for language nuances—syntax, semantics, 
     
     5. **SEO Information:**
        - Include meta description, Open Graph title and description, primary keywords, and secondary keywords.
-       - Primary Keywords: Focus on specific, long-tail sentence keywords with medium-to-low search volume and competition, targeting a niche audience with clear intent.
-       - Secondary Keywords: Focus on long-tail sentence keywords with moderate search volume and competition, closely related to the primary keywords but providing additional specific information or targeting a complementary audience.
+       - Primary Keywords: one primary keyword which explains the title.
+       - Secondary Keywords: one secondary keyword which explains the title.
   
     
     Make sure the content is thoroughly researched and provides value to readers. Avoid filler content or placeholders, and focus on delivering substantial, fact-based information. Always use specific and relevant names, brands, or details related to the title provided.
@@ -284,14 +284,10 @@ The algorithms you use should account for language nuances—syntax, semantics, 
             "ogTitle": "How to Take Control of Your Finances and Build a Life You Love",
             "ogDescription": "Learn the key steps to take control of your finances and start building a life that reflects your personal goals and values.",
      "primaryKeywords": [
-    "how to master personal finance for long-term financial success",
-    "effective money management strategies for beginners",
-    "top budgeting tips to save money and control expenses"
+    "how to master personal finance for long-term financial success"
   ],
   "secondaryKeywords": [
-    "steps to achieve financial freedom and live debt-free",
-    "how to implement value-based spending for smarter financial decisions",
-    "setting and achieving your savings goals for a secure future"
+    "steps to achieve financial freedom and live debt-free"
   ]
           },
           "content": [
