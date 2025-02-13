@@ -2,13 +2,10 @@
 
 import { subSections } from "@/libs/Section";
 import axios from "axios";
-import { error } from "console";
 import { useEffect, useState } from "react";
 import slugify from "slugify";
 import UPLOAD from "../api/upload/Upload";
-import HUMANIZE from "../api/humanize/Humanize";
 import { CONVERT } from "../api/humanizee/Convert";
-import { KEYWORD } from "../api/keyword/Keyword";
 
 // Refreshes the current page
 function refreshPage() {
@@ -129,16 +126,16 @@ function Upload2() {
       setConsoleData((prev) => [...prev, `GETTING IMAGES FOR CONTENT...`]);
       console.log(`GETTING IMAGES FOR CONTENT...`);
 
-      let primaryKeywords = await KEYWORD(covertedBlog.seo.primaryKeywords[0]);
-      let secondaryKeywords = await KEYWORD(
-        covertedBlog.seo.secondaryKeywords[0]
-      );
-      console.log(primaryKeywords);
-      console.log(secondaryKeywords);
-      let newseo = { ...covertedBlog.seo, primaryKeywords, secondaryKeywords };
+      // let primaryKeywords = await KEYWORD(covertedBlog.seo.primaryKeywords[0]);
+      // let secondaryKeywords = await KEYWORD(
+      //   covertedBlog.seo.secondaryKeywords[0]
+      // );
+      // console.log(primaryKeywords);
+      // console.log(secondaryKeywords);
+      // let newseo = { ...covertedBlog.seo, primaryKeywords, secondaryKeywords };
       console.log(`oldseo`, covertedBlog.seo);
 
-      console.log(`newseo`, newseo);
+      // console.log(`newseo`, newseo);
 
       const results = await Promise.all(
         covertedBlog.content.map(
@@ -157,50 +154,26 @@ function Upload2() {
 
             console.log("IMAGE GENERATED", link);
 
-            // console.log(`desccccc`, item.description);
-            // let desc: any = await HUMANIZE(item.description);
-            // const newdesc = await JSON.parse(desc);
-
-            // console.log(newdesc);
-            // // const link = "hello";
-            // console.log("links", link);
-            // return {
-            //   // title: item.title,
-            //   description: newdesc,
-            //   // description: item.description,
-            //   url: link,
-            //   alt: item.query,
-            // };
-
+            // Function to retry humanizing content
             async function runUntilResponse(item: string) {
               let response = null;
               let count = 0;
               while (response === null) {
-                if (count == 4) {
+                if (count >= 4) {
                   throw new Error("Maximum limit reached for humanizing...");
                 }
-                response = await CONVERT(item); // Call the function
-
-                if (response !== null) {
-                  console.log("Got a non-null response:", response);
-                  // Process or return the non-null response
-                  return response;
+                response = await CONVERT(item); // Retry until success or max attempts
+                if (response === null) {
+                  count++;
+                  console.log("Response is null, retrying...");
+                  // await new Promise((resolve) => setTimeout(resolve, 1000)); // Optional delay
                 }
-                count++;
-                console.log("Response is null, trying again...");
-                // Optional: Add a delay between retries
-                // await new Promise((resolve) => setTimeout(resolve, 1000)); // 1-second delay
               }
+              console.log("Got a non-null response:", response);
+              return response;
             }
 
             const response = await runUntilResponse(item.description);
-
-            // const data = await response.json();
-            // if (response.ok) {
-            //   newdescription = data.humanizedContent;
-            // } else {
-            //   throw new Error("Humanise Content Failed");
-            // }
 
             return {
               // title: item.title,
@@ -246,7 +219,7 @@ function Upload2() {
         results,
         covertedBlog.author,
         covertedBlog.quote,
-        newseo)
+        covertedBlog.seo)
       ) {
         const res = await axios.post("/api/dbupload", {
           section: path[0],
@@ -258,7 +231,7 @@ function Upload2() {
           content: results,
           author: covertedBlog.author,
           quote: covertedBlog.quote,
-          seo: newseo,
+          seo: covertedBlog.seo,
           slug: `${path[0]}/${path[1]}/${path[2]}/${slugify(
             covertedBlog.pageTitle
           )}`,
