@@ -335,7 +335,7 @@ async function Upload2() {
       //   }
       // });
 
-      console.log(`UPLOADDDDD STARTTTTTTTTT`);
+      console.log(`UPLOADDDDD START`);
       if (
         (path[0],
         // covertedBlog.pageTitle,
@@ -348,7 +348,7 @@ async function Upload2() {
         covertedBlog.quote,
         covertedBlog.seo)
       ) {
-        console.log(`UPLOADDDDD INSIDEEE`);
+        console.log(`UPLOADDDDD INSIDE`);
 
         try {
           let reqres = {
@@ -381,7 +381,12 @@ async function Upload2() {
           } else {
             console.log(`SUCCESS COUNT`, successCount);
             console.log(`FAILED COUNT`, failedCount);
-            console.log("STOOOOOPPPPINGGGGGGGGGGG");
+            console.log(
+              `Time: ${new Date().toLocaleString("en-IN", {
+                timeZone: "Asia/Kolkata",
+              })}`
+            );
+            console.log("COMPLETED");
             return "Success";
           }
         } catch (error) {
