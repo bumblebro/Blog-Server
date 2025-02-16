@@ -73,6 +73,8 @@ Ensure that the titles:
 - Vary across different blog formats.
 - Are meaningful and relevant to the topic, avoiding repetition or generic placeholders.
 - Include a mix of popular and engaging title strategies (e.g., numbers, questions, controversial opinions, etc.).
+- Strictly Dont send Updated Date in the Title.
+
 
 The response should be structured as a JSON array of strings with the following schema:
 
@@ -95,7 +97,11 @@ The response should be structured as a JSON array of strings with the following 
 
     console.log(`title picked :`, title);
 
-    if (typeof title === "string" && title.toLowerCase().includes("updated")) {
+    // if (typeof title === "string" && title.toLowerCase().includes("updated")) {
+    //   throw new Error("Title cannot contain the word 'updated'.");
+    // }
+
+    if (title.toLowerCase().includes("updated")) {
       throw new Error("Title cannot contain the word 'updated'.");
     }
 
