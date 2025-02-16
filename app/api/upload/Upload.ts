@@ -58,7 +58,7 @@ Each title should follow one of these blog formats:
   - Roundup Blogs (e.g., "Top 5...")
   - Buying Guides (e.g., "Ultimate Buying Guide for...")
   - Opinion Blogs (e.g., "Why I Think...")
-  - Strictly Dont send Updated Date in the Title.
+  - Strictly Dont put Word "Updated" in the Title.
 
 The titles must be:
 - Creative, captivating, and designed to make the reader want to click.
@@ -73,7 +73,7 @@ Ensure that the titles:
 - Vary across different blog formats.
 - Are meaningful and relevant to the topic, avoiding repetition or generic placeholders.
 - Include a mix of popular and engaging title strategies (e.g., numbers, questions, controversial opinions, etc.).
-- Strictly Dont send Updated Date in the Title.
+- Strictly Dont put Word "Updated" in the Title.
 
 
 The response should be structured as a JSON array of strings with the following schema:
