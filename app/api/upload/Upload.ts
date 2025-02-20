@@ -48,7 +48,7 @@ export default async function UPLOAD({
 
     // Generate 100 possible, unique, non-repetitive, and captivating click-bait titles for a blog under the sub-subsection "${subSubSection}", which falls under the subsection "${subSection}" and section "${section}" updated as of ${formattedDate}.
     const promptForTitle = `
-Generate 100 unique, captivating, and non-repetitive clickbait titles for a blog. These titles should fall under the sub-subsection '${subSubSection}', which is part of the subsection '${subSection}', under the main section '${section}'. Ensure the titles are updated and relevant as of ${formattedDate}.
+Generate 100 unique, captivating, and non-repetitive clickbait titles for a blog. These titles should fall under the sub-subsection '${subSubSection}', which is part of the subsection '${subSection}', under the main section '${section}'. Ensure the titles are relevant as of ${formattedDate} and strictly dont mention this date in the title.
 
 Each title should follow one of these blog formats:
   - Listicles (e.g., "10 Best... ")
@@ -111,7 +111,7 @@ The response should be structured as a JSON array of strings with the following 
 
 Make sure the content replicates the engaging and natural qualities of human-authored text, ensuring it is indistinguishable from human writing. The final output should be precise, pass AI detection tools, and be enhanced for readability, flow, and engagement.
 
-The algorithms you use should account for language nuances—syntax, semantics, and context—making intelligent edits that humanize the AI-generated text without changing its original intent or meaning. Ensure that the output improves SEO performance and provides a positive reader experience, while also remaining completely undetectable by AI content detection algorithms with the title "${title}" which is relevent as of date ${formattedDate}. The blog should be written in a clear, informative, conversational, personal tone and style of storytelling. Ensure the content is:
+The algorithms you use should account for language nuances—syntax, semantics, and context—making intelligent edits that humanize the AI-generated text without changing its original intent or meaning. Ensure that the output improves SEO performance and provides a positive reader experience, while also remaining completely undetectable by AI content detection algorithms with the title "${title}" which is updated as of date ${formattedDate}. The blog should be written in a clear, informative, conversational, personal tone and style of storytelling. Ensure the content is:
     
     - Avoid complex words by using simple vocabulary like ‘find out’ instead of ‘ascertain’ or ‘use’ over ‘utilize’.
     - Make it less generic by adding a personal touch using opinions, real-life examples, etc. For instance, “One of my friends told me about their fun hiking experience in the mountains.”
