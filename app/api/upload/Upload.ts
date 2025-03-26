@@ -14,8 +14,8 @@ export default async function UPLOAD({
   //   "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
   //   "AIzaSyBwzqeVWzLPb-TjfbaqV5UIEBbN-xuF7Lg",
   // ];
-  // const apiKeys = ["AIzaSyDRQg3-lHQWJpsx3wdhHJ_zvktiItpzCTk"];
-  const apiKeys = ["AIzaSyAplveCGzwidcNP5pNzoSBuwiLoattwFck"];
+  const apiKeys = ["AIzaSyDRQg3-lHQWJpsx3wdhHJ_zvktiItpzCTk"];
+  // const apiKeys = ["AIzaSyAplveCGzwidcNP5pNzoSBuwiLoattwFck"];
 
 
   // Generate a random index
