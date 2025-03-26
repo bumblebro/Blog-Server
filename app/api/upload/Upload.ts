@@ -14,7 +14,7 @@ export default async function UPLOAD({
   //   "AIzaSyA2bW3jhFQMlSRZvRyXZCTLbYczeoJruzc",
   //   "AIzaSyBwzqeVWzLPb-TjfbaqV5UIEBbN-xuF7Lg",
   // ];
-  const apiKeys = ["AIzaSyBnrCGypjsFCx05Qvsc5n73gAM6eTEvaaQ"];
+  const apiKeys = ["AIzaSyCTAYK_SvenZa8kVoNvk3LepQl3efGfqTc"];
 
   // Generate a random index
   const randomIndex = Math.floor(Math.random() * apiKeys.length);
