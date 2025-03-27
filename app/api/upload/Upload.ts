@@ -25,10 +25,10 @@ export default async function UPLOAD({
   // const genAI = new GoogleGenerativeAI(selectedApiKey);
 
   const apiKeys = process.env.NEXT_PUBLIC_GEMINIAI_API_URL;
-  
+
   console.log(`API Used`, apiKeys);
 
-  const genAI = new GoogleGenerativeAI(apiKeys);
+  const genAI = new GoogleGenerativeAI(apiKeys || "");
 
   const today = new Date();
   const options: Intl.DateTimeFormatOptions = {
