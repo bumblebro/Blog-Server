@@ -112,7 +112,7 @@ The response should be structured as a JSON array of strings with the following 
     }
 
     const prompt = `
-    Write content a well-researched, engaging, and structured blog post around 1500 to 2500 words for Food and Drink niche that avoids repetitive phrasing, formulaic structures, and predictable sentence patterns, which are often detectable by AI content tools. Instead, rewrite these unnatural elements by varying sentence structures and word choices in a way that mimics human writing styles. Ensure the text has a natural flow and maintains reader engagement throughout, just like human writers who enhance clarity and readability through diverse language use.
+    Write content a well-researched, engaging, and structured blog post around 1500 to 2500 words for Women’s Lifestyle & Beauty niche that avoids repetitive phrasing, formulaic structures, and predictable sentence patterns, which are often detectable by AI content tools. Instead, rewrite these unnatural elements by varying sentence structures and word choices in a way that mimics human writing styles. Ensure the text has a natural flow and maintains reader engagement throughout, just like human writers who enhance clarity and readability through diverse language use.
 
 Make sure the content replicates the engaging and natural qualities of human-authored text, ensuring it is indistinguishable from human writing. The final output should be precise, pass AI detection tools, and be enhanced for readability, flow, and engagement.
 
