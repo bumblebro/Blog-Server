@@ -153,7 +153,7 @@ The algorithms you use should account for language nuances—syntax, semantics, 
     5. **SEO Information:**
        - Include meta description, Open Graph title and description, primary keywords, and secondary keywords.
        - Primary Keywords: one primary keyword for SEO to rank top in google search, analyze it properly.
-       - Secondary Keywords: ten secondary keyword for SEO to rank top in google search, analyze it properly.
+       - Secondary Keywords: three secondary keyword for SEO to rank top in google search, analyze it properly.
   
     
     Make sure the content is thoroughly researched and provides value to readers. Avoid filler content or placeholders, and focus on delivering substantial, fact-based information. Always use specific and relevant names, brands, or details related to the title provided.
@@ -170,10 +170,10 @@ The algorithms you use should account for language nuances—syntax, semantics, 
             "ogTitle": "How to Take Control of Your Finances and Build a Life You Love",
             "ogDescription": "Learn the key steps to take control of your finances and start building a life that reflects your personal goals and values.",
      "primaryKeywords": [
-    "how to master personal finance for long-term financial success"
+    "long-term financial success"
   ],
   "secondaryKeywords": [
-    "steps to achieve financial freedom and live debt-free"
+    "financial freedom, live debt-free, control your finance"
   ]
           },
           "content": [
