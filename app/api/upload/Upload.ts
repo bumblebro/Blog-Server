@@ -53,7 +53,7 @@ export default async function UPLOAD({
 
     // Generate 100 possible, unique, non-repetitive, and captivating click-bait titles for a blog under the sub-subsection "${subSubSection}", which falls under the subsection "${subSection}" and section "${section}" updated as of ${formattedDate}.
     const promptForTitle = `
-Generate 100 unique, captivating, and non-repetitive clickbait titles for a blog. These titles should fall under the sub-subsection '${subSubSection}', which is part of the subsection '${subSection}', under the main section '${section}'. Ensure the titles are relevant as of ${formattedDate} and strictly dont mention this date in the title.
+Generate 100 unique, captivating, and non-repetitive clickbait titles for a blog. These titles should fall under the sub-subsection '${subSubSection}', which is part of the subsection '${subSection}', under the main section '${section}'. Ensure the titles are relevant and latest as of today and strictly dont mention this date in the title.
 
 Each title should follow one of these blog formats:
   - Listicles (e.g., "10 Best... ")
@@ -170,7 +170,7 @@ The algorithms you use should account for language nuances—syntax, semantics, 
             "ogTitle": "How to Take Control of Your Finances and Build a Life You Love",
             "ogDescription": "Learn the key steps to take control of your finances and start building a life that reflects your personal goals and values.",
      "primaryKeywords": [
-    "long-term financial success"
+    "financial success"
   ],
   "secondaryKeywords": [
     "financial freedom, live debt-free, control your finance"
