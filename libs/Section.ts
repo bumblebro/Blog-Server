@@ -421,4 +421,57 @@ export const subSections = {
     Fitness: ["Workout-Routines", "Healthy-Living-Tips"],
     "Mental-Health": ["Self-Care-Ideas", "Mindfulness-Practices"],
   },
+  CollegeLife: {
+    Dorm: [
+      "Dorm-Room-Decor",
+      "College-Room-Ideas",
+      "Dorm-Organization-Hacks",
+      "Dorm-Desk-Setup",
+      "Dorm-Aesthetic-Posters",
+    ],
+    School: [
+      "Back-To-School-Outfits",
+      "Cute-School-Supplies",
+      "Note-Taking-Hacks",
+      "Study-Tips",
+      "First-Day-Of-School-Captions",
+    ],
+    College: [
+      "College-Packing-List",
+      "College-Dorm-Essentials",
+      "College-Morning-Routine",
+      "What’s-In-My-Backpack",
+      "Finals-Week-Survival-Guide",
+    ],
+  },
+  SeasonalFun: {
+    Spring: [
+      "Spring-Bucket-List",
+      "Spring-Crafts-for-Kids",
+      "Easter-Table-Decor",
+      "Spring-Outdoor-Activities",
+      "Spring-Cleaning-Checklist",
+    ],
+    Summer: [
+      "Summer-Bucket-List",
+      "Summer-Party-Ideas",
+      "Summer-Vibes-Aesthetic",
+      "DIY-Pool-Party-Decor",
+      "Fourth-of-July-Ideas",
+    ],
+    Fall: [
+      "Fall-Bucket-List",
+      "Pumpkin-Carving-Ideas",
+      "Halloween-Costumes-for-Best-Friends",
+      "Thanksgiving-Table-Decor",
+      "Fall-Family-Photoshoot-Ideas",
+    ],
+    Winter: [
+      "Winter-Bucket-List",
+      "Christmas-Crafts",
+      "New-Year’s-Party-Decor",
+      "Hot-Chocolate-Bar-Setup",
+      "DIY-Gift-Ideas",
+    ],
+  },
 };
