@@ -27,9 +27,9 @@ interface sections {
 function Upload() {
   const sections: sections = subSections;
 
-  const [section, setSection] = useState<string>("Media");
-  const [subSection, setSubSection] = useState<string>("Platforms");
-  const [subSubSection, setSubSubSection] = useState<string>("YouTube");
+  const [section, setSection] = useState<string>("");
+  const [subSection, setSubSection] = useState<string>("");
+  const [subSubSection, setSubSubSection] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [blog, setBlog] = useState([{ blog: "", query: "" }]);
   const [updatedBlog, setUpdatedBlog] = useState<updatedBlog[]>([]);
@@ -40,6 +40,7 @@ function Upload() {
   const [imageurl, setImageUrl] = useState<string>("");
   const [imagealt, setImageAlt] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
+  const [dataall, setDataAll] = useState<any>([]);
 
   const searchImages = async (query: string) => {
     console.log(query);
@@ -52,7 +53,12 @@ function Upload() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (section == "" || subSection == "" || subSubSection == "") return;
+
     console.log("Clicked");
+    console.log("Section", section);
+    console.log("Subsection", subSection);
+    console.log("Subsubsection", subSubSection);
     setLoading(true);
     setUpdatedBlog([]);
     // const blogs = await axios.post("/api/upload", {
@@ -153,19 +159,12 @@ function Upload() {
             }
           }
 
-          const response = await runUntilResponse(item.description);
-
-          // const data = await response.json();
-          // if (response.ok) {
-          //   newdescription = data.humanizedContent;
-          // } else {
-          //   throw new Error("Humanise Content Failed");
-          // }
+          // const response = await runUntilResponse(item.description);
 
           return {
             // title: item.title,
-            description: response,
-            // description: item.description,
+            // description: response,
+            description: item.description,
             url: link,
             alt: item.query,
           };
@@ -190,6 +189,7 @@ function Upload() {
     setUpdatedBlog(results);
 
     setLoading(false);
+    // createBlog();
   }
 
   async function createBlog() {
@@ -207,6 +207,7 @@ function Upload() {
       slug,
     });
     console.log("Upload Result", res.data);
+    setDataAll(res.data);
   }
 
   return (
@@ -252,7 +253,12 @@ function Upload() {
             title="Sub-subsection"
             name="subSubSection"
             id="subSubSection"
-            onChange={(e) => setSubSubSection(e.target.value)}
+            onChange={(e) => {
+              setSubSubSection(e.target.value);
+              console.log(`section`, section);
+              console.log(`subsection`, subSection);
+              console.log(`subsubsection`, subSubSection);
+            }}
           >
             {(sections[section][subSection] || []).map(
               (subSub: string[], index: number) => (
@@ -280,6 +286,9 @@ function Upload() {
       ) : (
         <div>
           <button onClick={createBlog}>Add to DB</button>
+          <h1>{dataall?.section}</h1>
+          <h1>{dataall?.subSection}</h1>
+          <h1>{dataall?.subSubSection}</h1>
           <h1>{title}</h1>
           <h1>{author}</h1>
           <h1>{quote}</h1>
