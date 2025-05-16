@@ -51,7 +51,7 @@ export default async function UPLOAD({
     console.log("Start");
     // The Gemini 1.5 models are versatile and work with both text-only and multimodal prompts
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.0-flash",
       generationConfig: {
         responseMimeType: "application/json",
       },
@@ -317,7 +317,7 @@ The algorithms you use should account for language nuances—syntax, semantics, 
     };
 
     const model2 = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.0-flash",
       generationConfig: {
         responseMimeType: "application/json",
         responseSchema: schema,
