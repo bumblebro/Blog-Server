@@ -1,7 +1,7 @@
 import { SchemaType, GoogleGenerativeAI } from "@google/generative-ai";
 
 // Define the sleep function
-function sleep(ms) {
+function sleep(ms: any) {
   console.log(`Waiting for 2 min until next request, Please hold on baby`);
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
