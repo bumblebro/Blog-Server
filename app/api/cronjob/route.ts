@@ -116,6 +116,12 @@ async function fetchImageUrls(searchTerm: any) {
   }
 }
 
+// Define the sleep function
+function sleep(ms) {
+  console.log(`Waiting for 2 min until next request, Please hold on baby`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function image(query: string) {
   // const body = await req.json();
 
@@ -248,6 +254,7 @@ async function Upload2() {
         covertedBlog.imageQuery == null ||
         covertedBlog.imageQuery == "null"
       ) {
+        await sleep(120000); // Wait for 2 minutes
         startProcess();
         return;
       }
@@ -391,6 +398,7 @@ async function Upload2() {
           if (successCount < timestorun) {
             console.log(`SUCCESS COUNT`, successCount);
             console.log(`FAILED COUNT`, failedCount);
+            await sleep(120000); // Wait for 2 minutes
             startProcess();
           } else {
             console.log(`SUCCESS COUNT`, successCount);
@@ -407,6 +415,7 @@ async function Upload2() {
           console.log(`errorrrrrr`, error);
           failedCount = failedCount + 1;
           // console.clear(); // Clears the console
+          await sleep(120000); // Wait for 2 minutes
           startProcess(); // Retry if failed
         }
 
@@ -449,6 +458,7 @@ async function Upload2() {
       console.error("ERROR OCCURED, RETRYING...", error);
       failedCount = failedCount + 1;
       // console.clear(); // Clears the console
+      await sleep(120000); // Wait for 2 minutes
       startProcess(); // Handle errors and retry
     }
   }

@@ -1,5 +1,11 @@
 import { SchemaType, GoogleGenerativeAI } from "@google/generative-ai";
 
+// Define the sleep function
+function sleep(ms) {
+  console.log(`Waiting for 2 min until next request, Please hold on baby`);
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default async function UPLOAD({
   section,
   subSection,
@@ -110,6 +116,8 @@ The response should be structured as a JSON array of strings with the following 
       throw new Error("Title cannot contain the word 'updated'.");
       return;
     }
+
+    await sleep(120000); // Wait for 2 minutes
 
     const prompt = `
     Write content a well-researched, engaging, and structured blog post around 1500 to 2500 words for Women’s Lifestyle & Beauty niche that avoids repetitive phrasing, formulaic structures, and predictable sentence patterns, which are often detectable by AI content tools. Instead, rewrite these unnatural elements by varying sentence structures and word choices in a way that mimics human writing styles. Ensure the text has a natural flow and maintains reader engagement throughout, just like human writers who enhance clarity and readability through diverse language use.
